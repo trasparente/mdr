@@ -1,0 +1,7 @@
+<ul>
+  <li>
+    <time datetime='{{ site.time | date_to_rfc822 }}'>Build&nbsp;</time>
+  </li>
+  <li>GitHub {% include widgets/github_link.html text="Repository" path=site.github.repository_url %}</li>
+  <li>Page {% include widgets/github_link.html path=page.path text="Code" %}</li>
+</ul>

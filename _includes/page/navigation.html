@@ -1,0 +1,21 @@
+<nav>
+    <div>
+      <!-- PAGES not in 'assets/pages/' -->
+      {%- assign html_pages = site.html_pages -%}
+      {% for link in html_pages %}{% unless link.path contains 'assets/pages/' %}<a href="{{ link.url | absolute_url }}"{% if page.url == link.url %} class="active"{% endif %}>{{ link.title | default: link.name }}</a>{% endunless %}{% endfor %}
+      <!-- COLLECTIONS -->
+      {%- assign sorted_collections = site.collections -%}
+      {%- for collection in sorted_collections-%}{% if collection.docs.size > 0 %}
+      {%- assign collection_docs = collection.docs -%}
+      <details>
+        <summary{% if page.collection == collection.label %} class='active'{% endif %}>{{ collection.title | default: collection.label }}</summary>
+        <div>
+          {% for link in collection_docs reversed %}<a href="{{ link.url | absolute_url }}"{% if page.url == link.url %} class="active"{% endif %}>{{ link.title | default: link.path }}</a>
+          {% endfor %}{% endif %}
+        </div>
+      </details>{%- endfor -%}
+    </div>
+    <div>
+      {% include widgets/login.html %}
+    </div>
+</nav>

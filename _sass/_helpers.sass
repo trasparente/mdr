@@ -1,0 +1,16 @@
+.mpz
+  margin: 0
+  padding: 0
+
+// SAME-NAME STATES
+html
+  overflow-y: scroll
+  &.logged .unlogged, &:not(.logged) .logged,
+  &.online .offline, &:not(.online) .online,
+  &.updated .behind, &:not(.updated) .updated,
+  &.focus .blur, &:not(.focus) .focus,
+  &:not(.logged) .guest,
+  &:not(.logged) .admin,
+  &:not(.admin) .admin,
+  &:not(.guest) .guest,
+    display: none

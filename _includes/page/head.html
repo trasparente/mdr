@@ -1,0 +1,26 @@
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="canonical" href="{{ page.url | absolute_url }}" />
+  <meta name="generator" content="Jekyll v{{ site.github.versions.jekyll }}" />
+ 
+  <title>{{ site.github.project_title | upcase }} | {{ page.title }}</title>
+
+  {%- include page/favicon.html -%}
+
+  <!-- JS -->
+
+  <!-- jQuery 3.6.3 https://api.jquery.com/ -->
+  <script src='{{ "assets/js/jquery-3.6.3.min.js" | absolute_url }}'></script>
+
+  <!-- DataTables 1.13.4 https://www.datatables.net/download/index -->
+  <script src='{{ "assets/js/datatables-1.13.4.min.js" | absolute_url }}'></script>
+
+  <!-- Custom script Deferred -->
+  <script src='{{ "assets/js/script.js" | absolute_url }}?build={{ site.time | date: "%s" }}' defer></script>
+
+  <!-- CSS -->
+  <link rel='stylesheet' href='{{ "assets/css/stylesheet.css" | absolute_url }}?build={{ site.time | date: "%s" }}'>
+
+</head>

@@ -1,0 +1,14 @@
+details summary
+  cursor: pointer
+  outline: none
+
+  // Color, hover
+  color: var(--link)
+  &:hover, &::marker
+    color: var(--fg)
+
+  // Limit click area
+  display: inline list-item
+  &::after
+    display: table
+    content: ""

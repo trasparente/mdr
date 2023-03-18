@@ -1,0 +1,5 @@
+<!-- FAVICON.ICO -->
+{% assign favicon_ico_path = site.static_files | where_exp: "item", "item.path contains 'favicon.ico'" | map: 'path' | first | default: site.favicon.ico %}{% if favicon_ico_path %}<link rel='icon' href='{{ favicon_ico_path | absolute_url }}'>{% endif %}
+<!-- FAVICON.PNG -->
+{% assign favicon_png_path = site.static_files | where_exp: "item", "item.path contains 'favicon.png'" | map: 'path' | first | default: site.favicon.png %}{% if favicon_png_path %}<link rel='apple-touch-icon' href='{{ favicon_png_path | absolute_url }}'>
+<link rel='icon' type='image/png' href='{{ favicon_png_path | absolute_url }}'>{% endif %}
