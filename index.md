@@ -26,6 +26,6 @@ Table
 </table>
 </details>
 
-### Tre amigos
+## Colors classes
 
-Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ducimus, pariatur?
+{% include widgets/colors.html %}
