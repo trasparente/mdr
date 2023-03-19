@@ -1,2 +1,28 @@
 tt, code, kbd, samp
-  @extend .color-white
+  @extend .color-white, .background-black
+
+// INLINE
+code.highlighter-rouge
+  @extend .highlight
+  padding: 0 .2em
+
+// BLOCKS HIGHLIGHTED
+// Fenced, kramdown, indented:
+// div.highlighter-rouge > div.highlight > pre.highlight > code
+// liquid:
+// figure.highlight > pre > code
+.highlight pre
+  @extend .background-black
+  margin: 0
+  white-space: pre-wrap
+  line-height: 1.2
+  padding-block: .75em
+  padding-inline: 1em
+  border-radius: 6px
+  font-size: 97%
+  code
+    padding: 0px
+
+// Minimal Code Blocks
+div.highlighter-rouge pre
+  display: inline-block

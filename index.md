@@ -26,6 +26,10 @@ Table
 </table>
 </details>
 
+## Code
+
+{% include widgets/code.html %}
+
 ## Colors classes
 
 {% include widgets/colors.html %}

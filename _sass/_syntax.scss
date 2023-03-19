@@ -1,0 +1,66 @@
+.highlight {
+  .c, .ch, .cd, .cpf, .cm, .c1 {
+    @extend .color-blue;
+    font-style: italic;
+  }
+  .cp {
+    color: #465457;
+    font-weight: bold;
+  }
+  .cs {
+    @extend .color-forest;
+    font-weight: bold;
+    font-style: italic;
+  }
+  .err {
+    color: #f8f8f2;
+    background-color: #403d3d;
+  }
+  .ge {
+    color: #1b1d1e;
+    font-style: italic;
+  }
+  .gt, .gd, .gr, .nt {
+    @extend .color-pink;
+  }
+  .gh, .go {
+    color: #403d3d;
+  }
+  .gs {
+    font-weight: bold;
+  }
+  .gu {
+    color: #465457;
+  }
+  .k, .kv, .kc, .kd, .kp, .kr, .kt {
+    @extend .color-cyan;
+    font-weight: bold;
+  }
+  .kn, .ow, .o {
+    @extend .color-violet;
+    font-weight: bold;
+  }
+  .mf, .mh, .il, .mi, .mo, .m, .mb, .mx, .se {
+    @extend .color-purple
+  }
+  .sb, .sc, .sd, .s2, .sh, .si, .sx, .sr, .s1,  .ss, .s, .sa, .dl {
+    @extend .color-yellow
+  }
+  .na {
+    @extend .color-green
+  }
+  .nc , .nd, .ne, .nf, .fm, .gi {
+    @extend .color-orange;
+    font-weight: bold;
+  }
+  .no, .gp {
+    @extend .color-cyan
+  }
+  .bp, .nb, .ni, .nn, .vc, .vg, .vi, .nv, .vm, .w {
+    color: #f8f8f2;
+  }
+  .nl {
+    color: #f8f8f2;
+    font-weight: bold;
+  }
+}
