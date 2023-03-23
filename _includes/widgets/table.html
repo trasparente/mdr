@@ -1,0 +1,21 @@
+{{ include.csv | default: "table" | capitalize }}
+-----
+{% assign csv = site.data[include.csv] | sort: "date" | reverse %}
+<table>
+  <thead>
+    <tr class='rowheader'>
+      {% for header in csv.first %}<th>{{ header[0] }}</th>
+      {% endfor %}
+    </tr>
+  </thead>
+  <tbody>
+    {% for row in csv offset: 1 %}
+    <tr data-row='{{ forloop.index }}'>{% for cell in row %}
+      <td data-header='{{ cell[0] }}'>{% if cell[0] == "date" %}
+        <time datetime="{{ cell[1] | date_to_rfc822 }}">{{ cell[1] }} </time>{% else %}{{ cell[1] }}{% endif %}
+      </td>
+      {% endfor %}
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>

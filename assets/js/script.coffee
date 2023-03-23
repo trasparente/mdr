@@ -1,5 +1,5 @@
 ---
 ---
-{% include scripts/helpers.coffee %}
 {% include scripts/time.coffee %}
-$('#prova').DataTable()
+{% include scripts/helpers.coffee %}
+#$('#prova').DataTable()

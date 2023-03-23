@@ -9,6 +9,9 @@
 
   {%- include page/favicon.html -%}
 
+  <!-- CSS -->
+  <link rel='stylesheet' href='{{ "assets/css/stylesheet.css" | absolute_url }}?build={{ site.time | date: "%s" }}'>
+
   <!-- JS -->
 
   <!-- jQuery 3.6.3 https://api.jquery.com/ -->
@@ -17,10 +20,12 @@
   <!-- DataTables 1.13.4 https://www.datatables.net/download/index -->
   <script src='{{ "assets/js/datatables-1.13.4.min.js" | absolute_url }}'></script>
 
+  <!-- OctoKit 19.0.7 https://octokit.github.io/rest.js/v19 -->
+  <script type="module">
+    import { Octokit } from "https://cdn.skypack.dev/pin/@octokit/rest@v19.0.7-fuuyWKgN6s3HuZefQFbU/mode=imports,min/optimized/@octokit/rest.js"
+  </script>
+
   <!-- Custom script Deferred -->
   <script src='{{ "assets/js/script.js" | absolute_url }}?build={{ site.time | date: "%s" }}' defer></script>
-
-  <!-- CSS -->
-  <link rel='stylesheet' href='{{ "assets/css/stylesheet.css" | absolute_url }}?build={{ site.time | date: "%s" }}'>
 
 </head>

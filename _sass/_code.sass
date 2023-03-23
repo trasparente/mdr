@@ -1,5 +1,5 @@
 tt, code, kbd, samp
-  @extend .color-white, .background-black
+  color: #{$fg-muted}
 
 // INLINE
 code.highlighter-rouge
@@ -12,7 +12,7 @@ code.highlighter-rouge
 // liquid:
 // figure.highlight > pre > code
 .highlight pre
-  @extend .background-black
+  border: 2px solid #{$border}
   margin: 0
   white-space: pre-wrap
   line-height: 1.2

@@ -83,7 +83,19 @@ time =
       $(e).children('span').text string
     else
       $(e).append $ '<span/>', {text: string}
+    time.classes e
     return
+
+# Convert ISO-8601 duration string in milliseconds
+duration_ms = (string) ->
+  duration = 0
+  array = string.match(/^P(\d+Y)?(\d+M)?(\d+W)?(\d+D)?(T(\d+H)?(\d+M)?(\d+S)?)?$/) || []
+  ms_array = [null, ms('year'), ms('month'), ms('week'), ms('day'), null, ms('hour'), ms('minute'), ms('second')]
+  # Loop milliseconds array
+  for e, i in ms_array
+    # If milliseconds and string match,
+    if e and array[i] then duration += e * +array[i].slice 0, -1
+  return duration
 
 #
 # Append `span` with in/ago text

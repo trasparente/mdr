@@ -1,2 +1,12 @@
 b, strong, i, em
-  @extend .color-white
+  color: #{$fg-muted}
+
+// TITLE and CITE
+p, span, code, li, small, q, cite, time, blockquote
+  &[title], &[cite]
+    cursor: default
+
+// Number
+.number
+  text-align: right
+  @extend .color-cyan

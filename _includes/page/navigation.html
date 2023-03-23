@@ -2,7 +2,7 @@
     <div>
       <!-- PAGES not in 'assets/pages/' -->
       {%- assign html_pages = site.html_pages -%}
-      {% for link in html_pages %}{% unless link.path contains 'assets/pages/' %}<a href="{{ link.url | absolute_url }}"{% if page.url == link.url %} class="active"{% endif %}>{{ link.title | default: link.name }}</a>{% endunless %}{% endfor %}
+      {% for link in html_pages %}{% unless link.path contains 'assets/hidden/' %}<a href="{{ link.url | absolute_url }}"{% if page.url == link.url %} class="active"{% endif %}>{{ link.title | default: link.name }}</a>{% endunless %}{% endfor %}
       <!-- COLLECTIONS -->
       {%- assign sorted_collections = site.collections -%}
       {%- for collection in sorted_collections-%}{% if collection.docs.size > 0 %}
