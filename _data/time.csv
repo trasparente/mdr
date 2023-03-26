@@ -45,9 +45,11 @@ date,category,details,value,duration
 2022-12-28,bill,sky,74.6,
 2022-12-30,briefing,ccc,3,
 2023-01-20,briefing,cc,3,
-2023-01-24,bill,enel,89.21,P2M
+2023-01-24,bill,enel,89.21,
 2023-02-06,briefing,ccc,3,
 2023-02-13,citroen,assicurazione,340,P1Y
 2023-02-23,briefing,cc,3,
 2023-02-28,bill,sky,74.60,P2M
 2023-03-07,briefing,ccc,3
+2023-03-24,briefing,cccm,4
+2023-03-27,bill,enel,213.62,P2M

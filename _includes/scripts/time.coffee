@@ -50,7 +50,7 @@ time =
     diff = time.diff d
     abs = Math.abs diff
     unit = switch
-      when abs < ms('minute') then 'second'
+      when abs < ms('second')*59 then 'second'
       when abs < ms('minute')*59 then 'minute'
       when abs < ms('day') then 'hour'
       when abs < ms('week')*2 then 'day'
@@ -72,17 +72,18 @@ time =
   # append a span element with human string
   # replace title with reference date
   relative: (e) ->
+    el = $ e
     string = time.string e
-    date = new Date(time.get_date e)
-    $(e).attr 'title', date.toLocaleDateString(lang, {
+    date = new Date time.get_date e
+    el.attr 'title', (i, title) -> if !title then date.toLocaleDateString(lang, {
         day: "numeric"
         month: "short"
         year: "numeric"
       }) + ' ' + date.toLocaleTimeString(lang)
-    if $(e).find('span').length
-      $(e).children('span').text string
+    if el.find('span').length
+      el.children('span').text string
     else
-      $(e).append $ '<span/>', {text: string}
+      el.append $ '<span/>', {text: string}
     time.classes e
     return
 
@@ -101,4 +102,4 @@ duration_ms = (string) ->
 # Append `span` with in/ago text
 # inside `time[datetime]`
 # --------------------------------------
-$('time[datetime]').each -> time.relative @
+time_relative = -> $('time[datetime]').each -> time.relative @
