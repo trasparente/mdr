@@ -1,7 +1,7 @@
 {{ include.csv | default: "table" | capitalize }}
 -----
 {% assign csv = site.data[include.csv] %}
-<table>
+<table class='sort'>
   <thead>
     <tr>
       {% for header in csv.first %}<th>{{ header[0] }}</th>

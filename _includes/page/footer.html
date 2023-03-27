@@ -1,6 +1,6 @@
 <ul>
   <li>
-    <time datetime='{{ site.time | date_to_rfc822 }}'>Build&nbsp;</time>
+    <time datetime='{{ site.time | date_to_rfc822 }}'>Build <code>{{ site.github.build_revision | slice: 0, 7 }}</code>&nbsp;</time>
   </li>
   <li>GitHub {% include widgets/github_link.html text="Repository" %}</li>
   <li>Page {% include widgets/github_link.html path=page.path text="Code" %}</li>

@@ -35,14 +35,12 @@ table_durations = -> $('tr').has('td[data-header="duration"]:not(:empty)').each 
   return # End table rows loop
 
 # Sort by date descending
-table_sort = -> $('table').each ->
+table_sort = -> $('table.sort').each ->
   table = $ @
-  console.log table.find('tbody tr').length
   rows = table.find('tbody tr').sort (a, b) ->
-    value_a = $(a).find("td[data-header='date'] time").text().trim()
-    value_b = $(b).find("td[data-header='date'] time").text().trim()
+    value_a = $(a).find("td:first-child").text().trim()
+    value_b = $(b).find("td:first-child").text().trim()
     return if value_a >= value_b then -1 else 1
   table.find('tbody tr').remove()
   table.find('tbody').append rows
-  console.log rows.length
   return

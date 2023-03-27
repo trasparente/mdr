@@ -1,2 +1,11 @@
-time span
-  @extend .color-violet
+table
+  time.past
+    @extend .color-muted
+  time.future span
+    @extend .color-violet
+  time.future.tomorrow
+    span
+      @extend .color-magenta
+  time.past.today
+    span
+      @extend .color-pink

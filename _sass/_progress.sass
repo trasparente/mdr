@@ -1,0 +1,11 @@
+progress
+  appearance: none
+  border: 0
+  &, &::-webkit-progress-bar
+    background-color: var(--border)
+  &::-moz-progress-bar
+    background-color: var(--fg-muted)
+
+// That's Chrome everybody
+progress::-webkit-progress-value
+  background-color: var(--fg-muted)
