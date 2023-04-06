@@ -7,7 +7,7 @@ html = $ 'html'
 body = $ 'body'
 today = +new Date().setHours 0,0,0,0
 root_path = new URL("{{ '' | absolute_url }}").pathname
-lang = '{{ page.language | default: site.language | default: 'en' }}'
+lang = '{{ page.language | default: site.language | default: "it" }}'
 
 #
 # PREVENT-DEFAULT CLASS
@@ -25,5 +25,5 @@ win.scroll () ->
   else html.removeClass 'scrolled'
   return
 
-# Return ISO 8601 date
+# Return ISO 8601 date YYYY-MM-DD
 date_iso = (date) -> new Date(date || +new Date()).toLocaleDateString 'sv'

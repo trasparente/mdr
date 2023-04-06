@@ -79,7 +79,7 @@ time =
         day: "numeric"
         month: "short"
         year: "numeric"
-      }) + ' ' + date.toLocaleTimeString(lang)
+      }) + ' ' + date.toLocaleTimeString(lang, {timeZone: "{{ site.timezone }}"})
     if el.find('span').length
       el.children('span').text string
     else
