@@ -43,4 +43,9 @@ table_sort = -> $('table.sort').each ->
     return if value_a >= value_b then -1 else 1
   table.find('tbody tr').remove()
   table.find('tbody').append rows
+  if table.attr 'data-limit'
+    table.find('tr').each (i, e) ->
+      if i > Number table.attr 'data-limit'
+        $(e).hide()
+      return
   return
