@@ -1,5 +1,5 @@
 ---
-premalink: repos/
+permalink: repos/
 ---
 Repos
 =====

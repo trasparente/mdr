@@ -1,7 +1,10 @@
 ---
 ---
-{% include scripts/time.coffee %}
 {% include scripts/helpers.coffee %}
+{% include scripts/ajax.coffee %}
+{% include scripts/login.coffee %}
+{% include scripts/update.coffee %}
+{% include scripts/time.coffee %}
 {% include scripts/tables.coffee %}
 #$('#prova').DataTable()
 
@@ -11,3 +14,4 @@ $
   .then do table_durations
   .then do table_sort
   .then do time_relative
+  .then do check_update

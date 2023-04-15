@@ -1,9 +1,9 @@
 <ul>
   <li>
-    <time datetime='{{ site.time | date_to_rfc822 }}'>Build </time>
+    <time datetime='{{ site.time | date_to_rfc822 }}'>Site_time </time>
   </li>
   <li>{% assign pushed_at = site.github.public_repositories | where: "full_name", site.github.repository_nwo | first | map: "pushed_at" | first | date_to_rfc822 %}
-    <time datetime='{{ pushed_at }}'>Commit <code>{{ site.github.build_revision | slice: 0, 7 }}</code> </time>
+    <time datetime='{{ pushed_at }}'>Build_revision <code>{{ site.github.build_revision | slice: 0, 7 }}</code> pushed_at </time>
   </li>
   <li>GitHub {% include widgets/github_link.html text="Repository" %}</li>
   <li>Page {% include widgets/github_link.html path=page.path text="Code" %}</li>

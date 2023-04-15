@@ -6,7 +6,7 @@ dom = $(document)
 html = $ 'html'
 body = $ 'body'
 today = +new Date().setHours 0,0,0,0
-root_path = new URL("{{ '' | absolute_url }}").pathname
+github_repo_url = '{{ site.github.api_url }}/repos/{{ site.github.repository_nwo }}'
 lang = '{{ page.language | default: site.language | default: "it" }}'
 
 #
@@ -24,6 +24,14 @@ win.scroll () ->
     html.addClass 'scrolled'
   else html.removeClass 'scrolled'
   return
+
+#
+# ONLINE / OFFLINE
+# Called from BODY attribute
+# --------------------------------------
+online = -> html.addClass('online').removeClass 'offline'
+offline = -> html.addClass('offline').removeClass 'online'
+if navigator.onLine then online() else offline()
 
 # Return ISO 8601 date YYYY-MM-DD
 date_iso = (date) -> new Date(date || +new Date()).toLocaleDateString 'sv'
