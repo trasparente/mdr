@@ -13,17 +13,21 @@ check_login = (token) ->
       url: '{{ site.github.api_url }}/user'
       headers: { 'Authorization': "token #{t}" }
     get_user.done (data) ->
-      html.addClass 'logged'
+      html.removeClass('unlogged').addClass 'logged'
       localStorage.setItem 'token', t
       localStorage.setItem 'user', user = data.login
       # Get permissions
       get_repo = $.get
         url: github_repo_url
         headers: { 'Authorization': "token #{t}" }
-      get_repo.done (data) ->
-        role = if data.permissions.admin then 'admin' else 'guest'
+      get_repo.done (repo) ->
+        localStorage.setItem 'branch', repo.default_branch
+        localStorage.setItem 'parent', repo.parent?.full_name || ''
+        # Store role
+        role = if repo.permissions.admin then 'admin' else 'guest'
         html.addClass role
         localStorage.setItem 'role', role
+        # Alert for login
         if token then alert "#{user} logged as #{role}"
         return # End permission get_repo
       return # End get_user.done

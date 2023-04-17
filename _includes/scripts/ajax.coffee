@@ -2,7 +2,6 @@
 # AJAX PREFILTER
 # --------------------------------------
 $.ajaxPrefilter (options, ajaxOptions, request) ->
-
   # Check GitHub requests
   if options.url.startsWith '{{ site.github.api_url }}'
     # Proper Accept header

@@ -26,12 +26,15 @@ win.scroll () ->
   return
 
 #
-# ONLINE / OFFLINE
+# FOCUS / BLUR
 # Called from BODY attribute
 # --------------------------------------
-online = -> html.addClass('online').removeClass 'offline'
-offline = -> html.addClass('offline').removeClass 'online'
-if navigator.onLine then online() else offline()
+@focus = -> html.addClass('focus').removeClass 'blur'
+@blur = -> html.addClass('blur').removeClass 'focus'
+if document.hasFocus() then focus() else blur()
 
 # Return ISO 8601 date YYYY-MM-DD
 date_iso = (date) -> new Date(date || +new Date()).toLocaleDateString 'sv'
+
+# Get file url from data-file FORMs attribute
+url_from_data_file = (form) -> "#{github_repo_url}/contents/_data/#{form.attr 'data-file'}"

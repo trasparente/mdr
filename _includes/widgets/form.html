@@ -1,0 +1,23 @@
+{% assign form = include.form %}
+<form class='prevent {{ form.class }}'{% if form.type %} data-type='{{ form.type }}'{% endif %}{% if form.file %} data-file='{{ form.file }}'{% endif %}>
+<h3>{{ form.name | default: 'Form' }}</h3>
+{% for field in form.fields %}
+  <div data-field='{{ field.name }}'>
+  {% if field.type != 'hidden' %}<label for="{{ field.name }}">{{ field.name }}</label>{% endif %}
+  {% case field.type %}
+    {% when 'date' %}
+      <input type="date" id='{{ field.name }}' name='{{ field.name }}'{% if field.default == 'today' %} value='{{ site.time | date: "%F" }}'{% endif %}>
+    {% when 'select' %}
+      <select name="{{ field.name }}" id="{{ field.name }}">
+      {% for option in field.default %}
+        <option value="{{ option }}">{{ option }}</option>
+      {% endfor %}
+      </select>
+  {% endcase %}
+  </div>
+{% endfor %}
+  <div data-buttons>
+    <input type="submit" value='Submit'>
+    <input type="reset" value='Reset'>
+  </div>
+</form>

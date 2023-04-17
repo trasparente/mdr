@@ -1,0 +1,43 @@
+form
+  padding-left: .7em
+  border-left: 4px solid var(--border)
+  h3
+    @extend .color-muted
+  [data-field], h3
+    margin-block: .5em
+    label
+      margin-right: .3em
+  [data-buttons]
+    padding-block: .5em
+    input
+      margin-right: .5em
+
+html.ajax form
+  opacity: .5
+  filter: saturate(0)
+  pointer-events: none
+
+input, select, output
+  font-family: inherit
+  font-size: inherit
+  line-height: inherit
+  appearance: none
+  -webkit-appearance: none
+  @extend .color-yellow
+  border: 1px solid var(--border)
+  border-radius: 3px
+  background-color: var(--border)
+
+input, label, button, select
+  cursor: pointer
+  &:focus
+    outline: none
+    border: 1px solid var(--color-yellow)
+
+input[type='submit'],
+input[type='reset'],
+input[type='button'],
+button
+  @extend .link
+  &:focus
+    border-color: var(--fg)

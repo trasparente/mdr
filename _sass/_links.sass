@@ -1,10 +1,20 @@
-a
-  color: var(--link)
-  text-decoration: none
+.active-link
   &:hover
     text-decoration: underline
   &:active, &.active
     color: var(--fg)
 
-html:not(.updated) a
+a, .link
+  color: var(--link)
+  text-decoration: none
+  @extend .active-link
+
+html.behind a
   color: var(--fg-muted)
+html.offline a
+  color: var(--color-red)
+
+html
+  &.offline, &.behind
+    a
+      @extend .active-link

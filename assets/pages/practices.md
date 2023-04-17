@@ -1,5 +1,16 @@
 ---
 permalink: practices/
+form:
+  class: admin
+  type: append
+  file: practices.csv
+  fields:
+    - name: date
+      type: date
+      default: today
+    - name: serie
+      type: select
+      default: [1,2,3,4]
 ---
 Practices
 =========
@@ -17,3 +28,5 @@ Practices
 |-|-|-|
 {% for y in years %}|{{ y.name }}|{{ y.items.size }}|{% if y.name == year %}{% assign prog = y.items.size | times: 100 | divided_by: day %}{% else %}{% assign prog = y.items.size | times: 100 | divided_by: 365 %}{% endif %}<progress max="100" value="{{ prog }}"></progress>|{{ prog }}
 {% endfor %}
+
+{% include widgets/form.html form=page.form %}
