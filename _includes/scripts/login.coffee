@@ -3,6 +3,8 @@ logout = (token) ->
   localStorage.removeItem 'token'
   localStorage.removeItem 'user'
   localStorage.removeItem 'role'
+  localStorage.removeItem 'branch'
+  localStorage.removeItem 'parent'
   if token then alert 'Logged out'
   return
 
@@ -27,6 +29,9 @@ check_login = (token) ->
         role = if repo.permissions.admin then 'admin' else 'guest'
         html.addClass role
         localStorage.setItem 'role', role
+        # check parent commit if it is a Fork
+        if repo.parent?.full_name and role is 'admin' and html.attr 'data-github-fork', 'true'
+          do check_parent
         # Alert for login
         if token then alert "#{user} logged as #{role}"
         return # End permission get_repo

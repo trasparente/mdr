@@ -1,4 +1,4 @@
-name: Test
+name: Request_Pages_Build
 on:
   schedule:
     - cron: '1 0 * * *'

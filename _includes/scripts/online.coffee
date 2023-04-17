@@ -4,7 +4,9 @@
 # --------------------------------------
 @online = ->
   html.addClass('online').removeClass 'offline'
-  check_update().then -> check_login()
+  if '{{ site.github.environment }}' is 'production'
+    check_update().then -> check_login()
+  else do check_login
   return
 @offline = -> html.addClass('offline').removeClass 'online'
 # Initial call

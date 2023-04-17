@@ -11,11 +11,12 @@ html
   background-color: var(--bg)
   &:not(.unlogged) .unlogged, &:not(.logged) .logged,
   &.online .offline, &:not(.online) .online,
-  &.updated .behind, &:not(.updated) .updated,
+  &.updated .behind, &.behind .updated,
   &.focus .blur, &:not(.focus) .focus,
   &:not(.logged) .guest,
   &:not(.logged) .admin,
   &:not(.admin) .admin,
   &:not(.guest) .guest,
-  body[data-github-fork='false'] .fork
+  body:not([data-github-fork='true']) .fork,
+  body:not([data-github-environment='production']) .production-only
     @extend .hidden

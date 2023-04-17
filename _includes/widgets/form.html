@@ -13,6 +13,10 @@
         <option value="{{ option }}">{{ option }}</option>
       {% endfor %}
       </select>
+    {% when 'number' %}
+      <input type="number" id='{{ field.name }}' name='{{ field.name }}'{% if field.default %} value='{{ field.default }}'{% endif %}>
+    {% when nil %}
+      <input type="text" id='{{ field.name }}' name='{{ field.name }}'{% if field.default %} value='{{ field.default }}'{% endif %}>
   {% endcase %}
   </div>
 {% endfor %}
@@ -21,3 +25,12 @@
     <input type="reset" value='Reset'>
   </div>
 </form>
+{% capture api %}
+
+```liquid
+{% raw %}
+  {% include widgets/form.html form=page.form %}
+{% endraw %}
+```
+- `include.form`: `yml` form
+{% endcapture %}

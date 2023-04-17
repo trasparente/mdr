@@ -37,4 +37,9 @@ if document.hasFocus() then focus() else blur()
 date_iso = (date) -> new Date(date || +new Date()).toLocaleDateString 'sv'
 
 # Get file url from data-file FORMs attribute
-url_from_data_file = (form) -> "#{github_repo_url}/contents/_data/#{form.attr 'data-file'}"
+url_from_data_file = (form) ->
+  path = form.attr 'data-file'
+  # Prepend user folder if repository is forked
+  if localStorage.getItem('parent') and html.attr 'data-github-fork', 'true'
+    url = "user/{{ site.github.owner_name }}/#{ path }"
+  return "#{ github_repo_url }/contents/_data/#{url || path}"
