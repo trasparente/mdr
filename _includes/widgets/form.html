@@ -3,20 +3,20 @@
 <h3>{{ form.name | default: 'Form' }}</h3>
 {% for field in form.fields %}
   <div data-field='{{ field.name }}'>
-  {% if field.type != 'hidden' %}<label for="{{ field.name }}">{{ field.name }}</label>{% endif %}
-  {% case field.type %}
+  {% if field[1].type != 'hidden' %}<label for="{{ field[0] }}">{{ field[0] }}</label>{% endif %}
+  {% case field[1].type %}
     {% when 'date' %}
-      <input type="date" id='{{ field.name }}' name='{{ field.name }}'{% if field.default == 'today' %} value='{{ site.time | date: "%F" }}'{% endif %}>
+      <input type="date" id='{{ field[0] }}' name='{{ field[0] }}'{% if field[1].default == 'today' %} value='{{ site.time | date: "%F" }}'{% endif %}>
     {% when 'select' %}
-      <select name="{{ field.name }}" id="{{ field.name }}">
-      {% for option in field.default %}
+      <select name="{{ field[0] }}" id="{{ field[0] }}">
+      {% for option in field[1].default %}
         <option value="{{ option }}">{{ option }}</option>
       {% endfor %}
       </select>
     {% when 'number' %}
-      <input type="number" id='{{ field.name }}' name='{{ field.name }}'{% if field.default %} value='{{ field.default }}'{% endif %}>
+      <input type="number" id='{{ field[0] }}' name='{{ field[0] }}'{% if field[1].default %} value='{{ field[1].default }}'{% endif %}>
     {% when nil %}
-      <input type="text" id='{{ field.name }}' name='{{ field.name }}'{% if field.default %} value='{{ field.default }}'{% endif %}>
+      <input type="text" id='{{ field[0] }}' name='{{ field[0] }}'{% if field[1].default %} value='{{ field[1].default }}'{% endif %}>
   {% endcase %}
   </div>
 {% endfor %}

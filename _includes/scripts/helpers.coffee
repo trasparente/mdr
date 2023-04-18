@@ -31,7 +31,7 @@ win.scroll () ->
 # --------------------------------------
 @focus = -> html.addClass('focus').removeClass 'blur'
 @blur = -> html.addClass('blur').removeClass 'focus'
-if document.hasFocus() then focus() else blur()
+if document.hasFocus() then do focus else do blur
 
 # Return ISO 8601 date YYYY-MM-DD
 date_iso = (date) -> new Date(date || +new Date()).toLocaleDateString 'sv'
@@ -43,3 +43,110 @@ url_from_data_file = (form) ->
   if localStorage.getItem('parent') and html.attr 'data-github-fork', 'true'
     url = "user/{{ site.github.owner_name }}/#{ path }"
   return "#{ github_repo_url }/contents/_data/#{url || path}"
+
+get_user = (t) -> $.get
+  url: '{{ site.github.api_url }}/user'
+  headers: { 'Authorization': "token #{t}" }
+  success: (data) ->
+    html.removeClass('unlogged').addClass 'logged'
+    localStorage.setItem 'token', t
+    localStorage.setItem 'user', user = data.login
+    return
+  error: -> logout t
+
+get_repo = (user, token) -> $.get
+  url: github_repo_url
+  success: (repo) ->
+    localStorage.setItem 'branch', repo.default_branch
+    localStorage.setItem 'parent', repo.parent?.full_name || ''
+    # Store role
+    role = if repo.permissions.admin then 'admin' else 'guest'
+    html.addClass role
+    localStorage.setItem 'role', role
+    # Alert for login
+    if token then alert "#{user} logged as #{role}"
+    return
+
+# Get repository builds and check the last one
+get_builds = -> $.get
+  url: github_repo_url + '/pages/builds'
+  success: (builds) ->
+    # Compare last repository build with hardcoded jekyll deployment
+    same_sha = builds[0].commit is '{{ site.github.build_revision }}' 
+    deploy_post_build = {{ site.time | date: "%s" }} > +new Date(builds[0].created_at) / 1000
+    if builds[0].status is 'built' and same_sha and deploy_post_build
+      html.removeClass('behind').addClass 'updated'
+    else html.removeClass('updated').addClass 'behind'
+    return
+
+get_parent_commits = (builds, repo) -> $.get
+  url: "{{ site.github.api_url }}/repos/#{repo.parent?.full_name}/commits"
+  success: (commits) ->
+    [latest_date, latest_sha] = [
+      commits[0].commit.author.date
+      commits[0].sha
+    ]
+    same_sha = latest_sha is '{{ site.github.build_revision }}'
+    build_after_commit = +new Date(latest_date) / 1000 < {{ site.time | date: "%s" }}
+    if !same_sha and !build_after_commit then do sync_upstream
+    # If repository is ahead, need pull
+    else console.log 'open pull'
+    return # End check_parent success
+
+# Sync with upstream
+# https://docs.github.com/en/rest/branches/branches#sync-a-fork-branch-with-the-upstream-repository
+sync_upstream = -> $.ajax
+  url: github_repo_url + '/merge-upstream'
+  method: 'POST'
+  data: JSON.stringify {"branch": localStorage.getItem 'branch' }
+  success: (response) -> alert response.message
+
+get_file = (form, file_url, file, header, row) -> $.get file_url
+  # arguments: Object, 'error', 'Not Found'
+  error: (request, textStatus , errorThrown) ->
+    # File don't exist
+    if request.status is 404
+      save_file form, file_url, file
+    return # End get_file fail
+  success: (data) ->
+    # Decode old file
+    csv_array = Base64.decode(data.content).split '\n'
+    # Update old head
+    csv_array[0] = header
+    # append row
+    csv_array.push row
+    new_file = csv_array.join '\n'
+    save_file form, file_url, new_file
+    return # End get_file done
+
+save_file = (form, file_url, file) -> $.ajax
+  url: file_url
+  method: 'PUT'
+  data: JSON.stringify {
+    message: "Commit data content #{ form.attr 'data-file' }"
+    content: Base64.encode file
+  }
+  success: (data) ->
+    alert "Committed #{ data.content.sha }"
+    form.trigger 'reset'
+    return # End put_file
+
+# Bootstrap
+bootstrap = (token) ->
+  t = token || localStorage.getItem 'token'
+  if t
+    get_user(t).done (user) -> get_repo(user.login, token).done (repo) -> if repo.permissions.admin then get_builds().done (builds) -> if repo.fork then get_parent_commits builds, repo
+  else do logout
+  return
+
+#
+# ONLINE / OFFLINE
+# Called from BODY attribute
+# --------------------------------------
+@online = ->
+  html.addClass('online').removeClass 'offline'
+  do bootstrap
+  return
+@offline = -> html.addClass('offline').removeClass 'online'
+# Initial call
+if navigator.onLine then do online else do offline

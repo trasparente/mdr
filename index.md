@@ -5,13 +5,14 @@ form:
   type: append
   file: time.csv
   fields:
-    - name: date
+    date:
       type: date
       default: today
-    - name: category
-    - name: details
-    - name: value
+    category: true
+    details: true
+    value:
       type: number
+    duration: true
 ---
 {% include widgets/form.html form=page.form %}
 {% include widgets/table.html csv="time" category="trash" %}
