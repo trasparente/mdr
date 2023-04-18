@@ -5,10 +5,10 @@ form:
   type: append
   file: practices.csv
   fields:
-    - name: date
+    date:
       type: date
       default: today
-    - name: serie
+    serie:
       type: select
       default: [1,2,3,4]
 ---
