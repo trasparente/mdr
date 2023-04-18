@@ -40,17 +40,17 @@ date_iso = (date) -> new Date(date || +new Date()).toLocaleDateString 'sv'
 url_from_data_file = (form) ->
   path = form.attr 'data-file'
   # Prepend user folder if repository is forked
-  if localStorage.getItem('parent') and html.attr 'data-github-fork', 'true'
+  if localStorage.getItem('parent') and body.attr 'data-github-fork', 'true'
     url = "user/{{ site.github.owner_name }}/#{ path }"
   return "#{ github_repo_url }/contents/_data/#{url || path}"
 
 get_user = (t) -> $.get
   url: '{{ site.github.api_url }}/user'
   headers: { 'Authorization': "token #{t}" }
-  success: (data) ->
+  success: (user) ->
     html.removeClass('unlogged').addClass 'logged'
     localStorage.setItem 'token', t
-    localStorage.setItem 'user', user = data.login
+    localStorage.setItem 'user', user.login
     return
   error: -> logout t
 
@@ -64,7 +64,9 @@ get_repo = (user, token) -> $.get
     html.addClass role
     localStorage.setItem 'role', role
     # Alert for login
-    if token then alert "#{user} logged as #{role}"
+    message = "#{ user.login } logged as #{ role }"
+    $('[href="#logout"]').attr 'title', message
+    if token then alert message
     return
 
 # Get repository builds and check the last one
@@ -74,23 +76,19 @@ get_builds = -> $.get
     # Compare last repository build with hardcoded jekyll deployment
     same_sha = builds[0].commit is '{{ site.github.build_revision }}' 
     deploy_post_build = {{ site.time | date: "%s" }} > +new Date(builds[0].created_at) / 1000
-    if builds[0].status is 'built' and same_sha and deploy_post_build
+    built = builds[0].status is 'built'
+    development = '{{ site.github.environment }}' is 'development'
+    if (built and same_sha and deploy_post_build) or development
       html.removeClass('behind').addClass 'updated'
     else html.removeClass('updated').addClass 'behind'
     return
 
 get_parent_commits = (builds, repo) -> $.get
-  url: "{{ site.github.api_url }}/repos/#{repo.parent?.full_name}/commits"
+  url: "{{ site.github.api_url }}/repos/#{ repo.parent?.full_name }/commits"
   success: (commits) ->
-    [latest_date, latest_sha] = [
-      commits[0].commit.author.date
-      commits[0].sha
-    ]
-    same_sha = latest_sha is '{{ site.github.build_revision }}'
-    build_after_commit = +new Date(latest_date) / 1000 < {{ site.time | date: "%s" }}
-    if !same_sha and !build_after_commit then do sync_upstream
-    # If repository is ahead, need pull
-    else console.log 'open pull'
+    same_sha = commits[0].sha is '{{ site.github.build_revision }}'
+    build_after_commit = +new Date(commits[0].commit.author.date) / 1000 < {{ site.time | date: "%s" }}
+    if !same_sha and !build_after_commit then do sync_upstream else console.log 'open pull'
     return # End check_parent success
 
 # Sync with upstream
@@ -135,7 +133,7 @@ save_file = (form, file_url, file) -> $.ajax
 bootstrap = (token) ->
   t = token || localStorage.getItem 'token'
   if t
-    get_user(t).done (user) -> get_repo(user.login, token).done (repo) -> if repo.permissions.admin then get_builds().done (builds) -> if repo.fork then get_parent_commits builds, repo
+    get_user(t).done (user) -> get_repo(user, token).done (repo) -> if repo.permissions.admin then get_builds().done (builds) -> if repo.fork then get_parent_commits builds, repo
   else do logout
   return
 
