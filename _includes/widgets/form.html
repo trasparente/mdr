@@ -17,6 +17,14 @@
       <input type="number" id='{{ field[0] }}' name='{{ field[0] }}'{% if field[1].default %} value='{{ field[1].default }}'{% endif %}>
     {% when nil %}
       <input type="text" id='{{ field[0] }}' name='{{ field[0] }}'{% if field[1].default %} value='{{ field[1].default }}'{% endif %}>
+    {% when 'ref' %}
+      {% assign csv = field[1].csv %}
+      {% assign options = site.data[csv] %}
+      <select name="{{ field[0] }}" id="{{ field[0] }}">
+      {% for option in options %}{% assign property = field[1].property %}{% assign value = option[property] %}
+        <option value="{{ value }}">{{ value }}</option>
+      {% endfor %}
+      </select>
   {% endcase %}
   </div>
 {% endfor %}

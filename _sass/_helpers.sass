@@ -18,5 +18,6 @@ html
   &:not(.admin) .admin,
   &:not(.guest) .guest,
   body:not([data-github-fork='true']) .fork,
-  body:not([data-github-environment='production']) .production-only
+  body:not([data-github-environment='production']) .production-only,
+  .only-child:not(:only-child)
     @extend .hidden

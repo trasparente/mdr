@@ -9,6 +9,7 @@
     </tr>
   </thead>
   <tbody>
+    <tr class='only-child'><td>No data</td></tr>
   {% for row in csv %}
     {% if include.category and include.category contains row.category %}
     <tr data-row='{{ forloop.index }}'>{% for cell in row %}

@@ -1,8 +1,18 @@
 ---
 permalink: repos/
+form:
+  type: append
+  class: admin
+  file: filter.csv
+  fields:
+    briefing:
+      type: ref
+      csv: time
+      property: date
 ---
 Repos
 =====
+{% include widgets/form.html form=page.form %}
 {% assign repos = site.github.public_repositories | sort: 'pushed_at' | reverse %}
 <table>
 <thead><tr><th>Name</th><th>Pushed</th><th>Created</th><th>URL</th><th>HTML</th></tr></thead><tbody>{% for repo in repos %}
