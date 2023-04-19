@@ -5,7 +5,7 @@
 $('form[data-type][data-file$=".csv"]').on 'submit', ->
   form = $ @
   form.find(':input').blur()
-  file_name = form.attr 'data-file'
+  file_url = url_from_data_file form
   type = form.attr 'data-type'
   serialized = form.serializeArray()
   header = serialized.map((i) -> i.name).join ','
@@ -13,7 +13,6 @@ $('form[data-type][data-file$=".csv"]').on 'submit', ->
   file = [header, row].join '\n'
   switch type
     when 'append'
-      file_url = url_from_data_file form
       get_file form, file_url, file, header, row
     else
       console.log type

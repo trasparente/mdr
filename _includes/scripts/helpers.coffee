@@ -88,7 +88,9 @@ get_parent_commits = (builds, repo) -> $.get
   success: (commits) ->
     same_sha = commits[0].sha is '{{ site.github.build_revision }}'
     build_after_commit = +new Date(commits[0].commit.author.date) / 1000 < {{ site.time | date: "%s" }}
-    if !same_sha and !build_after_commit then do sync_upstream else console.log 'open pull'
+    if !same_sha and !build_after_commit
+      sync_upstream().done -> do get_builds
+    else console.log 'open pull'
     return # End check_parent success
 
 # Sync with upstream
@@ -99,7 +101,8 @@ sync_upstream = -> $.ajax
   data: JSON.stringify {"branch": localStorage.getItem 'branch' }
   success: (response) -> alert response.message
 
-get_file = (form, file_url, file, header, row) -> $.get file_url
+get_file = (form, file_url, file, header, row) -> $.get
+  url: file_url
   # arguments: Object, 'error', 'Not Found'
   error: (request, textStatus , errorThrown) ->
     # File don't exist
