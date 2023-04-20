@@ -9,12 +9,11 @@ a, .link
   text-decoration: none
   @extend .active-link
 
-html.behind a
-  color: var(--fg-muted)
-html.offline a
-  color: var(--color-red)
+html.offline
+  a, .link
+    color: var(--color-red)
 
 html
-  &.offline, &.behind
+  &.offline
     a
       @extend .active-link

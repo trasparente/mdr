@@ -9,22 +9,9 @@
   data-github-fork='{{ site.github.public_repositories | where: 'full_name', site.github.repository_nwo | first | map: 'fork' | first }}'
   data-github-environment = '{{ site.github.environment }}'
 >
-    <header>{%- include page/header.html -%}</header>
-    {%- include page/navigation.html -%}
-    <main>{{ content }}</main>
-    <footer>{%- include page/footer.html -%}</footer>
-    <div id='spy'>
-    <div class='fork'>fork</div>
-    <div class='blur'>blur</div>
-    <div class='focus'>focus</div>
-    <div class='online'>online</div>
-    <div class='offline'>offline</div>
-    <div class='updated'>updated</div>
-    <div class='behind'>behind</div>
-    <div class='logged'>logged</div>
-    <div class='unlogged'>unlogged</div>
-    <div class='guest'>guest</div>
-    <div class='admin'>admin</div>
-    </div>
+<header>{%- include page/header.html -%}</header>
+{%- include page/navigation.html -%}
+<main>{{ content }}</main>
+<footer>{%- include page/footer.html -%}</footer>
 </body>
 </html>

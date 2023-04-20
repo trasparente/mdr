@@ -9,7 +9,7 @@ $('form[data-type][data-file$=".csv"]').on 'submit', ->
   type = form.attr 'data-type'
   serialized = form.serializeArray()
   header = serialized.map((i) -> i.name).join ','
-  row = serialized.map((i)-> i.value).join ','
+  row = serialized.map((i) -> i.value).join ','
   file = [header, row].join '\n'
   switch type
     when 'append'

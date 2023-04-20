@@ -40,7 +40,7 @@ date_iso = (date) -> new Date(date || +new Date()).toLocaleDateString 'sv'
 url_from_data_file = (form) ->
   path = form.attr 'data-file'
   # Prepend user folder if repository is forked
-  if localStorage.getItem('parent') and body.attr 'data-github-fork', 'true'
+  if localStorage.getItem('parent') and body.attr('data-github-fork') is 'true'
     url = "user/{{ site.github.owner_name }}/#{ path }"
   return "#{ github_repo_url }/contents/_data/#{url || path}"
 
@@ -90,7 +90,7 @@ get_parent_commits = (builds, repo) -> $.get
     build_after_commit = +new Date(commits[0].commit.author.date) / 1000 < {{ site.time | date: "%s" }}
     if !same_sha and !build_after_commit
       sync_upstream().done -> do get_builds
-    else console.log 'open pull'
+    else console.log same_sha, build_after_commit
     return # End check_parent success
 
 # Sync with upstream
