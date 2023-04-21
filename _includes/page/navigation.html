@@ -4,18 +4,19 @@
       {%- assign html_pages = site.html_pages -%}
       {% for link in html_pages %}{% unless link.path contains 'assets/hidden/' %}<a href="{{ link.url | absolute_url }}"{% if page.url == link.url %} class="active"{% endif %}>{{ link.title | default: link.name }}</a>{% endunless %}{% endfor %}
       <!-- COLLECTIONS -->
-      {%- assign sorted_collections = site.collections -%}
-      {%- for collection in sorted_collections-%}{% if collection.docs.size > 0 %}
-      {%- assign collection_docs = collection.docs -%}
-      <details>
-        <summary{% if page.collection == collection.label %} class='active'{% endif %}>{{ collection.title | default: collection.label }}</summary>
-        <div>
-          {% for link in collection_docs reversed %}<a href="{{ link.url | absolute_url }}"{% if page.url == link.url %} class="active"{% endif %}>{{ link.title | default: link.path }}</a>
-          {% endfor %}{% endif %}
-        </div>
-      </details>{%- endfor -%}
+      {% assign sorted_collections = site.collections %}
+      {% for collection in sorted_collections %}{% if collection.docs.size > 0 %}
+      <a href='{{ collection.docs[0].url }}'{% if page.collection == collection.label %} class='active'{% endif %}>{{ collection.title | default: collection.label }}</a>
+      {% endif %}{% endfor %}
     </div>
     <div>
       {% include widgets/login.html %}
     </div>
 </nav>
+{% if page.collection %}{% assign col = site.collections | where: label, page.collection | first %}
+<nav>
+  <div>
+    {% for d in col.docs %}<a href="{{ d.url | absolute_url }}"{% if page.url == d.url %} class="active"{% endif %}>{{ d.title }}</a>{% endfor %}
+  </div>
+</nav>
+{% endif %}

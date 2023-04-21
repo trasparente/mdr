@@ -1,5 +1,4 @@
 ---
-permalink: repos/
 form:
   type: append
   class: admin

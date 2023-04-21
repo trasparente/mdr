@@ -8,6 +8,7 @@ body = $ 'body'
 today = +new Date().setHours 0,0,0,0
 github_repo_url = '{{ site.github.api_url }}/repos/{{ site.github.repository_nwo }}'
 lang = '{{ page.language | default: site.language | default: "it" }}'
+if $('meta[name="remote_theme"]').attr 'content' then html.addClass 'remote-theme'
 
 #
 # PREVENT-DEFAULT CLASS

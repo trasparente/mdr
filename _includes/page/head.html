@@ -7,6 +7,12 @@
 
   <title>{{ site.github.project_title | upcase }} | {{ page.title }}</title>
 
+  {% if site.remote_theme %}<!-- REMOTE THEME -->
+  <meta name='remote_theme' content='{{ site.remote_theme }}'>
+  <meta name='remote_theme_nwo' content='{{ site.remote_theme | split: "@" | first }}'>
+  <meta name='remote_theme_branch' content='{{ site.remote_theme | split: "@" | last }}'>
+  {% endif %}
+
   {%- include page/favicon.html -%}
 
   <!-- CSS -->

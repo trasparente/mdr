@@ -11,7 +11,7 @@ html
   background-color: var(--bg)
   &:not(.unlogged) .unlogged, &:not(.logged) .logged,
   &.online .offline, &:not(.online) .online,
-  &.updated .behind, &.behind .updated,
+  &:not(.behind) .behind, &:not(.updated) .updated,
   &.focus .blur, &:not(.focus) .focus,
   &:not(.logged) .guest,
   &:not(.logged) .admin,
@@ -19,5 +19,6 @@ html
   &:not(.guest) .guest,
   body:not([data-github-fork='true']) .fork,
   body:not([data-github-environment='production']) .production-only,
-  .only-child:not(:only-child)
+  .only-child:not(:only-child),
+  &:not(.remote-theme) .remote-theme
     @extend .hidden

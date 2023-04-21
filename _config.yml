@@ -1,2 +1,17 @@
 timezone: Europe/Rome
 permalink: pretty
+
+# DEFAULTS
+defaults:
+  - scope:
+      path: ''
+    values:
+      layout: default
+
+# COLLECTIONS
+collections:
+  docs:
+    title: Docs
+    output: true
+  posts:
+    title: Posts
