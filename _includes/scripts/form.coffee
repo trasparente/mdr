@@ -13,7 +13,7 @@ $('form[data-type][data-file$=".csv"]').on 'submit', ->
   file = [header, row].join '\n'
   switch type
     when 'append'
-      get_file form, file_url, file, header, row
+      get_csv_file form, file_url, file, header, row
     else
       console.log type
   return # End form submit

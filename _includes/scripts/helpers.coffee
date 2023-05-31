@@ -89,9 +89,12 @@ get_parent_commits = (builds, repo) -> $.get
   success: (commits) ->
     same_sha = commits[0].sha is '{{ site.github.build_revision }}'
     build_after_commit = +new Date(commits[0].commit.author.date) / 1000 < {{ site.time | date: "%s" }}
-    if !same_sha and !build_after_commit
-      sync_upstream().done -> do get_builds
-    else console.log same_sha, build_after_commit
+    switch [same_sha, build_after_commit]
+      when [false, false]
+        sync_upstream().done -> do get_builds
+      when [false, true]
+        console.log 'could PR'
+      else console.log same_sha, build_after_commit
     return # End check_parent success
 
 # Sync with upstream
@@ -102,14 +105,14 @@ sync_upstream = -> $.ajax
   data: JSON.stringify {"branch": localStorage.getItem 'branch' }
   success: (response) -> alert response.message
 
-get_file = (form, file_url, file, header, row) -> $.get
+get_csv_file = (form, file_url, file, header, row) -> $.get
   url: file_url
   # arguments: Object, 'error', 'Not Found'
   error: (request, textStatus , errorThrown) ->
     # File don't exist
     if request.status is 404
       save_file form, file_url, file
-    return # End get_file fail
+    return # End get_csv_file fail
   success: (data) ->
     # Decode old file
     csv_array = Base64.decode(data.content).split '\n'
@@ -119,7 +122,7 @@ get_file = (form, file_url, file, header, row) -> $.get
     csv_array.push row
     new_file = csv_array.join '\n'
     save_file form, file_url, new_file
-    return # End get_file done
+    return # End get_csv_file done
 
 save_file = (form, file_url, file) -> $.ajax
   url: file_url
@@ -129,8 +132,9 @@ save_file = (form, file_url, file) -> $.ajax
     content: Base64.encode file
   }
   success: (data) ->
-    alert "Committed #{ data.content.sha }"
     form.trigger 'reset'
+    html.removeClass('updated').addClass 'behind'
+    alert "Committed #{ data.content.sha }"
     return # End put_file
 
 # Bootstrap
