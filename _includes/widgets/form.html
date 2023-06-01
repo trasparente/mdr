@@ -21,7 +21,8 @@
       {% assign csv = field[1].csv %}
       {% assign options = site.data[csv] %}
       <select name="{{ field[0] }}" id="{{ field[0] }}">
-      {% for option in options %}{% assign property = field[1].property %}{% assign value = option[property] %}
+      {% assign property = field[1].property %}
+      {% for option in options %}{% assign value = option[property] %}
         <option value="{{ value }}">{{ value }}</option>
       {% endfor %}
       </select>

@@ -89,10 +89,10 @@ get_parent_commits = (builds, repo) -> $.get
   success: (commits) ->
     same_sha = commits[0].sha is '{{ site.github.build_revision }}'
     build_after_commit = +new Date(commits[0].commit.author.date) / 1000 < {{ site.time | date: "%s" }}
-    switch [same_sha, build_after_commit]
-      when [false, false]
+    switch true
+      when !same_sha and !build_after_commit
         sync_upstream().done -> do get_builds
-      when [false, true]
+      when !same_sha and build_after_commit
         console.log 'could PR'
       else console.log same_sha, build_after_commit
     return # End check_parent success
@@ -121,13 +121,17 @@ get_csv_file = (form, file_url, file, header, row) -> $.get
     # append row
     csv_array.push row
     new_file = csv_array.join '\n'
-    save_file form, file_url, new_file
+    save_file form, file_url, new_file, data.sha
     return # End get_csv_file done
 
-save_file = (form, file_url, file) -> $.ajax
+save_file = (form, file_url, file, sha) -> $.ajax
   url: file_url
   method: 'PUT'
-  data: JSON.stringify {
+  data: if sha then JSON.stringify {
+    message: "Commit data content #{ form.attr 'data-file' }"
+    sha: sha
+    content: Base64.encode file
+  } else JSON.stringify {
     message: "Commit data content #{ form.attr 'data-file' }"
     content: Base64.encode file
   }
@@ -135,7 +139,7 @@ save_file = (form, file_url, file) -> $.ajax
     form.trigger 'reset'
     html.removeClass('updated').addClass 'behind'
     alert "Committed #{ data.content.sha }"
-    return # End put_file
+    return # End end_commit
 
 # Bootstrap
 bootstrap = (token) ->
