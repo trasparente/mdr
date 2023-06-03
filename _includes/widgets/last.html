@@ -1,1 +1,1 @@
-{% assign condition = 'item.' | append: include.field | append: ' == ' | append: include.value %}{% assign last = include.data | where: include.field, include.value | last | map: 'date' %}<time datetime='{{last}}'>{{ include.text }}</time>
+{% assign condition = 'item.' | append: include.field | append: ' == ' | append: include.value %}{% assign last = include.data | where: include.field, include.value | last | map: 'date' %}<time datetime='{{ last }}'>{{ include.text }}</time>

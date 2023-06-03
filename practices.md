@@ -29,12 +29,16 @@ Practices
 {% for y in years %}|{{ y.name }}|{{ y.items.size }}|{% if y.name == year %}{% assign prog = y.items.size | times: 100 | divided_by: day %}{% else %}{% assign prog = y.items.size | times: 100 | divided_by: 365 %}{% endif %}<progress max="100" value="{{ prog }}"></progress>|{{ prog }}
 {% endfor %}
 
-- {% include widgets/last.html data=site.data.practices field='serie' value='1' text='First serie: ' %}
-- {% include widgets/last.html data=site.data.practices field='serie' value='2' text='Second serie: ' %}
+||Practices|First|Last
+|--:|--:|--:|--:|
+|First|{{ site.data.practices | where: "serie", 1 | size }}|{% include widgets/first.html data=site.data.practices field='serie' value='1' %}|{% include widgets/last.html data=site.data.practices field='serie' value='1' %}
+|Second|{{ site.data.practices | where: "serie", 2 | size }}|{% include widgets/first.html data=site.data.practices field='serie' value='2' %}|{% include widgets/last.html data=site.data.practices field='serie' value='2' %}
+|Total|{{ site.data.practices.size }}
+
 <style>
 time>span{color:var(--fg-muted)}
 [data-serie='2']{color: var(--color-red)}
 [data-serie='1']{color: var(--color-green)}
-code:not([data-serie]){opacity: .3}
+main code:not([data-serie]){opacity: .3}
 </style>
 {% include widgets/form.html form=page.form %}

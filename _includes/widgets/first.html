@@ -1,0 +1,1 @@
+{% assign condition = 'item.' | append: include.field | append: ' == ' | append: include.value %}{% assign first = include.data | where: include.field, include.value | first | map: 'date' %}<time datetime='{{ first }}'>{{ include.text }}</time>

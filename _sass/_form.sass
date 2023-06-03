@@ -34,6 +34,9 @@ input, label, button, select
   &:focus
     outline: none
     border: 1px solid var(--color-yellow)
+  &[disabled]
+    cursor: not-allowed
+    color: var(--fg-muted)
 
 input[type='submit'],
 input[type='reset'],
@@ -50,5 +53,6 @@ button
 input[type=number]
   @extend .color-cyan
   -moz-appearance: textfield !important
+  text-align: right
   &:focus-visible
     border: 1px solid var(--color-cyan)

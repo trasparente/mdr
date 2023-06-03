@@ -1,6 +1,6 @@
 {% assign form = include.form %}
 <form class='prevent {{ form.class }}'{% if form.type %} data-type='{{ form.type }}'{% endif %}{% if form.file %} data-file='{{ form.file }}'{% endif %}>
-<h3>{{ form.name | default: 'Form' }}</h3>
+<h3>{{ form.name | default: form.file | default: 'Form' }}</h3>
 {% for field in form.fields %}
   <div data-field='{{ field.name }}'>
   {% if field[1].type != 'hidden' %}<label for="{{ field[0] }}">{{ field[0] }}</label>{% endif %}
@@ -19,13 +19,33 @@
       <input type="text" id='{{ field[0] }}' name='{{ field[0] }}'{% if field[1].default %} value='{{ field[1].default }}'{% endif %}>
     {% when 'ref' %}
       {% assign csv = field[1].csv %}
+      {% assign watch = field[1].watch %}
       {% assign options = site.data[csv] %}
-      <select name="{{ field[0] }}" id="{{ field[0] }}">
       {% assign property = field[1].property %}
-      {% for option in options %}{% assign value = option[property] %}
-        <option value="{{ value }}">{{ value }}</option>
+      <select name="{{ field[0] }}" id="{{ field[0] }}" data-watch='{{ watch }}'>
+      {% for option in options %}{% assign name = option[property] %}
+        <option value="{{ option['value'] }}">{{ name }}</option>
       {% endfor %}
       </select>
+    {% when 'pick' %}
+      {%- assign csv = field[1].csv -%}
+      {%- assign options = site.data[csv] -%}
+      {%- assign property = field[1].property -%}
+      <input type="text" id='{{ field[0] }}' name='{{ field[0] }}' value='{{ options | sample | map: property }}' title='picked {{ property }} from {{ csv }}' disabled>
+    {% when 'roll' %}
+      {%- assign dice = field[1].dice | default: 6 -%}
+      {%- assign roll = field[1].roll | default: 1 -%}
+      {%- assign mod = field[1].mod | default: 0 -%}
+      {%- assign array = '' | split: '' -%}
+      {%- assign total = 0 -%}
+      {% for d in (1..dice) %}{% assign array = array | push: d %}{% endfor %}
+      <input
+        type="number" id='{{ field[0] }}' name='{{ field[0] }}'
+        value='{% assign rolls = "" | split: "" %}{% for r in (1..roll) %}{% assign effimer = array %}{% assign sample = effimer | sample %}{% assign rolls = rolls | push: sample %}{% endfor %}{% for r in rolls %}{% assign total = total | plus: r %}{% endfor %}{% assign total = total | plus: mod %}{{ total }}'
+        title='Rolled {{ roll }}d{{ dice }}: {% include widgets/reference.html csv="agency" value=total %} {{ rolls | inspect }}'
+        max='{{ roll | times: dice }}'
+        min='{{ roll }}'
+        disabled>
   {% endcase %}
   </div>
 {% endfor %}
@@ -36,10 +56,43 @@
 </form>
 {% capture api %}
 
+Render a functional form from a `yml` object in the page front matter
+
 ```liquid
 {% raw %}
   {% include widgets/form.html form=page.form %}
 {% endraw %}
 ```
 - `include.form`: `yml` form
+
+Example form in the page front matter
+
+```yml
+form:
+  class: admin
+  type: append
+  file: time.csv
+  fields:
+    text: true
+    today_date:
+      type: date*
+      default: today
+    number:
+      type: number
+    select:
+      type: select*
+      default: [1,2,3,4]
+    reference:
+      type: ref*
+      csv: time*
+      property: date*
+    pick:
+      type: pick*
+      csv: stones*
+      property: dead*
+    roll:
+      type: roll*
+      roll: 3*
+      dice: 6*
+```
 {% endcapture %}

@@ -1,4 +1,5 @@
 ---
+title: kramdown
 ---
 Kramdown
 ========

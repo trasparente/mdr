@@ -1,0 +1,1 @@
+{% assign condition = 'item.value contains ' | append: include.value %}{% assign reference = site.data[include.csv] | where_exp: 'item', condition | first | map: 'name' %}{{ reference }}

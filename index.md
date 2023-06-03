@@ -6,16 +6,21 @@ form:
   file: cluster.csv
   fields:
     name:
-      type: load
-      url: stonelore/stone/_data/stones.csv
+      type: pick
+      csv: stones
+      property: dead
     x:
       type: roll
-      dice: 3d6
+      roll: 3
+      dice: 6
     y:
       type: roll
-      dice: 3d6
+      roll: 3
+      dice: 6
     z:
       type: roll
-      dice: 3d6
+      roll: 3
+      dice: 6
 ---
+{{site.collections|map:'docs'|size}}
 {% include widgets/form.html form=page.form %}

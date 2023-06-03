@@ -18,8 +18,13 @@ $('form[data-type][data-file$=".csv"]').on 'submit', ->
       console.log type
   return # End form submit
 
+#
+# Form RESET
+# --------------------------------
+
 $('form').on 'reset', ->
   form = $ @
   form.find(':input').blur()
+  # Update focus class
   if document.hasFocus() then do focus
   return # End form reset
