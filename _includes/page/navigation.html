@@ -6,7 +6,7 @@
       <!-- COLLECTIONS -->
       {% assign sorted_collections = site.collections %}
       {% for collection in sorted_collections %}{% if collection.docs.size > 0 %}
-      <a href='{{ collection.docs[0].url }}'{% if page.collection == collection.label %} class='active'{% endif %}>{{ collection.title | default: collection.label }}</a>
+      <a href='{{ collection.docs[0].url | absolute_url }}'{% if page.collection == collection.label %} class='active'{% endif %}>{{ collection.title | default: collection.label }}</a>
       {% endif %}{% endfor %}
     </div>
     <div>
