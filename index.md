@@ -22,5 +22,4 @@ form:
       roll: 3
       dice: 6
 ---
-{{site.collections|map:'docs'|map:'url'|inspect}}
 {% include widgets/form.html form=page.form %}
