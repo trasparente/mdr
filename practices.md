@@ -41,4 +41,4 @@ time>span{color:var(--fg-muted)}
 [data-serie='1']{color: var(--color-green)}
 main code:not([data-serie]){opacity: .3}
 </style>
-{% include widgets/form.html form=page.form %}
+{% include widgets/form.html %}

@@ -138,7 +138,7 @@ save_file = (form, file_url, file, sha) -> $.ajax
   success: (data) ->
     form.trigger 'reset'
     html.removeClass('updated').addClass 'behind'
-    alert "Committed #{ data.content.sha }"
+    alert "Committed #{ data.content.path } as #{ data.commit.sha.slice 0, 7 }"
     return # End end_commit
 
 # Bootstrap

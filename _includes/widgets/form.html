@@ -1,4 +1,4 @@
-{% assign form = include.form %}
+{% assign form = include.form | default: page.form %}
 <form class='prevent {{ form.class }}'{% if form.type %} data-type='{{ form.type }}'{% endif %}{% if form.file %} data-file='{{ form.file }}'{% endif %}>
 <h3>{{ form.name | default: form.file | default: 'Form' }}</h3>
 {% for field in form.fields %}
@@ -6,7 +6,8 @@
   {% if field[1].type != 'hidden' %}<label for="{{ field[0] }}">{{ field[0] }}</label>{% endif %}
   {% case field[1].type %}
     {% when 'date' %}
-      <input type="date" id='{{ field[0] }}' name='{{ field[0] }}'{% if field[1].default == 'today' %} value='{{ site.time | date: "%F" }}'{% endif %}>
+      <input type="date" id='{{ field[0] }}' name='{{ field[0] }}'
+        {% if field[1].default == 'today' %} value='{{ site.time | date: "%F" }}'{% endif %}>
     {% when 'select' %}
       <select name="{{ field[0] }}" id="{{ field[0] }}">
       {% for option in field[1].default %}
@@ -14,15 +15,18 @@
       {% endfor %}
       </select>
     {% when 'number' %}
-      <input type="number" id='{{ field[0] }}' name='{{ field[0] }}'{% if field[1].default %} value='{{ field[1].default }}'{% endif %}>
+      <input type="number" id='{{ field[0] }}' name='{{ field[0] }}' step='any'
+        {% if field[1].default %} value='{{ field[1].default }}'{% endif %}>
     {% when nil %}
-      <input type="text" id='{{ field[0] }}' name='{{ field[0] }}'{% if field[1].default %} value='{{ field[1].default }}'{% endif %}>
+      <input type="text" id='{{ field[0] }}' name='{{ field[0] }}'
+        {% if field[1].default %} value='{{ field[1].default }}'{% endif %}>
     {% when 'ref' %}
       {% assign csv = field[1].csv %}
       {% assign watch = field[1].watch %}
       {% assign options = site.data[csv] %}
       {% assign property = field[1].property %}
-      <select name="{{ field[0] }}" id="{{ field[0] }}" data-watch='{{ watch }}'>
+      <select name="{{ field[0] }}" id="{{ field[0] }}"
+        data-watch='{{ watch }}'>
       {% for option in options %}{% assign name = option[property] %}
         <option value="{{ option['value'] }}">{{ name }}</option>
       {% endfor %}
@@ -31,7 +35,10 @@
       {%- assign csv = field[1].csv -%}
       {%- assign options = site.data[csv] -%}
       {%- assign property = field[1].property -%}
-      <input type="text" id='{{ field[0] }}' name='{{ field[0] }}' value='{{ options | sample | map: property }}' title='picked {{ property }} from {{ csv }}' disabled>
+      <input
+        type="text" id='{{ field[0] }}' name='{{ field[0] }}'
+        value='{{ options | sample | map: property }}'
+        title='picked {{ property }} from {{ csv }}' disabled>
     {% when 'roll' %}
       {%- assign dice = field[1].dice | default: 6 -%}
       {%- assign roll = field[1].roll | default: 1 -%}
@@ -45,7 +52,7 @@
         title='Rolled {{ roll }}d{{ dice }}: {% include widgets/reference.html csv="agency" value=total %} {{ rolls | inspect }}'
         max='{{ roll | times: dice }}'
         min='{{ roll }}'
-        disabled>
+        {% if field[1].hidden %}hidden{% endif %} disabled>
   {% endcase %}
   </div>
 {% endfor %}

@@ -22,4 +22,4 @@ form:
       roll: 3
       dice: 6
 ---
-{% include widgets/form.html form=page.form %}
+{% include widgets/form.html %}

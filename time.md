@@ -18,4 +18,4 @@ form:
 {% include widgets/table.html csv="time" category="bill" limit="4" %}
 {% include widgets/table.html csv="time" category="yaris, kangoo, citroen" %}
 {% include widgets/table.html csv="time" category="briefing" limit="4" %}
-{% include widgets/form.html form=page.form %}
+{% include widgets/form.html %}
