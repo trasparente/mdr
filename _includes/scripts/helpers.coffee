@@ -115,7 +115,9 @@ get_csv_file = (form, file_url, file, header, row) -> $.get
     return # End get_csv_file fail
   success: (data) ->
     # Decode old file
-    csv_array = Base64.decode(data.content).split '\n'
+    csv_array = Base64.decode data.content
+      .split '\n'
+      .filter Boolean
     # Update old head
     csv_array[0] = header
     # append row
