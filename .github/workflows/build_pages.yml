@@ -1,11 +1,13 @@
 name: Request_Pages_Build
 on:
   schedule:
+    # Array: 'minute hour day month week'
     - cron: '1 0 * * *'
 jobs:
   build_pages:
     runs-on: ubuntu-latest
     steps:
+      # Array: use GitHub CLI to request a build
       - run: gh api -X POST repos/${{ github.repository }}/pages/builds
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

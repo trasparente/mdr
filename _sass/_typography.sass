@@ -10,3 +10,13 @@ p, span, code, li, small, q, cite, time, blockquote
 .number
   text-align: right
   @extend .color-cyan
+
+// Blockquotes
+blockquote
+  margin: 1em 0
+  padding: .5em .7em
+  border-left: 4px solid var(--border)
+  & > p
+    margin: 0
+  &.red
+    border-color: var(--color-red)

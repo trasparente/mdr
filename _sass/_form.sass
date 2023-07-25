@@ -1,9 +1,10 @@
 form
-  margin-block: .5em
-  padding-left: .7em
+  margin: .5em 0
+  padding: 0 .7em
   border-left: 4px solid var(--border)
   h3
-    @extend .color-muted
+    margin-top: #{nth($headings-margins, 3)}em
+    @extend .color-magenta
   [data-field]
     margin-block: .5em
     label

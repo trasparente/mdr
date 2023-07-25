@@ -1,9 +1,13 @@
 {% assign form = include.form | default: page.form %}
-<form class='prevent {{ form.class }}'{% if form.type %} data-type='{{ form.type }}'{% endif %}{% if form.file %} data-file='{{ form.file }}'{% endif %}>
-<h3>{{ form.name | default: form.file | default: 'Form' }}</h3>
+{% if form.file == nil %}> Missing `form.file` for `form` widget
+{:.red}{% else %}
+{% assign class = form.class | default: 'admin' %}
+{% assign extension = form.file | split: '.' | last %}
+<form class='prevent {{ class }}' data-file='{{ form.file }}'>
+<h3>{{ form.name | default: form.file | default: 'Form' | capitalize }}</h3>
 {% for field in form.fields %}
   <div data-field='{{ field.name }}'>
-  {% if field[1].type != 'hidden' %}<label for="{{ field[0] }}">{{ field[0] }}</label>{% endif %}
+  {% if field[1].type != 'hidden' %}<label for="{{ field[0] }}">{{ field[0] | capitalize }}</label>{% endif %}
   {% case field[1].type %}
     {% when 'date' %}
       <input type="date" id='{{ field[0] }}' name='{{ field[0] }}'
@@ -17,7 +21,7 @@
     {% when 'number' %}
       <input type="number" id='{{ field[0] }}' name='{{ field[0] }}' step='any'
         {% if field[1].default %} value='{{ field[1].default }}'{% endif %}>
-    {% when nil %}
+    {% when 'text' or nil %}
       <input type="text" id='{{ field[0] }}' name='{{ field[0] }}'
         {% if field[1].default %} value='{{ field[1].default }}'{% endif %}>
     {% when 'ref' %}
@@ -49,10 +53,12 @@
       <input
         type="number" id='{{ field[0] }}' name='{{ field[0] }}'
         value='{% assign rolls = "" | split: "" %}{% for r in (1..roll) %}{% assign effimer = array %}{% assign sample = effimer | sample %}{% assign rolls = rolls | push: sample %}{% endfor %}{% for r in rolls %}{% assign total = total | plus: r %}{% endfor %}{% assign total = total | plus: mod %}{{ total }}'
-        title='Rolled {{ roll }}d{{ dice }}: {% include widgets/reference.html csv="agency" value=total %} {{ rolls | inspect }}'
+        title='Rolled {{ roll }}d{{ dice }}{% if mod != 0 %}{% if mod > 0 %}+{% endif %}{{ mod }}{% endif %}: {% include widgets/reference.html csv="agency" value=total %} {{ rolls | inspect }}'
         max='{{ roll | times: dice }}'
         min='{{ roll }}'
         {% if field[1].hidden %}hidden{% endif %} disabled>
+    {% else %}
+      {{ field[1] | inspect }}
   {% endcase %}
   </div>
 {% endfor %}
@@ -61,14 +67,12 @@
     <input type="reset" value='Reset'>
   </div>
 </form>
+{% endif %}
 {% capture api %}
-
 Render a functional form from a `yml` object in the page front matter
 
 ```liquid
-{% raw %}
-  {% include widgets/form.html form=page.form %}
-{% endraw %}
+{% raw %}{% include widgets/form.html form=page.form %}{% endraw %}
 ```
 - `include.form`: `yml` form
 
@@ -76,30 +80,72 @@ Example form in the page front matter
 
 ```yml
 form:
+ 
+  # File path to edit inside '_data'
+  # Format: 'folder/file.ext'
+  # Required
+  file: example.csv
+ 
+  # Form class list
+  # Default: 'admin'
+  # Optional
   class: admin
-  type: append
-  file: time.csv
+ 
+  # Form field as yaml fields
+  # Columns if file is 'csv'
+  # Properties if file is 'json' or 'yaml'
   fields:
+
+    # Text, implicit
     text: true
-    today_date:
-      type: date*
-      default: today
+    # Text, explicit
+    text:
+      type: text
+      # Optional
+      default: default string
+
+    # Number
     number:
       type: number
+      # Optional
+      default: 0
+ 
+    # Date picker
+    date:
+      type: date
+      # Default value accept 'today'
+      default: today
+
+    # Select from list
     select:
-      type: select*
+      type: select
       default: [1,2,3,4]
+
+    # Reference:
+    # select from external csv
     reference:
-      type: ref*
-      csv: time*
-      property: date*
+      type: ref
+      # csv file name inside '_data'
+      csv: time
+      # Column name to gather
+      property: date
+
+    # Pick a property from a random line in a csv
     pick:
-      type: pick*
-      csv: stones*
-      property: dead*
+      type: pick
+      # csv file name inside '_data'
+      csv: stones
+      # Column name to pick
+      property: dead
+
+    # Roll dices at site deploy
     roll:
-      type: roll*
-      roll: 3*
-      dice: 6*
+      type: roll
+      # Number of rolls
+      roll: 3
+      # Number of sides
+      dice: 6
+      # Optional numeric modifier
+      mod: 0
 ```
 {% endcapture %}

@@ -21,17 +21,16 @@
     {% endfor %}
   </tbody>
 </table>
-<style>
-td[data-value='briefing']{color:var(--color-green)}
-td[data-value='bill']{color:var(--color-orange)}
-td[data-value='trash']{color:var(--fg-muted)}
-</style>
 {% capture api %}
 
 ```liquid
-{% raw %}
-  {% include widgets/table.html csv="time" %}
-{% endraw %}
+{% raw %}{% include widgets/table.html csv="time" %}{% endraw %}
 ```
 
+Example css style
+```css
+td[data-value='briefing']{color:var(--color-green)}
+td[data-value='bill']{color:var(--color-orange)}
+td[data-value='trash']{color:var(--fg-muted)}
+```
 {% endcapture %}

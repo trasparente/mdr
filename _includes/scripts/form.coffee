@@ -2,7 +2,7 @@
 # APPEND to CSV
 # --------------------------------
 
-$('form[data-type][data-file$=".csv"]').on 'submit', ->
+$('form[data-file$=".csv"]').on 'submit', ->
   form = $ @
   form.find(':input').blur()
   file_url = url_from_data_file form
