@@ -4,7 +4,7 @@ form:
   # File path to edit inside '_data'
   # Format: 'folder/file.ext'
   # Required
-  file: example.csv
+  file: example.json
  
   # Form class list
   # Default: 'admin'

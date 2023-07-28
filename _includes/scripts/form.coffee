@@ -6,16 +6,19 @@ $('form[data-file$=".csv"]').on 'submit', ->
   form = $ @
   form.find(':input').blur()
   file_url = url_from_data_file form
-  type = form.attr 'data-type'
   serialized = form.serializeArray()
   header = serialized.map((i) -> i.name).join ','
   row = serialized.map((i) -> i.value).join ','
   file = [header, row].join '\n'
-  switch type
-    when 'append'
-      get_csv_file form, file_url, file, header, row
-    else
-      console.log type
+  get_csv_file form, file_url, file, header, row
+  return # End form submit
+
+$('form[data-file$=".json"]').on 'submit', ->
+  form = $ @
+  form.find(':input').blur()
+  file_url = url_from_data_file form
+  serialized = form.serializeArray()
+  console.log serialized
   return # End form submit
 
 #
