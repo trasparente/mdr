@@ -1,11 +1,12 @@
 logout = (token) ->
   html.addClass('unlogged').removeClass ['logged', 'admin', 'guest']
-  localStorage.removeItem 'token'
   localStorage.removeItem 'user'
   localStorage.removeItem 'role'
   localStorage.removeItem 'branch'
   localStorage.removeItem 'parent'
-  if token then alert 'Logged out'
+  if token
+    localStorage.removeItem 'token'
+    alert 'Logged out'
   return
 
 $('a[href="#login"]').on 'click', ->

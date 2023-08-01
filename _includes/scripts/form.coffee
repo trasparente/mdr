@@ -17,8 +17,16 @@ $('form[data-file$=".json"]').on 'submit', ->
   form = $ @
   form.find(':input').blur()
   file_url = url_from_data_file form
-  serialized = form.serializeArray()
-  console.log serialized
+  file = {}
+  form.find(':input').each ->
+    el = $ @
+    name = el.attr 'name'
+    type = el.attr 'type'
+    tag = el.prop 'tagName'
+    val = el.val()
+    file[name] = if type in ['number', 'boolean'] then Number val else val
+    return
+  get_json_file form, file_url, JSON.stringify file
   return # End form submit
 
 #

@@ -6,33 +6,43 @@
 <form class='prevent {{ class }}' data-file='{{ form.file }}'>
 <h3>{{ form.name | default: form.file | default: 'Form' | capitalize }}</h3>
 {% for field in form.fields %}
-  <div data-field='{{ field.name }}'>
-  {% if field[1].type != 'hidden' %}<label for="{{ field[0] }}">{{ field[0] | capitalize }}</label>{% endif %}
+  <div data-input='{{ field[1].type }}'>
+  {% if field[1].type != 'hidden' %}<label for='{{ field[0] }}'>{{ field[0] | capitalize }}</label>{% endif %}
   {% case field[1].type %}
     {% when 'date' %}
-      <input type="date" id='{{ field[0] }}' name='{{ field[0] }}'
+      <input type='date' id='{{ field[0] }}' name='{{ field[0] }}'
         {% if field[1].default == 'today' %} value='{{ site.time | date: "%F" }}'{% endif %}>
     {% when 'select' %}
-      <select name="{{ field[0] }}" id="{{ field[0] }}">
+      <select name='{{ field[0] }}' id='{{ field[0] }}'{% if field[1].multiple %} multiple{% endif %}>
       {% for option in field[1].default %}
-        <option value="{{ option }}">{{ option }}</option>
+        <option value='{{ option }}'>{{ option }}</option>
       {% endfor %}
       </select>
+    {% when 'boolean' %}
+      <select name='{{ field[0] }}' id='{{ field[0] }}' type='number'>
+        <option value='0'>False</option>
+        <option value='1'>True</option>
+      </select>
     {% when 'number' %}
-      <input type="number" id='{{ field[0] }}' name='{{ field[0] }}' step='any'
+      <input type='number' id='{{ field[0] }}' name='{{ field[0] }}'
+        step='{{ field[1].step | default: "any" }}'
+        min='{{ field[1].min }}'
+        max='{{ field[1].max }}'
         {% if field[1].default %} value='{{ field[1].default }}'{% endif %}>
+    {% when 'textarea' %}
+      <textarea spellcheck='false' name='{{ field[0] }}' id='{{ field[0] }}'{% if field[1].placeholder %} placeholder='{{ field[1].placeholder }}'{% endif %}></textarea>
     {% when 'text' or nil %}
-      <input type="text" id='{{ field[0] }}' name='{{ field[0] }}'
+      <input type='text' id='{{ field[0] }}' name='{{ field[0] }}'
         {% if field[1].default %} value='{{ field[1].default }}'{% endif %}>
     {% when 'ref' %}
       {% assign csv = field[1].csv %}
       {% assign watch = field[1].watch %}
       {% assign options = site.data[csv] %}
       {% assign property = field[1].property %}
-      <select name="{{ field[0] }}" id="{{ field[0] }}"
+      <select name='{{ field[0] }}' id='{{ field[0] }}'
         data-watch='{{ watch }}'>
       {% for option in options %}{% assign name = option[property] %}
-        <option value="{{ option['value'] }}">{{ name }}</option>
+        <option value='{{ name }}'>{{ name }}</option>
       {% endfor %}
       </select>
     {% when 'pick' %}
@@ -40,9 +50,9 @@
       {%- assign options = site.data[csv] -%}
       {%- assign property = field[1].property -%}
       <input
-        type="text" id='{{ field[0] }}' name='{{ field[0] }}'
+        type='text' id='{{ field[0] }}' name='{{ field[0] }}'
         value='{{ options | sample | map: property }}'
-        title='picked {{ property }} from {{ csv }}' disabled>
+        title='picked {{ property }} from {{ csv }}'>
     {% when 'roll' %}
       {%- assign dice = field[1].dice | default: 6 -%}
       {%- assign roll = field[1].roll | default: 1 -%}
@@ -51,20 +61,20 @@
       {%- assign total = 0 -%}
       {% for d in (1..dice) %}{% assign array = array | push: d %}{% endfor %}
       <input
-        type="number" id='{{ field[0] }}' name='{{ field[0] }}'
+        type='number' id='{{ field[0] }}' name='{{ field[0] }}'
         value='{% assign rolls = "" | split: "" %}{% for r in (1..roll) %}{% assign effimer = array %}{% assign sample = effimer | sample %}{% assign rolls = rolls | push: sample %}{% endfor %}{% for r in rolls %}{% assign total = total | plus: r %}{% endfor %}{% assign total = total | plus: mod %}{{ total }}'
         title='Rolled {{ roll }}d{{ dice }}{% if mod != 0 %}{% if mod > 0 %}+{% endif %}{{ mod }}{% endif %}: {% include widgets/reference.html csv="agency" value=total %} {{ rolls | inspect }}'
         max='{{ roll | times: dice }}'
         min='{{ roll }}'
-        {% if field[1].hidden %}hidden{% endif %} disabled>
+        {% if field[1].hidden %}hidden{% endif %}>
     {% else %}
       {{ field[1] | inspect }}
   {% endcase %}
   </div>
 {% endfor %}
   <div data-buttons>
-    <input type="submit" value='Submit'>
-    <input type="reset" value='Reset'>
+    <input type='submit' value='Submit'>
+    <input type='reset' value='Reset'>
   </div>
 </form>
 {% endif %}
@@ -104,12 +114,24 @@ form:
       # Optional
       default: default string
 
+    # Textarea
+    textarea:
+      type: textarea
+      # Optional
+      placeholder: Textarea
+
     # Number
     number:
       type: number
       # Optional
       default: 0
- 
+
+    # Boolean
+    boolean:
+      type: boolean
+      # Optional
+      default: 0
+
     # Date picker
     date:
       type: date
@@ -119,7 +141,7 @@ form:
     # Select from list
     select:
       type: select
-      default: [1,2,3,4]
+      default: [As,String]
 
     # Reference:
     # select from external csv

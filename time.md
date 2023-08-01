@@ -15,10 +15,10 @@ form:
     duration: true
 ---
 {% include widgets/form.html %}
-{% include widgets/table.html csv="time" category="trash" %}
-{% include widgets/table.html csv="time" category="briefing" limit="4" %}
-{% include widgets/table.html csv="time" category="bill" limit="4" %}
-{% include widgets/table.html csv="time" category="yaris, kangoo, citroen" %}
+{% include widgets/view.html csv="time" category="trash" %}
+{% include widgets/view.html csv="time" category="briefing" limit="4" %}
+{% include widgets/view.html csv="time" category="bill" limit="4" %}
+{% include widgets/view.html csv="time" category="yaris, kangoo, citroen" %}
 
 <style>
 td[data-value='briefing']{color:var(--color-green)}

@@ -4,13 +4,13 @@ form:
   # File path to edit inside '_data'
   # Format: 'folder/file.ext'
   # Required
-  file: example.json
+  file: fields.json
  
   # Form class list
   # Default: 'admin'
   # Optional
   class: admin
- 
+
   # Form field as yaml fields
   # Columns if file is 'csv'
   # Properties if file is 'json' or 'yaml'
@@ -24,12 +24,24 @@ form:
       # Optional
       default: default string
 
+    # Textarea
+    textarea:
+      type: textarea
+      # Optional
+      placeholder: Textarea
+
     # Number
     number:
       type: number
       # Optional
       default: 0
- 
+
+    # Boolean
+    boolean:
+      type: boolean
+      # Optional
+      default: 0
+
     # Date picker
     date:
       type: date
@@ -39,7 +51,7 @@ form:
     # Select from list
     select:
       type: select
-      default: [1,2,3,4]
+      default: [As,String]
 
     # Reference:
     # select from external csv
@@ -73,7 +85,7 @@ form:
 - toc
 {:toc}
 
-{% include widgets/api.html include='widgets/table' %}
+{% include widgets/api.html include='widgets/view' %}
 {% include widgets/api.html include='widgets/form' %}
 {% include widgets/form.html form=page.form %}
 {% include widgets/api.html %}
