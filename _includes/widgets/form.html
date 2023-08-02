@@ -21,7 +21,7 @@
     {% when 'boolean' %}
       <select name='{{ field[0] }}' id='{{ field[0] }}' type='number'>
         <option value='0'>False</option>
-        <option value='1'>True</option>
+        <option value='1'{% if field[1].default == 1 %} selected{% endif %}>True</option>
       </select>
     {% when 'number' %}
       <input type='number' id='{{ field[0] }}' name='{{ field[0] }}'

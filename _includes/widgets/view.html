@@ -25,17 +25,6 @@
 {% elsif include.json %}
 <div class="highlight highlighter-rouge"><pre data-json>{{ site.data[include.json] | jsonify }}</pre></div>
 {% endif %}
-```json
-{
-  "ciao": 4,
-  "roma": "GO go",
-  "lista": [
-    1,
-    2,
-    4
-  ]
-}
-```
 {% capture api %}
 
 ```liquid

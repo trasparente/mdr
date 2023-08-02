@@ -107,10 +107,10 @@ get_parent_commits = (builds, repo) -> $.get
   success: (commits) ->
     # Compare Jekyll build revision with parent last commit sha
     same_sha = commits[0].sha is '{{ site.github.build_revision }}'
-    # Compare this forked site last build time with parent last commit time
-    build_after_commit = +new Date(commits[0].commit.author.date) / 1000 < {{ site.time | date: "%s" }}
-    console.log same_sha, build_after_commit
-    sync_upstream().done -> do get_builds
+    # Compare parent last commit time with this forked site last build time
+    commit_after_build = +new Date(commits[0].commit.author.date) / 1000 > {{ site.time | date: "%s" }}
+    console.log "same_sha, commit_after_build:", same_sha, commit_after_build
+    if commit_after_build then sync_upstream().done -> do get_builds
     return # End check_parent success
 
 # Sync with upstream
@@ -172,7 +172,10 @@ save_file = (form, file_url, file, sha) -> $.ajax
 bootstrap = (token) ->
   t = token || localStorage.getItem 'token'
   if t
-    get_auth(t).done (user) -> get_repo(user, token).done (repo) -> if repo.permissions.admin then get_builds().done (builds) -> if repo.fork then get_parent_commits builds, repo
+    get_auth(t).done (user) ->
+      get_repo(user, token).done (repo) ->
+        if repo.permissions.admin then get_builds().done (builds) ->
+          if repo.fork and builds[0].status is 'built' then get_parent_commits builds, repo
   else do logout
   return
 

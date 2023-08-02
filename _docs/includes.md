@@ -39,8 +39,9 @@ form:
     # Boolean
     boolean:
       type: boolean
+      # Default to 0, false
       # Optional
-      default: 0
+      default: 1
 
     # Date picker
     date:
