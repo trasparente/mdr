@@ -1,4 +1,4 @@
-{{ include.category | default: include.csv | default: include.json | default: "table" | capitalize }}
+{{ include.category | default: include.csv | default: include.json | default: include.yml | default: "table" | capitalize }}
 -----
 {% if include.csv %}
   {% assign csv = site.data[include.csv] %}
@@ -24,12 +24,20 @@
   </table>
 {% elsif include.json %}
 <div class="highlight highlighter-rouge"><pre data-json>{{ site.data[include.json] | jsonify }}</pre></div>
+{% elsif include.yml %}
+<div class="highlight highlighter-rouge"><pre data-yml>{{ site.data[include.yml] | jsonify }}</pre></div>
 {% endif %}
 {% capture api %}
 
+Render data files, specify extension as liquid include with filename.
+
+- `csv`, `json` or `yml`: filename
+
+
 ```liquid
-{% raw %}{% include widgets/view.html csv="list" %}
-{% include widgets/view.html json="object" %}{% endraw %}
+{% raw %}{% include widgets/view.html csv='csv' %}
+{% include widgets/view.html json='json' %}
+{% include widgets/view.html yml='yml' %}{% endraw %}
 ```
 
 Example css style

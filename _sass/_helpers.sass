@@ -13,13 +13,16 @@ html
   &.online .offline, &:not(.online) .online,
   &:not(.behind) .behind, &:not(.updated) .updated,
   &.focus .blur, &:not(.focus) .focus,
+  &:not(.scrolled) .scrolled,
   &:not(.logged) .guest,
   &:not(.logged) .admin,
   &:not(.admin) .admin,
   &:not(.ajax) .ajax,
   &:not(.guest) .guest,
   body:not([data-github-fork='true']) .fork,
-  body:not([data-github-environment='production']) .production-only,
+  body:not([data-github-fork='false']) .unforked,
+  body:not([data-github-environment='development']) .development,
+  body:not([data-github-environment='production']) .production,
   .only-child:not(:only-child),
   &:not(.remote-theme) .remote-theme
     @extend .hidden

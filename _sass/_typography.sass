@@ -1,10 +1,21 @@
 b, strong, i, em
-  color: #{$fg-muted}
+  @extend .color-muted
 
 // TITLE and CITE
-p, span, code, li, small, q, cite, time, blockquote
+p, span, code, li, small, q, cite, time, blockquote, abbr
   &[title], &[cite]
     cursor: default
+
+// Super and sub scripts
+mark
+  background-color: $yellow
+  font-weight: bold
+
+// Inserted and deleted
+ins
+  @extend .color-green
+del
+  @extend .color-red
 
 // Number
 .number

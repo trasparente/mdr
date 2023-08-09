@@ -1,10 +1,10 @@
 {% assign form = include.form | default: page.form %}
 {% if form.file == nil %}> Missing `form.file` for `form` widget
 {:.red}{% else %}
-{% assign class = form.class | default: 'admin' %}
+{% assign class = form.class %}
 {% assign extension = form.file | split: '.' | last %}
 <form class='prevent {{ class }}' data-file='{{ form.file }}'>
-<h3>{{ form.name | default: form.file | default: 'Form' | capitalize }}</h3>
+<h3>{{ form.name | default: form.file | default: 'Form' | capitalize | replace: '_', ' ' }}</h3>
 {% for field in form.fields %}
   <div data-input='{{ field[1].type }}'>
   {% if field[1].type != 'hidden' %}<label for='{{ field[0] }}'>{{ field[0] | capitalize }}</label>{% endif %}
@@ -23,6 +23,9 @@
         <option value='0'>False</option>
         <option value='1'{% if field[1].default == 1 %} selected{% endif %}>True</option>
       </select>
+    {% when 'color' %}
+      <input type='color' id='{{ field[0] }}' name='{{ field[0] }}'
+        {% if field[1].default %} value='{{ field[1].default }}'{% endif %}>
     {% when 'number' %}
       <input type='number' id='{{ field[0] }}' name='{{ field[0] }}'
         step='{{ field[1].step | default: "any" }}'
@@ -129,8 +132,15 @@ form:
     # Boolean
     boolean:
       type: boolean
+      # Default to 0, false
       # Optional
-      default: 0
+      default: 1
+
+    # Color
+    color:
+      type: color
+      # Optional
+      default: "#000"
 
     # Date picker
     date:

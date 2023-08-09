@@ -1,9 +1,10 @@
-tt, code, kbd, samp, pre[data-json]
+tt, code, kbd, samp,
+pre[data-json], pre[data-yml]
   color: #{$fg-muted}
 
 // INLINE
 code.highlighter-rouge
-  @extend .highlight
+  @extend .highlight, .color-forest
   padding: 0
 
 // BLOCKS HIGHLIGHTED
@@ -18,7 +19,6 @@ code.highlighter-rouge
   line-height: 1.2
   padding-block: .75em
   padding-inline: 1em
-  border-radius: 6px
   font-size: 97%
   code
     padding: 0px

@@ -1,3 +1,6 @@
+// Admin forms takes space for everybody
+html:not(.admin) form[data-file]:not([data-file='']),
+  visibility: hidden // occupy real space
 form
   margin: .5em 0
   padding: 0 .7em
@@ -9,12 +12,13 @@ form
     margin-block: .5em
     label
       margin-right: .3em
-  [data-input='textarea'] label
-    vertical-align: top
-    // From user agent css
-    margin-block: 1px
-    padding: 2px
-    display: inline-block
+  [data-input='textarea'], [data-input='color']
+    label
+      vertical-align: top
+      // From user agent css
+      margin-block: 1px
+      padding: 2px
+      display: inline-block
   [data-buttons]
     padding-block: .5em
     input

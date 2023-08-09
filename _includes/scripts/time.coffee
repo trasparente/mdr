@@ -103,3 +103,14 @@ duration_ms = (string) ->
 # inside `time[datetime]`
 # --------------------------------------
 time_relative = -> $('time[datetime]').each -> time.relative @
+
+{%- capture api -%}
+Given a `time[time-relative]`{:.language-css} element:
+- append a span element with human string
+- replace title with reference date
+
+```html
+<time datetime='{{ site.time | date_to_rfc822 }}'>Site time </time>
+```
+<time datetime='{{ site.time | date_to_rfc822 }}'>Site time </time>
+{%- endcapture -%}

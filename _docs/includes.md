@@ -7,9 +7,8 @@ form:
   file: fields.json
  
   # Form class list
-  # Default: 'admin'
   # Optional
-  class: admin
+  class: ''
 
   # Form field as yaml fields
   # Columns if file is 'csv'
@@ -42,6 +41,12 @@ form:
       # Default to 0, false
       # Optional
       default: 1
+
+    # Color
+    color:
+      type: color
+      # Optional
+      default: "#000"
 
     # Date picker
     date:
@@ -90,3 +95,6 @@ form:
 {% include widgets/api.html include='widgets/form' %}
 {% include widgets/form.html form=page.form %}
 {% include widgets/api.html %}
+{% include widgets/api.html include='widgets/github_url' %}
+{% include widgets/api.html include='widgets/github_link' %}
+{% include widgets/api.html include='scripts/time.coffee' %}
