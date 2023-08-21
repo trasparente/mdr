@@ -1,8 +1,6 @@
 ---
 permalink: practices/
 form:
-  class: admin
-  type: append
   file: practices.csv
   fields:
     date:

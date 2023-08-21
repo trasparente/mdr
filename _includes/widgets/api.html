@@ -33,7 +33,7 @@ Description
 ```
 {%- endcapture -%}
 {% endif %}
-### {{ include_file | split: "/" | last | split: '.' | first | capitalize }}
+### {{ include_file | split: "/" | last | split: '.' | first | replace: '_', ' ' | capitalize }}
 {{ api | mardowify }}
 
 {% if api %}File: {% assign absolute_path = include_file | prepend: '_includes/' %}{% include widgets/github_link.html path=absolute_path %}{% endif %}

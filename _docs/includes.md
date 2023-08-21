@@ -59,6 +59,12 @@ form:
       type: select
       default: [As,String]
 
+    # Select multiple
+    select:
+      type: select
+      default: [Multiple,Choice]
+      multiple: true
+
     # Reference:
     # select from external csv
     reference:
@@ -98,3 +104,5 @@ form:
 {% include widgets/api.html include='widgets/github_url' %}
 {% include widgets/api.html include='widgets/github_link' %}
 {% include widgets/api.html include='scripts/time.coffee' %}
+{% include widgets/api.html include='widgets/first.html' %}
+{% include widgets/api.html include='widgets/last.html' %}

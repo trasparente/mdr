@@ -1,8 +1,6 @@
 ---
 title: Time
 form:
-  class: admin
-  type: append
   file: time.csv
   fields:
     date:

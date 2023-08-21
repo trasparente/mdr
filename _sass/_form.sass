@@ -1,7 +1,8 @@
 // Admin forms takes space for everybody
 html:not(.admin) form[data-file]:not([data-file='']),
-  visibility: hidden // occupy real space
+  opacity: 0 // occupy real space
 form
+  transition: opacity .2s ease-in
   margin: .5em 0
   padding: 0 .7em
   border-left: 4px solid var(--border)
@@ -12,7 +13,7 @@ form
     margin-block: .5em
     label
       margin-right: .3em
-  [data-input='textarea'], [data-input='color']
+  [data-input='textarea'], [data-input='color'], [data-multiple='true']
     label
       vertical-align: top
       // From user agent css

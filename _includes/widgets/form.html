@@ -3,10 +3,10 @@
 {:.red}{% else %}
 {% assign class = form.class %}
 {% assign extension = form.file | split: '.' | last %}
-<form class='prevent {{ class }}' data-file='{{ form.file }}'>
+<form class='prevent{% if class %} {{ class }}{% endif %}' data-file='{{ form.file }}'>
 <h3>{{ form.name | default: form.file | default: 'Form' | capitalize | replace: '_', ' ' }}</h3>
 {% for field in form.fields %}
-  <div data-input='{{ field[1].type }}'>
+  <div data-input='{{ field[1].type }}'{% if field[1].multiple %} data-multiple='true'{% endif %}>
   {% if field[1].type != 'hidden' %}<label for='{{ field[0] }}'>{{ field[0] | capitalize }}</label>{% endif %}
   {% case field[1].type %}
     {% when 'date' %}
@@ -87,7 +87,7 @@ Render a functional form from a `yml` object in the page front matter
 ```liquid
 {% raw %}{% include widgets/form.html form=page.form %}{% endraw %}
 ```
-- `include.form`: `yml` form
+- `include.form`: yml form
 
 Example form in the page front matter
 
@@ -152,6 +152,12 @@ form:
     select:
       type: select
       default: [As,String]
+
+    # Select multiple
+    select:
+      type: select
+      default: [Multiple,Choice]
+      multiple: true
 
     # Reference:
     # select from external csv

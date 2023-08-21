@@ -21,6 +21,8 @@ dom.on 'submit', 'form.prevent', (e) -> e.preventDefault()
 
 # CITATIONS
 $('[cite]:not([title])').each -> $(@).attr 'title', $(@).attr('cite')
+# LINKS
+$('a:not([title])').each -> $(@).attr 'title', $(@).attr('href')
 
 # Preview JSON file
 # Attribute [data-json]
