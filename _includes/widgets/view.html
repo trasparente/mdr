@@ -1,4 +1,4 @@
-{{ include.category | default: include.csv | default: include.json | default: include.yml | default: "table" | capitalize }}
+{{ include.title | default: include.category | default: include.csv | default: include.json | default: include.yml | default: "table" | capitalize }}
 -----
 {% if include.csv %}
   {% assign csv = site.data[include.csv] %}
@@ -31,6 +31,7 @@
 
 Render data files, specify extension as liquid include with filename.
 
+- `title`: optional, heading text
 - `csv`, `json` or `yml`: filename
 
 

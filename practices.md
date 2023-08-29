@@ -37,6 +37,7 @@ Practices
 time>span{color:var(--fg-muted)}
 [data-serie='2']{color: var(--color-red)}
 [data-serie='1']{color: var(--color-green)}
+[data-serie='0']{color: var(--color-violet)}
 main code:not([data-serie]){opacity: .3}
 </style>
 {% include widgets/form.html %}
