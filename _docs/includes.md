@@ -21,6 +21,7 @@ form:
     text:
       type: text
       # Optional
+      title: Label string
       default: default string
 
     # Textarea
@@ -57,12 +58,13 @@ form:
     # Select from list
     select:
       type: select
-      default: [As,String]
+      options: [Saved,As,String]
+      default: As
 
     # Select multiple
-    select:
+    select_multiple:
       type: select
-      default: [Multiple,Choice]
+      options: [Multiple,Choice]
       multiple: true
 
     # Reference:

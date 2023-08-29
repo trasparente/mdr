@@ -8,7 +8,8 @@ form:
       default: today
     serie:
       type: select
-      default: [1,2,3,4]
+      options: [0,1,2,3,4]
+      default: 1
 ---
 Practices
 =========

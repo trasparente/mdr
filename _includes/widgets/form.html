@@ -7,15 +7,15 @@
 <h3>{{ form.name | default: form.file | default: 'Form' | capitalize | replace: '_', ' ' }}</h3>
 {% for field in form.fields %}
   <div data-input='{{ field[1].type }}'{% if field[1].multiple %} data-multiple='true'{% endif %}>
-  {% if field[1].type != 'hidden' %}<label for='{{ field[0] }}'>{{ field[0] | capitalize }}</label>{% endif %}
+  {% if field[1].type != 'hidden' %}<label for='{{ field[0] }}'>{{ field[1].title | default: field[0] | replace: "_", " " | capitalize }}</label>{% endif %}
   {% case field[1].type %}
     {% when 'date' %}
       <input type='date' id='{{ field[0] }}' name='{{ field[0] }}'
         {% if field[1].default == 'today' %} value='{{ site.time | date: "%F" }}'{% endif %}>
     {% when 'select' %}
       <select name='{{ field[0] }}' id='{{ field[0] }}'{% if field[1].multiple %} multiple{% endif %}>
-      {% for option in field[1].default %}
-        <option value='{{ option }}'>{{ option }}</option>
+      {% for option in field[1].options %}
+        <option value='{{ option }}'{% if field[1].default == option %} selected{% endif %}>{{ option }}</option>
       {% endfor %}
       </select>
     {% when 'boolean' %}
@@ -115,6 +115,7 @@ form:
     text:
       type: text
       # Optional
+      title: Text
       default: default string
 
     # Textarea
@@ -151,7 +152,8 @@ form:
     # Select from list
     select:
       type: select
-      default: [As,String]
+      options: [Saved,As,String]
+      default: As
 
     # Select multiple
     select:
