@@ -75,6 +75,7 @@ url_from_data_file = (form) ->
     path = "user/#{ form.attr 'data-file' }"
   return "#{ github_repo_url }/contents/_data/#{ path }" # End url_from_data_file
 
+# GitHub auth, personal token as argument
 get_auth = (t) -> $.get
   url: '{{ site.github.api_url }}/user'
   headers: { 'Authorization': "token #{ t }" }

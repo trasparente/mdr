@@ -13,6 +13,6 @@ $.ajaxPrefilter (options, ajaxOptions, request) ->
 
   return # End Ajax prefilter
 
+# Control html.ajax class
 $(document).ajaxStart () -> html.addClass 'ajax'
-
 $(document).ajaxComplete (event, request, ajaxOptions) -> html.removeClass 'ajax'

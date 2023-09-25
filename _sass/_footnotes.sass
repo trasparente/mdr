@@ -1,15 +1,21 @@
 // FOOTNOTES
+
+// Links
 a.footnote
   margin-inline: .2em
   &:before
     content: "["
   &:after
     content: "]"
+
+// Box
 .footnotes
   border: 1px solid var(--border)
+  margin-top: 4em
 
   &::before
     content: "Footnotes"
+    color: var(--fg-muted)
     display: block
     margin: 1em 0 0 1em
     font-weight: bold

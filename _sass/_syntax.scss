@@ -1,4 +1,7 @@
 .highlight {
+  .p {
+    @extend .color-orange;
+  }
   .c, .ch, .cd, .cpf, .cm, .c1 {
     @extend .color-blue;
     font-style: italic;

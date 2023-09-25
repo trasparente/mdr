@@ -1,5 +1,6 @@
 logout = (token) ->
   html.addClass('unlogged').removeClass ['logged', 'admin', 'guest']
+  $('[href="#logout"]').attr 'title', 'Click to logout'
   localStorage.removeItem 'user'
   localStorage.removeItem 'role'
   localStorage.removeItem 'branch'

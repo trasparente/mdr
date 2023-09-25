@@ -10,9 +10,9 @@
       </tr>
     </thead>
     <tbody>
-      <tr class='only-child'><td>No data</td></tr>
+      <tr class='only-child'><td colspan='{{csv.first.size}}'>No data</td></tr>
     {% for row in csv %}
-      {% if include.category and include.category contains row.category %}
+      {% if include.category contains row.category or include.category == nil %}
       <tr data-row='{{ forloop.index }}'>{% for cell in row %}
         <td data-header='{{ cell[0] }}' data-value='{{ cell[1] }}'>{% if cell[0] == "date" %}
           <time datetime="{{ cell[1] | date_to_rfc822 }}">{{ cell[1] }} </time>{% else %}{{ cell[1] }}{% endif %}</td>

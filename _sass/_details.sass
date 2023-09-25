@@ -1,14 +1,22 @@
-details summary
-  cursor: pointer
-  outline: none
+details
+  margin-block: 1em
+  summary
+    cursor: pointer
+    outline: none
 
-  // Color, hover
-  color: var(--link)
-  &:hover, &::marker
-    color: var(--fg)
+    // Color, hover
+    color: var(--link)
+    &:hover, &::marker
+      color: var(--fg)
 
-  // Limit click area
-  display: inline list-item
-  &::after
-    display: table
-    content: ""
+    // Limit click area
+    display: inline list-item
+    &::after
+      display: table
+      content: ""
+
+// Reset top margin for headings as first child
+@for $index from 1 through length($headings-margins)
+  details > h#{$index}:first-child,
+  details > summary + h#{$index}
+    margin-top: 1em

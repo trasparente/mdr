@@ -1,18 +1,18 @@
-// Admin forms takes space for everybody
-html:not(.admin) form[data-file]:not([data-file='']),
-  opacity: 0 // occupy real space
 form
   transition: opacity .2s ease-in
   margin: .5em 0
   padding: 0 .7em
   border-left: 4px solid var(--border)
+  // Titles
   h3
     margin-top: #{nth($headings-margins, 3)}em
     @extend .color-magenta
+  // Input divs
   [data-input]
     margin-block: .5em
     label
       margin-right: .3em
+  // Label exceptions
   [data-input='textarea'], [data-input='color'], [data-multiple='true']
     label
       vertical-align: top
@@ -20,16 +20,24 @@ form
       margin-block: 1px
       padding: 2px
       display: inline-block
+  // Button div
   [data-buttons]
     padding-block: .5em
     input
       margin-right: .5em
 
-html.ajax form
-  opacity: .5
-  filter: saturate(0)
-  pointer-events: none
+// Restrict [data-file] forms to admins
+html:not(.admin) form[data-file]:not([data-file='']),
+  opacity: 0 // occupy real space
 
+// Disable form on ajax call or build behind commit
+html.ajax, html.behind
+  form
+    opacity: .5
+    filter: saturate(0)
+    pointer-events: none
+
+// Appearence
 input, select, output, textarea
   font-family: inherit
   font-size: inherit
@@ -41,6 +49,7 @@ input, select, output, textarea
   border-radius: 3px
   background-color: var(--border)
 
+// Interaction
 input, label, button, select, textarea
   cursor: pointer
   min-width: 2em
@@ -51,6 +60,7 @@ input, label, button, select, textarea
     cursor: not-allowed
     color: var(--fg-muted)
 
+// Buttons
 input[type='submit'],
 input[type='reset'],
 input[type='button'],
