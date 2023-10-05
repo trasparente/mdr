@@ -13,16 +13,22 @@ github_repo_url = '{{ site.github.api_url }}/repos/{{ site.github.repository_nwo
 lang = '{{ page.language | default: site.language | default: "it" }}'
 if $('meta[name="remote_theme"]').attr 'content' then html.addClass 'remote-theme'
 
-#
-# PREVENT-DEFAULT CLASS
-# --------------------------------------
+# Prevent-default class
 dom.on 'click', 'a.prevent', (e) -> e.preventDefault()
 dom.on 'submit', 'form.prevent', (e) -> e.preventDefault()
 
-# CITATIONS
+# Appearance
+# --------------------------------------
+# Citations
 $('[cite]:not([title])').each -> $(@).attr 'title', $(@).attr('cite')
-# LINKS
+# Links
 $('a:not([title])').each -> $(@).attr 'title', $(@).attr('href')
+# Anchor links gets details opened
+$("[href^='#']").on "click", ->
+  targetDIV = $ @.getAttribute "href"
+  if targetDIV.is ":hidden"
+    targetDIV.closest("details").prop "open", true
+  return
 
 # Preview JSON file
 # Attribute [data-json]
@@ -63,6 +69,18 @@ win.scroll () -> if win.scrollTop() > win.height() then html.addClass 'scrolled'
 @focus = -> html.addClass('focus').removeClass 'blur'
 @blur = -> html.addClass('blur').removeClass 'focus'
 if document.hasFocus() then do focus else do blur
+
+#
+# FULLSCREEN: WINDOW RESIZE EVENT
+# Add class `fullscreen`
+# Called from BODY attribute
+# --------------------------------------
+@resize = ->
+  if window.innerHeight is screen.height then html.addClass 'fullscreen'
+  else html.removeClass 'fullscreen'
+  return
+
+resize()
 
 # Return ISO 8601 date YYYY-MM-DD
 date_iso = (date) -> new Date(date || +new Date()).toLocaleDateString 'sv'

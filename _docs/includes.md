@@ -1,4 +1,5 @@
 ---
+order: 0
 form:
  
   # File path to edit inside '_data'
@@ -99,6 +100,7 @@ form:
 - toc
 {:toc}
 
+{% include widgets/api.html include='page/navigation' %}
 {% include widgets/api.html include='widgets/view' %}
 {% include widgets/api.html include='widgets/form' %}
 {% include widgets/form.html form=page.form %}

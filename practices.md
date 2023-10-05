@@ -1,5 +1,4 @@
 ---
-permalink: practices/
 form:
   file: practices.csv
   fields:
@@ -28,8 +27,9 @@ Practices
 {% for y in years %}|{{ y.name }}|{{ y.items.size }}|{% if y.name == year %}{% assign prog = y.items.size | times: 100 | divided_by: day %}{% else %}{% assign prog = y.items.size | times: 100 | divided_by: 365 %}{% endif %}<progress max="100" value="{{ prog }}"></progress>|{{ prog }}
 {% endfor %}
 
-||Practices|First|Last
+|Serie|Practices|First|Last
 |--:|--:|--:|--:|
+|Null|{{ site.data.practices | where: "serie", 0 | size }}|{% include widgets/first.html data=site.data.practices field='serie' value='0' %}|{% include widgets/last.html data=site.data.practices field='serie' value='0' %}
 |First|{{ site.data.practices | where: "serie", 1 | size }}|{% include widgets/first.html data=site.data.practices field='serie' value='1' %}|{% include widgets/last.html data=site.data.practices field='serie' value='1' %}
 |Second|{{ site.data.practices | where: "serie", 2 | size }}|{% include widgets/first.html data=site.data.practices field='serie' value='2' %}|{% include widgets/last.html data=site.data.practices field='serie' value='2' %}
 |Total|{{ site.data.practices.size }}

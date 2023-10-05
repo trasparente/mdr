@@ -2,13 +2,14 @@
 <html lang="en" dir="ltr">
 {%- include page/head.html -%}
 <body
+  onresize='resize()'
   ononline='online()'
   onoffline='offline()'
   onfocus='focus()'
   onblur='blur()'
   data-github-fork='{{ site.github.public_repositories | where: 'full_name', site.github.repository_nwo | first | map: 'fork' | first }}'
   data-github-environment = '{{ site.github.environment }}'
->
+  {% if page.class %}class='{{ page.class }}'{%- endif -%}>
 <header>{%- include page/header.html -%}</header>
 {%- include page/navigation.html -%}
 <main>{{ content }}</main>

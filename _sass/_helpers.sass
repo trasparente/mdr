@@ -19,6 +19,7 @@ html
   &:not(.admin) .admin,
   &:not(.ajax) .ajax,
   &:not(.guest) .guest,
+  &:not(.fullscreen) .fullscreen,
   body:not([data-github-fork='true']) .fork,
   body:not([data-github-fork='false']) .unforked,
   body:not([data-github-environment='development']) .development,
@@ -26,3 +27,17 @@ html
   .only-child:not(:only-child),
   &:not(.remote-theme) .remote-theme
     @extend .hidden
+
+// FULLSCREEN FILLSCREEN
+html.fullscreen
+  overflow: initial
+  body.fillscreen
+    main
+      padding-inline: .5em
+      height: 57vh
+      h1:first-child
+        margin-top: 0
+    header, footer
+      display: none
+    header, nav, main, footer
+      max-width: none

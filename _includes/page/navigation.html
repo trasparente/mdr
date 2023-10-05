@@ -2,11 +2,12 @@
     <div>
       <!-- PAGES not in 'assets/pages/' -->
       {%- assign html_pages = site.html_pages -%}
-      {% for link in html_pages %}{% unless link.path contains 'assets/hidden/' %}<a href="{{ link.url | absolute_url }}"{% if page.url == link.url %} class="active"{% endif %}>{{ link.title | default: link.name }}</a>{% endunless %}{% endfor %}
+      {% for link in html_pages %}{% unless link.path contains 'assets/hidden/' %}<a href="{{ link.url | absolute_url }}"{% if page.url == link.url %} class="active"{% endif %}{% if link.order %} style='order: {{ link.order }}'{% endif %}>{{ link.title | default: link.name }}</a>{% endunless %}{% endfor %}
       <!-- COLLECTIONS -->
       {% assign sorted_collections = site.collections %}
       {% for collection in sorted_collections %}{% if collection.docs.size > 0 %}
-      <a href='{{ collection.docs[0].url | absolute_url }}'{% if page.collection == collection.label %} class='active'{% endif %}>{{ collection.title | default: collection.label }}</a>
+      {%- assign first_doc = collection.docs | where_exp: 'item', 'item.order != nil' | sort: 'order' | first -%}
+      <a href='{{ first_doc.url | absolute_url }}'{% if page.collection == collection.label %} class='active'{% endif %}>{{ collection.title | default: collection.label }}</a>
       {% endif %}{% endfor %}
     </div>
     <div>
@@ -16,7 +17,15 @@
 {% if page.collection %}{% assign col = site.collections | where: label, page.collection | first %}
 <nav>
   <div>
-    {% for d in col.docs %}<a href="{{ d.url | absolute_url }}"{% if page.url == d.url %} class="active"{% endif %}>{{ d.title }}</a>{% endfor %}
+    {% for d in col.docs %}<a href="{{ d.url | absolute_url }}"{% if page.url == d.url %} class="active"{% endif %}{% if d.order %} style="order: {{ d.order }}"{% endif %}>{{ d.title }}</a>{% endfor %}
   </div>
 </nav>
 {% endif %}
+{%- capture api -%}
+Render main navigation links and secodary navigation for collections documents.
+
+- Pages: `site.html_pages`
+- Collections: `site.collections`
+  - Collections documents
+- Login widget
+{%- endcapture -%}
