@@ -13,4 +13,4 @@ $
   .when do table_numbers
   .then do table_durations
   .then do table_sort
-  .then do time_relative
+  .then do datetime

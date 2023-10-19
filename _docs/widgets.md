@@ -1,5 +1,5 @@
 ---
-order: 0
+order: 2
 form:
  
   # File path to edit inside '_data'
@@ -95,7 +95,7 @@ form:
       # Optional numeric modifier
       mod: 0
 ---
-# Includes
+# Widgets
 {:.no_toc}
 - toc
 {:toc}

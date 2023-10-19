@@ -9,9 +9,9 @@ dom = $(document)
 html = $ 'html'
 body = $ 'body'
 today = +new Date().setHours 0,0,0,0
+environment = '{{ site.github.environment }}'
 github_repo_url = '{{ site.github.api_url }}/repos/{{ site.github.repository_nwo }}'
 lang = '{{ page.language | default: site.language | default: "it" }}'
-if $('meta[name="remote_theme"]').attr 'content' then html.addClass 'remote-theme'
 
 # Prevent-default class
 dom.on 'click', 'a.prevent', (e) -> e.preventDefault()
@@ -128,10 +128,12 @@ get_builds = -> $.get
     # Compare last build created_at with jekyll site.time
     deploy_post_build = {{ site.time | date: "%s" }} > +new Date(builds[0].created_at) / 1000
     built = builds[0].status is 'built'
-    development = '{{ site.github.environment }}' is 'development'
+    development = environment is 'development'
     if (built and same_sha and deploy_post_build) or development
       html.removeClass('behind').addClass 'updated'
-    else html.removeClass('updated').addClass 'behind'
+    else
+      html.removeClass('updated').addClass 'behind'
+      setTimeout get_builds(), 1000*60
     return # End get_builds done
 
 # Get parent repo last commit
@@ -196,9 +198,11 @@ save_file = (form, file_url, file, sha) -> $.ajax
     content: Base64.encode file
   }
   success: (data) ->
+    alert "Committed #{ data.content.path } as #{ data.commit.sha.slice 0, 7 }"
     form.trigger 'reset'
     html.removeClass('updated').addClass 'behind'
-    alert "Committed #{ data.content.path } as #{ data.commit.sha.slice 0, 7 }"
+    if environment isnt 'development'
+      setTimeout get_builds(), 1000*60
     return # End save_file
 
 # Bootstrap

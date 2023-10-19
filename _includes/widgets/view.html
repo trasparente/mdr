@@ -1,8 +1,8 @@
-{{ include.title | default: include.category | default: include.csv | default: include.json | default: include.yml | default: "table" | capitalize }}
+{{ include.title | default: include.category | default: include.csv | default: include.json | default: include.yml | default: "View widget" | capitalize }}
 -----
-{% if include.csv %}
-  {% assign csv = site.data[include.csv] %}
-  <table class='sort' data-limit='{{ include.limit }}'>
+{% if include.csv or include.liquid %}
+  {% assign csv = site.data[include.csv] | default: include.liquid %}
+  <table class='{{ include.class }}' data-sort='{{ include.sort }}' data-limit='{{ include.limit }}'>
     <thead>
       <tr>
         {% for header in csv.first %}<th>{{ header[0] }}</th>
@@ -14,8 +14,8 @@
     {% for row in csv %}
       {% if include.category contains row.category or include.category == nil %}
       <tr data-row='{{ forloop.index }}'>{% for cell in row %}
-        <td data-header='{{ cell[0] }}' data-value='{{ cell[1] }}'>{% if cell[0] == "date" %}
-          <time datetime="{{ cell[1] | date_to_rfc822 }}">{{ cell[1] }} </time>{% else %}{{ cell[1] }}{% endif %}</td>
+        <td data-header='{{ cell[0] }}' data-value='{{ cell[1] }}'>{% if cell[0] == "date" or cell[0] == "unix" %}
+          <time datetime="{{ cell[1] | date_to_rfc822 }}">{{ cell[1] | date: "%F" }} </time>{% else %}{{ cell[1] }}{% endif %}</td>
         {% endfor %}
       </tr>
       {% endif %}
@@ -23,20 +23,23 @@
     </tbody>
   </table>
 {% elsif include.json %}
-<div class="highlight highlighter-rouge"><pre data-json>{{ site.data[include.json] | jsonify }}</pre></div>
+<div class="highlight highlighter-rouge {{ include.class }}"><pre data-json>{{ site.data[include.json] | jsonify }}</pre></div>
 {% elsif include.yml %}
-<div class="highlight highlighter-rouge"><pre data-yml>{{ site.data[include.yml] | jsonify }}</pre></div>
+<div class="highlight highlighter-rouge {{ include.class }}"><pre data-yml>{{ site.data[include.yml] | default: include.yml | jsonify }}</pre></div>
 {% endif %}
 {% capture api %}
 
-Render data files, specify extension as liquid include with filename.
+Render data files or liquid objects.
 
-- `title`: optional, heading text
-- `csv`, `json` or `yml`: filename
-
+- `csv`, `json`, `yml`: filename, no extension
+- `liquid`: liquid object
+- `title`: optional, heading text, default to `category` or `filename`
+- `class`: optional, space separated class list for the element
+- `sort`: optional, can be `asc` or `desc` to sort the first column numeric values
 
 ```liquid
-{% raw %}{% include widgets/view.html csv='csv' %}
+{% raw %}{% include widgets/view.html csv='csv' sort='desc' %}
+{% include widgets/view.html liquid=page.list %}
 {% include widgets/view.html json='json' %}
 {% include widgets/view.html yml='yml' %}{% endraw %}
 ```

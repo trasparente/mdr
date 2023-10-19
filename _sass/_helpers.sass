@@ -24,8 +24,8 @@ html
   body:not([data-github-fork='false']) .unforked,
   body:not([data-github-environment='development']) .development,
   body:not([data-github-environment='production']) .production,
-  .only-child:not(:only-child),
-  &:not(.remote-theme) .remote-theme
+  body[data-github-remote-theme=''] .remote-theme,
+  .only-child:not(:only-child)
     @extend .hidden
 
 // FULLSCREEN FILLSCREEN

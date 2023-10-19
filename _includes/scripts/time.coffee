@@ -21,11 +21,11 @@ time =
   # Given a time difference and the gap string:
   # append ' ago' if past, or prepend 'in ' if future
   in_ago: (diff, string) -> if diff > 0 then "#{string} ago" else "in #{string}"
-  # Given a [time-relative] element:
+  # Given a [datetime] element:
   # return attribute value or text content
   get_date: (e) -> $(e).attr('datetime') || Date.now()
 
-  # Given a [time-classes] element:
+  # Given a [datetime] element:
   # Add relative class (past, future, today, tomorrow)
   classes: (e) ->
     el = $ e
@@ -42,7 +42,7 @@ time =
     el.addClass arr.join ' '
     return
 
-  # Given a [time-relative] element:
+  # Given a [datetime] element:
   # return a human string
   string: (e) ->
     d = time.get_date e
@@ -68,9 +68,10 @@ time =
     if string in ['0 second ago', 'in 0 second'] then string = 'now'
     return string
 
-  # Given a [time-relative] element:
+  # Given a [datetime] element:
   # append a span element with human string
   # replace title with reference date
+  # add relative class
   relative: (e) ->
     el = $ e
     string = time.string e
@@ -102,12 +103,13 @@ duration_ms = (string) ->
 # Append `span` with in/ago text
 # inside `time[datetime]`
 # --------------------------------------
-time_relative = -> $('time[datetime]').each -> time.relative @
+datetime = -> $('time[datetime]').each -> time.relative @
 
 {%- capture api -%}
-Given a `time[time-relative]`{:.language-css} element:
+Given a `time[datetime]`{:.language-css} element:
 - append a span element with human string
 - replace title with reference date
+- Add relative class: `past`, `future`, `today`, `tomorrow`
 
 ```html
 <time datetime='{{ site.time | date_to_rfc822 }}'>Site time </time>
