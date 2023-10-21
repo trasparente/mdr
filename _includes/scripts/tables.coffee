@@ -16,6 +16,7 @@ table_durations = -> $('tr').has('td[data-header="duration"]:not(:empty)').each 
   # Loop not empty duration cells
   row.find('td[data-header="duration"]:not(:empty)').each ->
     duration = duration_ms $(@).text().trim()
+    console.log duration
     # Get row date
     date_cell = row.find('td[data-header="date"]').eq(0)
     date_string = date_cell.text().trim()

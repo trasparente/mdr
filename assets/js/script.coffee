@@ -6,6 +6,7 @@
 {% include scripts/time.coffee %}
 {% include scripts/tables.coffee %}
 {% include scripts/form.coffee %}
+{% include scripts/custom.coffee %}
 #$('#prova').DataTable()
 
 # Start table chain

@@ -27,8 +27,9 @@ form
       margin-right: .5em
 
 // Restrict [data-file] forms to admins
-html:not(.admin) form[data-file]:not([data-file='']),
-  opacity: 0 // occupy real space
+html:not(.admin) form[data-file]:not([data-file=''])
+  [data-input], [data-buttons], h3
+    opacity: 0 // occupy real space
 
 // Disable form on ajax call or build behind commit
 html.ajax, html.behind

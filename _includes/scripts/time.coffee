@@ -111,6 +111,9 @@ Given a `time[datetime]`{:.language-css} element:
 - replace title with reference date
 - Add relative class: `past`, `future`, `today`, `tomorrow`
 
+**Function**
+- `duration_ms(string)`{:.language-js}: return the milliseconds of a ISO-8601 duration string `/^P(\d+Y)?(\d+M)?(\d+W)?(\d+D)?(T(\d+H)?(\d+M)?(\d+S)?)?$/`{:.language-js}
+
 ```html
 <time datetime='{{ site.time | date_to_rfc822 }}'>Site time </time>
 ```

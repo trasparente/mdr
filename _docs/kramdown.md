@@ -34,6 +34,8 @@ Colors
 {% assign col = "red,orange,yellow,green,forest,cyan,blue,violet,purple,magenta,pink" | split: ',' %}
 {% for c in col %}<span class='color-{{c}}'>.color-{{c}}</span>
 {% endfor %}
+{% for c in col %}<span class='background-{{c}} color-{{c}}'>.background-{{c}}</span>
+{% endfor %}
 
 Code
 ----

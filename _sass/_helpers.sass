@@ -28,13 +28,19 @@ html
   .only-child:not(:only-child)
     @extend .hidden
 
+// BLINK
+.blink
+  animation: blinker 1s step-start infinite
+@keyframes blinker
+  50%
+    opacity: 0
+
 // FULLSCREEN FILLSCREEN
 html.fullscreen
   overflow: initial
   body.fillscreen
     main
       padding-inline: .5em
-      height: 57vh
       h1:first-child
         margin-top: 0
     header, footer
