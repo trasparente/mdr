@@ -29,13 +29,20 @@ Exclude headers from the TOC with the class `no_toc`.
 {:.no_toc}
 ```
 
-Colors
-------
-{% assign col = "red,orange,yellow,green,forest,cyan,blue,violet,purple,magenta,pink" | split: ',' %}
-{% for c in col %}<span class='color-{{c}}'>.color-{{c}}</span>
+Color classes
+-------------
+{% assign colors = "red,orange,yellow,green,forest,cyan,blue,violet,purple,magenta,pink" | split: ',' %}
+<span class='color-muted'>.color-muted</span>
+<span class='color-fg'>.color-fg</span>
+<span class='color-link'>.color-link</span>
+<span class='blink'>.blink</span>
+
+{% for c in colors %}<span class='color-{{c}}'>.color-{{c}}</span>
 {% endfor %}
-{% for c in col %}<span class='background-{{c}} color-{{c}}'>.background-{{c}}</span>
-{% endfor %}
+
+<span style='padding:1em;display:inline-block' class='background-bg'>.background-bg</span><span style='padding:1em;display:inline-block' class='background-muted'>.background-muted</span><span style='padding:1em;display:inline-block' class='background-muted background-blink'>.background-blink</span>
+
+{% for c in colors %}<span style='padding:1em;display:inline-block' class='background-{{c}}'>.background-{{c}}</span>{% endfor %}
 
 Code
 ----
@@ -72,12 +79,8 @@ $('body').append(arr)
 
 ## Blockquotes
 
-> Example with cite attribute (source url)
+> Example with cite attribute (source url), support background color classes
 {:cite="https://example.com"}
-
-{% for color in colors %}
-<blockquote class="{{ color }}">.{{ color }}</blockquote>
-{% endfor %}
 
 And **Inline quotation element** like <q cite="https://example.com">this</q>.
 
@@ -129,13 +132,13 @@ Rendered HTML code:
 <sup id="fnref:1" role="doc-noteref">
   <a href="#fn:1" class="footnote" rel="footnote">1</a>
 </sup>
-```
 
-```html
+...
+
 <div class="footnotes" role="doc-endnotes">
   <ol>
     <li id="fn:1" role="doc-endnote">
-      <p>... <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p> ... <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     ...
   </ol>

@@ -1,5 +1,7 @@
 form
-  transition: opacity .2s ease-in
+  transition-property: opacity, filter
+  transition-duration: .2s
+  transition-timing-function: ease-in
   margin: .5em 0
   padding: 0 .7em
   border-left: 4px solid var(--border)
@@ -45,10 +47,7 @@ input, select, output, textarea
   line-height: inherit
   appearance: none
   -webkit-appearance: none
-  @extend .color-yellow
-  border: 1px solid var(--border)
-  border-radius: 3px
-  background-color: var(--border)
+  @extend .color-yellow, .border, .background-muted, .border-radius
 
 // Interaction
 input, label, button, select, textarea

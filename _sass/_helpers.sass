@@ -1,7 +1,20 @@
-.mpz
+// Reset margin and padding
+.mz
   margin: 0
+.pz
   padding: 0
+.mpz
+  @extend .mz, .pz
 
+// BORDERS
+.border
+  border-width: 1px
+.border-top
+  border-width: 1px 0 0 0
+.border-bottom
+  border-width: 0 0 1px 0
+
+// HIDE
 .hidden, [hidden], template
   display: none
 
@@ -28,12 +41,18 @@ html
   .only-child:not(:only-child)
     @extend .hidden
 
-// BLINK
+// BLINKS
 .blink
   animation: blinker 1s step-start infinite
 @keyframes blinker
   50%
     opacity: 0
+// Background blink
+.background-blink
+  animation: back-blinker 1s step-start infinite
+@keyframes back-blinker
+  50%
+    background: transparent
 
 // FULLSCREEN FILLSCREEN
 html.fullscreen
@@ -47,3 +66,12 @@ html.fullscreen
       display: none
     header, nav, main, footer
       max-width: none
+
+// SCREEN MIXING
+// Mobile screens are 40em (620px)
+// element
+//   @include mobile
+//     content
+@mixin mobile
+  @media screen and (max-width: 40em)
+    @content

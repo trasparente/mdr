@@ -1,12 +1,12 @@
 {% assign last = include.data | where: include.field, include.value | last | map: 'date' %}<time datetime='{{ last }}'>{{ include.text }}</time>
 {%- capture api -%}
-Given a liquid array with a `date` field, show the relative time of the first occurence of a value for a field.
+Given a liquid array with a `date` field, show the relative time of the last occurence of a value for a field.
 
 ```liquid
-{% raw %}{% include widgets/first.html data=site.data.csv field='serie' value='1' %}{% endraw %}
+{% raw %}{% include widgets/last.html data=site.data.csv field='serie' value='1' %}{% endraw %}
 ```
 **Includes**
 - `data`: liquid array
-- `field`: field for the first occurence
-- `value`: value for the first occurrence
+- `field`: field for the last occurence
+- `value`: value for the last occurrence
 {%- endcapture -%}

@@ -35,10 +35,10 @@ table_durations = -> $('tr').has('td[data-header="duration"]:not(:empty)').each 
     return # End 'duration' cells loop
   return # End table rows loop
 
-# Sort by first column numeric values with [data-sort]
+# Sort by first column numeric values with [data-sort='asc/desc']
 table_sort = -> $('table:not([data-sort=""]').each ->
   table = $ @
-  # Sort function by first TD cell text node
+  # Sort function by first column value
   rows = table.find('tbody tr').sort (a, b) ->
     value_a = +$(a).find("td:first-child").text().trim()
     value_b = +$(b).find("td:first-child").text().trim()
@@ -50,12 +50,16 @@ table_sort = -> $('table:not([data-sort=""]').each ->
   # Remove rows and append new sequence
   table.find('tbody tr').remove()
   table.find('tbody').append rows
-  # Hide extra rows if data-limit attribute is set
+
+# Hide extra rows if data-limit attribute is set
+# Negative limit show table bottom rows
+table_limit = -> $('table[data-limit]').each ->
+  table = $ @
   if table.attr 'data-limit'
     limit = +table.attr 'data-limit'
-    rows = table.find('tr')
+    rows = table.find('tbody tr')
     rows.each (i, e) ->
-      if (limit > 0 and i > limit) or (limit < 0 and i < rows.length+limit)
+      if (limit > 0 and i > limit) or (limit < 0 and i < rows.length+limit - 1)
         $(e).hide()
       return # End data-limit loop
   return # End table_sort

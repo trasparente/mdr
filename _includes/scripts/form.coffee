@@ -17,6 +17,7 @@ $('form[data-file$=".json"]').on 'submit', ->
   form = $ @
   form.find(':input').blur()
   file_url = url_from_data_file form
+  # Serialize form fields in `file`
   file = {}
   form.find(':input').each ->
     el = $ @

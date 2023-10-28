@@ -43,6 +43,11 @@ $('[data-json]').each ->
   el.html text
   return
 
+$('a[data-yaml]').each ->
+  el = $ @
+  console.log el.data 'yaml'
+  return
+
 # Preview YML file
 # Attribute [data-yml]
 # --------------------------------------
@@ -133,7 +138,7 @@ get_builds = -> $.get
       html.removeClass('behind').addClass 'updated'
     else
       html.removeClass('updated').addClass 'behind'
-      setTimeout get_builds(), 1000*60
+      setTimeout get_builds, 1000*60
     return # End get_builds done
 
 # Get parent repo last commit
@@ -201,8 +206,7 @@ save_file = (form, file_url, file, sha) -> $.ajax
     alert "Committed #{ data.content.path } as #{ data.commit.sha.slice 0, 7 }"
     form.trigger 'reset'
     html.removeClass('updated').addClass 'behind'
-    if environment isnt 'development'
-      setTimeout get_builds(), 1000*60
+    if environment isnt 'development' then do get_builds
     return # End save_file
 
 # Bootstrap

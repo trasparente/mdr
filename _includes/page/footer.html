@@ -6,7 +6,8 @@
     Build_revision <code title='{{ site.github.build_revision }}'>{{ site.github.build_revision | slice: 0, 7 }}</code> <time datetime='{{ pushed_at }}'>pushed_at </time>
   </li>
   <li>GitHub {% include widgets/github_link.html text="Repository" %} {% assign created_at = site.github.public_repositories | where: "full_name", site.github.repository_nwo | first | map: "created_at" | first | date_to_rfc822 %}<time datetime='{{ created_at }}'>created_at </time></li>
-  <li>Page {% include widgets/github_link.html path=page.path text="Code" %}</li>
+  {% if site.remote_theme %}<li>Use <code>remote-theme</code> <a href='https://github.com/{{ site.remote_theme | split: "@" | first }}'>{{ site.remote_theme | split: "@" | first }}</a></li>{% endif %}
+  <li>Page {% include widgets/github_link.html path=page.path text="code" %}</li>
 </ul>
 <ul>
   <li>

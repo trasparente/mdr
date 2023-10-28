@@ -1,6 +1,6 @@
 {% assign form = include.form | default: page.form %}
 {% if form.file == nil %}> Missing `form.file` for `form` widget
-{:.red}{% else %}
+{:.background-red}{% else %}
 {% assign class = form.class %}
 {% assign extension = form.file | split: '.' | last %}
 <form class='prevent{% if class %} {{ class }}{% endif %}' data-file='{{ form.file }}'>
@@ -57,8 +57,8 @@
         value='{{ options | sample | map: property }}'
         title='picked {{ property }} from {{ csv }}'>
     {% when 'roll' %}
-      {%- assign dice = field[1].dice | default: 6 -%}
-      {%- assign roll = field[1].roll | default: 1 -%}
+      {%- assign dice = field[1].roll | split: 'd' | last | default: 6 -%}
+      {%- assign roll = field[1].roll | split: 'd' | first | default: 1 -%}
       {%- assign mod = field[1].mod | default: 0 -%}
       {%- assign array = '' | split: '' -%}
       {%- assign total = 0 -%}
@@ -182,9 +182,7 @@ form:
     roll:
       type: roll
       # Number of rolls
-      roll: 3
-      # Number of sides
-      dice: 6
+      roll: 3d6
       # Optional numeric modifier
       mod: 0
 ```

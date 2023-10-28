@@ -1,14 +1,10 @@
 tt, code, kbd, samp,
 pre[data-json], pre[data-yml]
-  color: #{$fg-muted}
+  @extend .color-muted
 
 // INLINE
 code.highlighter-rouge
-  @extend .highlight, .color-green
-  padding: 0
-
-a code.highlighter-rouge
-  color: var(--link)
+  @extend .highlight, .color-green, .pz
 
 // BLOCKS HIGHLIGHTED
 // Fenced, kramdown, indented:
@@ -16,15 +12,13 @@ a code.highlighter-rouge
 // liquid:
 // figure.highlight > pre > code
 .highlight pre
-  border: 2px solid #{$border}
-  margin: 0
+  @extend .background-muted, .mz, .border-radius
   white-space: pre-wrap
   line-height: 1.2
-  padding-block: .75em
-  padding-inline: 1em
+  padding: .8em
   font-size: 97%
   code
-    padding: 0px
+    @extend .pz
 
 // Minimal Code Blocks
 div.highlighter-rouge pre
