@@ -77,16 +77,31 @@ c = (arg) -> arr.index()
 $('body').append(arr)
 ~~~
 
-## Blockquotes
+## Details
 
-> Example with cite attribute (source url), support background color classes
+<details>
+<summary>Summary</summary>
+Content
+</details>
+
+## Links and Buttons
+
+[Link](#)
+<button>Button</button>
+
+## Blockquotes and quotes
+
+Support `background-{color}` classes, changing border color.
+> Example with cite attribute (source url)
+
 {:cite="https://example.com"}
 
-And **Inline quotation element** like <q cite="https://example.com">this</q>.
+**Inline quotation element**
 
 ```html
 <q cite="{source url}">Quote</q>
 ```
+<q cite="https://example.com">Quote</q>
 
 ## Typography
 

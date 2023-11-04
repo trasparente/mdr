@@ -4,7 +4,7 @@ form
   transition-timing-function: ease-in
   margin: .5em 0
   padding: 0 .7em
-  border-left: 4px solid var(--border)
+  @extend .border-left
   // Titles
   h3
     margin-top: #{nth($headings-margins, 3)}em
@@ -25,8 +25,6 @@ form
   // Button div
   [data-buttons]
     padding-block: .5em
-    input
-      margin-right: .5em
 
 // Restrict [data-file] forms to admins
 html:not(.admin) form[data-file]:not([data-file=''])
@@ -36,7 +34,7 @@ html:not(.admin) form[data-file]:not([data-file=''])
 // Disable form on ajax call or build behind commit
 html.ajax, html.behind
   form
-    opacity: .5
+    opacity: 50%
     filter: saturate(0)
     pointer-events: none
 
@@ -47,10 +45,11 @@ input, select, output, textarea
   line-height: inherit
   appearance: none
   -webkit-appearance: none
+  padding: 1px 2px
   @extend .color-yellow, .border, .background-muted, .border-radius
 
 // Interaction
-input, label, button, select, textarea
+input, label, select, textarea
   cursor: pointer
   min-width: 2em
   &:focus
@@ -63,19 +62,15 @@ input, label, button, select, textarea
 // Buttons
 input[type='submit'],
 input[type='reset'],
-input[type='button'],
-button
-  @extend .link
-  &:focus
-    border-color: var(--fg)
+input[type='button']
+  @extend .button
+  margin-left: 0 !important
 
 // Hide number ARROWS
-// input::-webkit-outer-spin-button,
-// input::-webkit-inner-spin-button
-//   -webkit-appearance: none !important
+
 input[type='number']
   @extend .color-cyan
   -moz-appearance: textfield !important
   text-align: right
-  &:focus-visible
+  &:focus
     border: 1px solid var(--color-cyan)

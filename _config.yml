@@ -1,5 +1,6 @@
 timezone: Europe/Rome
 permalink: pretty
+repository: trasparente/mdr
 
 # DEFAULTS
 defaults:

@@ -1,13 +1,11 @@
 nav
   display: flex
-  text-transform: uppercase
   justify-content: space-between
+  text-transform: uppercase
   &:first-of-type
     @extend .border-bottom
   > div
     display: flex
-    @include mobile
-      flex-direction: column
   a, span
     display: block
-    padding: 0.5em
+    padding: .5em .7em

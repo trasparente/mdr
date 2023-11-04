@@ -31,7 +31,7 @@ GEM
     faraday-net_http (3.0.2)
     faraday-retry (2.1.0)
       faraday (~> 2.0)
-    ffi (1.15.5-x64-mingw-ucrt)
+    ffi (1.16.3-x64-mingw-ucrt)
     forwardable-extended (2.6.0)
     gemoji (3.0.1)
     github-pages (228)
@@ -251,7 +251,7 @@ GEM
       tzinfo (>= 1.0.0)
     unf (0.1.4)
       unf_ext
-    unf_ext (0.0.8.2-x64-mingw-ucrt)
+    unf_ext (0.0.8.2)
     unicode-display_width (1.8.0)
     wdm (0.1.1)
     webrick (1.8.1)
@@ -264,8 +264,6 @@ DEPENDENCIES
   faraday-retry
   github-pages
   jekyll
-  jekyll-coffeescript
-  tzinfo (~> 1.2)
   tzinfo-data
   wdm (~> 0.1.1)
   webrick

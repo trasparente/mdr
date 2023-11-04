@@ -4,10 +4,11 @@ blockquote
   font-size: 110%
   margin: 1em 0
   padding: .5em .7em
-  border-left: 6px solid var(--border)
+  @extend .border-left
   & > p
     @extend .mz
 
+// Border color according to background
 @each $color in $colors
   blockquote.background-#{$color}
     border-color: var(--color-#{$color})

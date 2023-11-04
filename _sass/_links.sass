@@ -1,13 +1,27 @@
 .active-link
   &:hover
     text-decoration: underline
-  &:active, &.active
+  &:active, &:focus, &.active
     color: var(--fg)
 
 a, .link
   color: var(--link)
   text-decoration: none
   @extend .active-link
+
+button, .button
+  @extend .background-muted
+  cursor: pointer
+  border: none
+  font-size: var(--font-size)
+  font-family: system-ui
+  color: var(--link)
+  padding: .4em .7em
+  margin-inline: .3em
+  &:hover
+    @extend .background-bg
+  &:active
+    @extend .color-fg
 
 // link with inline code
 a code.highlighter-rouge

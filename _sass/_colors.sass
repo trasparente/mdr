@@ -10,19 +10,38 @@
 .background-muted
   background-color: var(--border)
 
-// Color classes
+// COLOR CYCLE
 @each $color in $colors
+  // Color classes
   .color-#{$color}
     color: var(--color-#{$color})
-
-// Background classes
-@each $color in $colors
+  // Background classes
   .background-#{$color}
     background-color: var(--background-#{$color})
+  // ACCENTS
+  .accent-#{$color}
+    // Links
+    --link: var(--color-#{$color})
+    // Navigation
+    nav a
+      &:hover
+        text-decoration: none
+      &:not(.active)
+        @extend .background-#{$color}
+        &:hover
+          @extend .background-bg
+    // Borders
+    .border, .border-top, .border-bottom, .border-left
+      border-color: var(--background-#{$color})
+      // exclude children elements
+      *
+        border-color: var(--border)
 
 // BORDERS
-.border, .border-top, .border-bottom
+.border, .border-top, .border-bottom, .border-left
   border-color: var(--border)
   border-style: solid
 .border-radius
   border-radius: 3px
+.border-left
+  border-left-width: 5px

@@ -9,7 +9,7 @@ prova:
       csv: stones
       property: dead
     # roll is a number
-    roll:
+    3d6:
       type: roll
       roll: 3d6
     # tables
