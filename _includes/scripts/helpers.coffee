@@ -90,7 +90,8 @@ resize()
 # Return ISO 8601 date YYYY-MM-DD
 date_iso = (date) -> new Date(date || +new Date()).toLocaleDateString 'sv'
 
-# Get file url from data-file FORMs attribute
+# Get data file url from data-file form attribute
+# If it is a fork, save inside 'user' folder
 url_from_data_file = (form) ->
   path = form.attr 'data-file'
   # Prepend user folder if repository is forked
@@ -99,15 +100,15 @@ url_from_data_file = (form) ->
   return "#{ github_repo_url }/contents/_data/#{ path }" # End url_from_data_file
 
 # GitHub auth, personal token as argument
-get_auth = (t) -> $.get
+get_auth = (token) -> $.get
   url: '{{ site.github.api_url }}/user'
-  headers: { 'Authorization': "token #{ t }" }
+  headers: { 'Authorization': "token #{ token }" }
   success: (user) ->
     html.removeClass('unlogged').addClass 'logged'
-    localStorage.setItem 'token', t
+    localStorage.setItem 'token', token
     localStorage.setItem 'user', user.login
     return # End get_auth done
-  error: -> logout t
+  error: -> logout token
 
 get_repo = (user, token) -> $.get
   url: github_repo_url
@@ -128,13 +129,9 @@ get_repo = (user, token) -> $.get
 get_builds = -> $.get
   url: github_repo_url + '/pages/builds'
   success: (builds) ->
-    # Compare last build commit sha with hardcoded jekyll build revision
-    same_sha = builds[0].commit is '{{ site.github.build_revision }}'
-    # Compare last build created_at with jekyll site.time
-    deploy_post_build = {{ site.time | date: "%s" }} > +new Date(builds[0].created_at) / 1000
-    built = builds[0].status is 'built'
-    development = environment is 'development'
-    if (built and same_sha and deploy_post_build) or development
+    if builds[0].status is 'built' or environment is 'development'
+      if html.hasClass 'behind'
+        history.pushState null, '', "#{ window.location }?update_to=#{ builds[0].updated_at }"
       html.removeClass('behind').addClass 'updated'
     else
       html.removeClass('updated').addClass 'behind'

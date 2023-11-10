@@ -6,7 +6,7 @@ order: 1
 - toc
 {:toc}
 
-### Setup
+## Setup
 
 1. New repository with jekyll `.gitignore` file
 2. Select pages branch in repository `Settings > Pages > Branch`
@@ -53,3 +53,29 @@ jobs:
         env:
           GITHUB_TOKEN: ${% raw %}{{ secrets.GITHUB_TOKEN }}{% endraw %}
 ```
+
+## Theme
+
+[Link](#)
+<button>Button</button>
+<details>
+<summary>Details</summary>
+Content
+</details>
+
+Color classes `.color-{ color }`{:.language-css}
+
+{% assign colors = "red,orange,yellow,green,forest,cyan,blue,violet,purple,magenta,pink" | split: ',' %}
+<span class='color-muted'>.color-muted</span>
+<span class='color-fg'>.color-fg</span>
+<span class='color-link'>.color-link</span>
+<span class='blink'>.blink</span>
+{% for c in colors %}<span class='color-{{c}}'>.color-{{c}}</span>
+{% endfor %}
+
+Background classes `.background-{ color }`{:.language-css}
+
+<span style='padding:1em;display:inline-block' class='background-bg'>.background-bg</span><span style='padding:1em;display:inline-block' class='background-muted'>.background-muted</span><span style='padding:1em;display:inline-block' class='background-muted background-blink'>.background-blink</span>
+{% for c in colors %}<span style='padding:1em;display:inline-block' class='background-{{c}}'>.background-{{c}}</span>{% endfor %}
+
+Accent classes `.accent-{ color }`{:.language-css} coordinates links, navigation and border colors.

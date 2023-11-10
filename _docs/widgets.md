@@ -6,10 +6,11 @@ form:
   # Format: 'folder/file.ext'
   # Required
   file: fields.json
- 
+
+  # Timestamp to save as 'folder/{timestamp}.ext'
   # Form class list
   # Optional
-  class: ''
+  timestamp: true
 
   # Form field as yaml fields
   # Columns if file is 'csv'
@@ -78,8 +79,8 @@ form:
       property: date
 
     # Pick a property from a random line in a csv
-    pick:
-      type: pick
+    random:
+      type: random
       # csv file name inside '_data'
       csv: stones
       # Column name to pick
@@ -88,12 +89,14 @@ form:
     # Roll dices at site deploy
     roll:
       type: roll
-      # Number of rolls
-      roll: 3
-      # Number of sides
-      dice: 6
-      # Optional numeric modifier
-      mod: 0
+      roll: 3d6
+
+    # Roll and index a value/name csv
+    roll_csv:
+      type: roll
+      roll: 3d6
+      csv: agency
+      property: name
 ---
 # Widgets
 {:.no_toc}

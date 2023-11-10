@@ -1,5 +1,5 @@
 #
-# APPEND to CSV
+# Forms SUBMIT or RESET
 # --------------------------------
 
 $('form[data-file$=".csv"]').on 'submit', ->

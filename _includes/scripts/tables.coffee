@@ -16,7 +16,6 @@ table_durations = -> $('tr').has('td[data-header="duration"]:not(:empty)').each 
   # Loop not empty duration cells
   row.find('td[data-header="duration"]:not(:empty)').each ->
     duration = duration_ms $(@).text().trim()
-    console.log duration
     # Get row date
     date_cell = row.find('td[data-header="date"]').eq(0)
     date_string = date_cell.text().trim()
@@ -38,10 +37,10 @@ table_durations = -> $('tr').has('td[data-header="duration"]:not(:empty)').each 
 # Sort by first column numeric values with [data-sort='asc/desc']
 table_sort = -> $('table:not([data-sort=""]').each ->
   table = $ @
-  # Sort function by first column value
+  # Sort function by `td time[data-sort]`
   rows = table.find('tbody tr').sort (a, b) ->
-    value_a = +$(a).find("td:first-child").text().trim()
-    value_b = +$(b).find("td:first-child").text().trim()
+    value_a = $(a).find("td time").attr 'data-sort' || $(a).find("td time").attr 'datetime'
+    value_b = $(b).find("td time").attr 'data-sort' || $(b).find("td time").attr 'datetime'
     if 'asc' is table.attr 'data-sort'
       return if value_a <= value_b then -1 else 1
     if 'desc' is table.attr 'data-sort'

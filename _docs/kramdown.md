@@ -29,20 +29,14 @@ Exclude headers from the TOC with the class `no_toc`.
 {:.no_toc}
 ```
 
-Color classes
--------------
-{% assign colors = "red,orange,yellow,green,forest,cyan,blue,violet,purple,magenta,pink" | split: ',' %}
-<span class='color-muted'>.color-muted</span>
-<span class='color-fg'>.color-fg</span>
-<span class='color-link'>.color-link</span>
-<span class='blink'>.blink</span>
+Tables
+------
 
-{% for c in colors %}<span class='color-{{c}}'>.color-{{c}}</span>
-{% endfor %}
+Use `|----` for a new `<tbody>`{:.language-html} and `|====` for a `<tfoot>`{:.language-html}
 
-<span style='padding:1em;display:inline-block' class='background-bg'>.background-bg</span><span style='padding:1em;display:inline-block' class='background-muted'>.background-muted</span><span style='padding:1em;display:inline-block' class='background-muted background-blink'>.background-blink</span>
-
-{% for c in colors %}<span style='padding:1em;display:inline-block' class='background-{{c}}'>.background-{{c}}</span>{% endfor %}
+|Header|Number|Boolean|
+|---|---|---|
+|String|14.7|true|
 
 Code
 ----
@@ -77,17 +71,6 @@ c = (arg) -> arr.index()
 $('body').append(arr)
 ~~~
 
-## Details
-
-<details>
-<summary>Summary</summary>
-Content
-</details>
-
-## Links and Buttons
-
-[Link](#)
-<button>Button</button>
 
 ## Blockquotes and quotes
 

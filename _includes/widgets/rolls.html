@@ -1,0 +1,19 @@
+{%- assign rolls_mod = include.mod | default: 0 -%}
+{%- assign rolls_dice = include.roll | split: 'd' | last | default: 6 -%}
+{%- assign rolls_roll = include.roll | split: 'd' | first | default: 1 -%}
+{%- assign rolls_array = '' | split: '' -%}
+{%- assign rolls_rolls = '' | split: '' -%}
+{%- assign rolls_output = 0 -%}
+{%- for d in (1..rolls_dice) -%}
+  {%- assign rolls_array = rolls_array | push: d -%}
+{%- endfor -%}
+{%- for r in (1..rolls_roll) -%}
+  {%- assign effimer = rolls_array -%}
+  {%- assign sample = effimer | sample -%}
+  {%- assign rolls_rolls = rolls_rolls | push: sample -%}
+{%- endfor -%}
+{%- for r in rolls_rolls -%}
+  {%- assign rolls_output = rolls_output | plus: r -%}
+{%- endfor -%}
+{%- assign rolls_output = rolls_output | plus: rolls_mod -%}
+{{ rolls_output }}

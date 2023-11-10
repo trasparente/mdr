@@ -10,7 +10,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr class='only-child'><td colspan='{{csv.first.size}}'>No data</td></tr>
+      <tr class='only-child'><td colspan='{{ csv.first.size }}'>No data</td></tr>
     {% for row in csv %}
       {% if include.category contains row.category or include.category == nil %}
       <tr data-row='{{ forloop.index }}'>{% for cell in row %}
@@ -33,9 +33,8 @@ Render data files or liquid objects.
 
 - `csv`, `json` or `yml`: data filename, no extension
 - `liquid`: liquid object
-- `title`: optional, heading text, default to `category` or `filename`
+- `title`: optional, heading text, default to `category` or filename
 - `class`: optional, space separated class list for the element
-- `sort`: optional, can be `asc` or `desc` to sort the first column numeric values
 
 ```liquid
 {% raw %}{% include widgets/view.html csv='csv' sort='desc' %}
@@ -44,7 +43,23 @@ Render data files or liquid objects.
 {% include widgets/view.html yml='yml' %}{% endraw %}
 ```
 
-Example css style
+Options for `csv`
+
+- `category`: filter rows given a string for the `category` property
+- `sort`: optional, can be `asc` or `desc` to sort the first column numeric values  
+  default state is `unsorted`
+
+**Csv table**
+```html
+<table class='...' data-sort='...' data-limit='...'>
+  <tr data-row='1'>
+    <td data-header='...' data-value='...'>
+      <!-- if header is `date` or `unix` -->
+      <time datetime='date_to_rcf822'>ISO 8601 </time>
+...
+
+```
+Styles
 ```css
 td[data-value='briefing']{color:var(--color-green)}
 td[data-value='bill']{color:var(--color-orange)}

@@ -16,6 +16,10 @@
 .border-left
   border-width: 0 0 0 5px
 
+// Inline
+.inline
+  display: inline-block
+
 // Flex
 .flex
   display: flex
@@ -68,7 +72,11 @@ html.fullscreen
       padding-inline: .5em
       h1:first-child
         margin-top: 0
-    header, footer
+    header
+      padding-inline: 1em
+      h1
+        font-size: 1em
+    footer
       display: none
     header, nav, main, footer
       max-width: none

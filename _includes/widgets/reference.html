@@ -1,1 +1,7 @@
 {% assign condition = 'item.value contains ' | append: include.value %}{% assign reference = site.data[include.csv] | where_exp: 'item', condition | first | map: 'name' %}{{ reference }}
+{%- capture api -%}
+Return `name` property of the `include.csv` record which contains `include.value`
+
+- `csv`: csv filename inside `_data` forlder
+- `value`: token to search in `value` field
+{%- endcapture -%}
