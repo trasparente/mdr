@@ -1,0 +1,48 @@
+{% assign count = 0 %}
+{% assign csv = site.data[include.csv] %}
+{%- assign total = 0 -%}
+{%- assign not = 0 -%}
+{%- assign days = include.days | default: 60 | minus: 1 -%}
+<div class="calendar">
+{%- for d in (0..days) reversed -%}
+  {%- assign gap = d | times: 86400 -%}
+  {%- assign day = site.time | date: "%s" | minus: gap | date: "%F" -%}
+  {%- assign is = csv | where: "date", day | size -%}
+  {%- if is > 0 -%}
+    {%- assign count = count | plus: 1 -%}
+    {%- assign total = total | plus: 1 -%}
+    {%- assign not = 0 -%}
+    {%- assign effimer = count -%}
+  {%- else -%}
+    {%- assign not = not | plus: 1 -%}
+    {%- assign count = 0 -%}
+    {%- assign effimer = not -%}
+    {% if effimer > 9 %}{% assign effimer = 1 %}{% endif %}
+  {%- endif -%}
+  <div data-property='{{ csv | where: "date", day | map: include.property }}' data-day='{{ day }}' title='{{ day | date: "%A %B %-d %Y" }}'>
+    {{ effimer }}
+  </div>
+{%- endfor -%}
+</div>
+{%- capture api -%}
+Render a series of divs from a csv file with a `date` column.
+
+- `csv`: data file without extension
+- `property`: divs will have `data-property` attribute for styling
+- `days`: past span from today of the calendar, default to 60 (past 2 months)
+
+```liquid
+{% raw %}{% include widgets/calendar.html csv='practice' property='serie' %}{% endraw %}
+```
+
+Divs represent a day, showing a counter of consecutive days present or not present in the file.
+
+```html
+<div data-property="0" data-day="2023-09-29" title="Friday September 29 2023">5</div>
+```
+
+Divs attributes:
+- `data-property`: the property passed as include variabile
+- `data-day`: day in the format `YYYY-MM-DD`
+- `title`: date in the format `Weekday Month D YYYY`
+{%- endcapture -%}

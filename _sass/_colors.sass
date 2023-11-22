@@ -3,10 +3,12 @@
   color: var(--fg)
 .color-muted
   color: var(--fg-muted)
+.color-border
+  color: var(--border)
 .color-link
   color: var(--link)
 .background-bg
-  background-color: var(--bg)
+  background-color: var(--bg) !important
 .background-muted
   background-color: var(--border)
 
@@ -22,6 +24,9 @@
   .accent-#{$color}
     // Links
     --link: var(--color-#{$color})
+    // Evidend
+    &.evident
+      @extend .background-#{$color}, .color-#{$color}
     // Navigation
     nav a
       &:hover

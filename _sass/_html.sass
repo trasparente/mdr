@@ -1,0 +1,23 @@
+html
+  overflow-y: scroll
+  background-color: var(--bg)
+
+  // HIDE SAME-NAME STATES
+  &:not(.unlogged) .unlogged, &:not(.logged) .logged,
+  &.online .offline, &:not(.online) .online,
+  &:not(.behind) .behind, &:not(.updated) .updated,
+  &.focus .blur, &:not(.focus) .focus,
+  &:not(.scrolled) .scrolled,
+  &:not(.logged) .guest,
+  &:not(.logged) .admin,
+  &:not(.admin) .admin,
+  &:not(.ajax) .ajax,
+  &:not(.guest) .guest,
+  &:not(.fullscreen) .fullscreen,
+  body:not([data-github-fork='true']) .fork,
+  body:not([data-github-fork='false']) .unfork,
+  body:not([data-github-environment='development']) .development,
+  body:not([data-github-environment='production']) .production,
+  body[data-github-remote-theme=''] .remote-theme,
+  .only-child:not(:only-child)
+    @extend .hidden

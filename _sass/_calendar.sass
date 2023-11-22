@@ -1,0 +1,17 @@
+.calendar
+  display: flex
+  justify-content: space-between
+
+  // Days
+  div[data-day]
+    flex-grow: 1
+    cursor: default
+    text-align: center
+    font-family: monospace
+    color: var(--fg-muted)
+    &:hover
+      background-color: var(--border)
+
+  // No property
+  div[data-property='']
+    opacity: .3

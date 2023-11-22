@@ -44,7 +44,7 @@
     {% when 'ref' %}
       {% assign csv = field[1].csv %}
       {% assign options = site.data[csv] %}
-      {% assign property = field[1].property %}
+      {% assign property = field[1].property | default: 'name' %}
       <select name='{{ field[0] }}' id='{{ field[0] }}'>
       {% for option in options %}{% assign name = option[property] %}
         <option value='{{ name }}'>{{ name }}</option>
@@ -53,7 +53,7 @@
     {% when 'random' %}
       {%- assign csv = field[1].csv -%}
       {%- assign options = site.data[csv] -%}
-      {%- assign property = field[1].property -%}
+      {%- assign property = field[1].property | default: 'name' -%}
       <input
         type='text' id='{{ field[0] }}' name='{{ field[0] }}'
         value='{{ options | sample | map: property }}'
@@ -176,7 +176,8 @@ form:
       type: ref
       # csv file name inside '_data'
       csv: time
-      # Column name to gather
+      # Optional column name to gather
+      # default to 'name'
       property: date
 
     # Random line in a csv
@@ -184,7 +185,8 @@ form:
       type: random
       # csv file name inside '_data'
       csv: stones
-      # Column name to pick
+      # Optional column name to pick
+      # default to 'name'
       property: dead
 
     # Roll dices at site deploy

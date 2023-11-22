@@ -10,14 +10,11 @@ a, .link
   @extend .active-link
 
 button, .button
-  @extend .background-muted, .border-radius
-  cursor: pointer
-  border: none
+  @extend .evident
+  color: var(--link)
   font-size: var(--font-size)
   font-family: system-ui
-  color: var(--link)
-  padding: .4em .7em
-  margin-inline: .3em
+  cursor: pointer
   &:hover
     @extend .background-bg
   &:active

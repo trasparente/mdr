@@ -3,10 +3,14 @@
   margin: 0
 .pz
   padding: 0
+.padding-around
+  padding: $padding_around
 .mpz
   @extend .mz, .pz
 
 // BORDERS
+.no-border
+  border: none
 .border
   border-width: 1px
 .border-top
@@ -16,53 +20,37 @@
 .border-left
   border-width: 0 0 0 5px
 
-// Inline
+// EVIDENT
+.evident
+  @extend .background-muted, .border-radius, .no-border, .padding-around
+  margin-inline: .2em
+
+// DISPLAY
 .inline
   display: inline-block
-
-// Flex
 .flex
   display: flex
-
-// HIDE
 .hidden, [hidden], template
   display: none
 
-// SAME-NAME STATES
-html
-  overflow-y: scroll
-  background-color: var(--bg)
-  &:not(.unlogged) .unlogged, &:not(.logged) .logged,
-  &.online .offline, &:not(.online) .online,
-  &:not(.behind) .behind, &:not(.updated) .updated,
-  &.focus .blur, &:not(.focus) .focus,
-  &:not(.scrolled) .scrolled,
-  &:not(.logged) .guest,
-  &:not(.logged) .admin,
-  &:not(.admin) .admin,
-  &:not(.ajax) .ajax,
-  &:not(.guest) .guest,
-  &:not(.fullscreen) .fullscreen,
-  body:not([data-github-fork='true']) .fork,
-  body:not([data-github-fork='false']) .unforked,
-  body:not([data-github-environment='development']) .development,
-  body:not([data-github-environment='production']) .production,
-  body[data-github-remote-theme=''] .remote-theme,
-  .only-child:not(:only-child)
-    @extend .hidden
-
 // BLINKS
 .blink
-  animation: blinker 1s step-start infinite
+  animation: blinker $blink step-start infinite
 @keyframes blinker
   50%
     opacity: 0
 // Background blink
 .background-blink
-  animation: back-blinker 1s step-start infinite
-@keyframes back-blinker
+  animation: background-blink $blink step-start infinite
+@keyframes background-blink
   50%
     background: transparent
+// Foreground blink
+.foreground-blink
+  animation: foreground-blink $blink step-start infinite
+@keyframes foreground-blink
+  50%
+    color: transparent
 
 // FULLSCREEN FILLSCREEN
 html.fullscreen
@@ -73,14 +61,13 @@ html.fullscreen
       h1:first-child
         margin-top: 0
     header
-      padding-inline: 1em
+      padding-inline: .7em .1em
       h1
         font-size: 1em
     footer
       display: none
     header, nav, main, footer
       max-width: none
-
 
 // SCREEN MIXING
 // Mobile screens are 40em (620px)

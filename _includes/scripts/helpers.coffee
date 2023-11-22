@@ -132,9 +132,11 @@ get_builds = -> $.get
     if builds[0].status is 'built' or environment is 'development'
       if html.hasClass 'behind'
         history.pushState null, '', "#{ window.location }?update_to=#{ builds[0].updated_at }"
+        $('#spy .behind').addClass 'foreground-blink'
       html.removeClass('behind').addClass 'updated'
     else
       html.removeClass('updated').addClass 'behind'
+      $('#spy .behind').removeClass 'foreground-blink'
       setTimeout get_builds, 1000*60
     return # End get_builds done
 
@@ -142,11 +144,8 @@ get_builds = -> $.get
 get_parent_commits = (builds, repo) -> $.get
   url: "{{ site.github.api_url }}/repos/#{ repo.parent?.full_name }/commits"
   success: (commits) ->
-    # Compare Jekyll build revision with parent last commit sha
-    same_sha = commits[0].sha is '{{ site.github.build_revision }}'
     # Compare parent last commit time with this forked site last build time
     commit_after_build = +new Date(commits[0].commit.author.date) / 1000 > {{ site.time | date: "%s" }}
-    console.log "same_sha, commit_after_build:", same_sha, commit_after_build
     if commit_after_build then sync_upstream().done -> do get_builds
     return # End get_parent_commits done
 
@@ -206,6 +205,19 @@ save_file = (form, file_url, file, sha) -> $.ajax
     if environment isnt 'development' then do get_builds
     return # End save_file
 
+# Get Forks recursively
+get_forks = (pg = 1, forks = []) -> $.get
+  url: github_repo_url + '/forks'
+  per_page: 100
+  page: pg
+  success: (data, status, request) ->
+    output = forks.concat data
+    links = request.getResponseHeader 'links'
+    if links && links.includes 'rel="next"'
+      get_forks pg+1, output
+    else console.log output
+    return # End get_forks
+
 # Bootstrap
 bootstrap = (token) ->
   t = token || localStorage.getItem 'token'
@@ -213,7 +225,9 @@ bootstrap = (token) ->
     get_auth(t).done (user) ->
       get_repo(user, token).done (repo) ->
         if repo.permissions.admin then get_builds().done (builds) ->
-          if repo.fork and builds[0].status is 'built' then get_parent_commits builds, repo
+          if repo.fork and builds[0].status is 'built'
+            get_parent_commits builds, repo
+          else do get_forks
   else do logout
   return # End bootstrap
 
@@ -221,10 +235,7 @@ bootstrap = (token) ->
 # ONLINE / OFFLINE
 # Called from BODY attribute
 # --------------------------------------
-@online = ->
-  html.addClass('online').removeClass 'offline'
-  do bootstrap
-  return # End online
+@online = -> html.addClass('online').removeClass 'offline'
 @offline = -> html.addClass('offline').removeClass 'online'
 # Initial call
 if navigator.onLine then do online else do offline

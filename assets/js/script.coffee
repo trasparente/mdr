@@ -11,7 +11,8 @@
 
 # Start table chain
 $
-  .when do table_numbers
+  .when do bootstrap
+  .then do table_numbers
   .then do table_durations
   .then do table_sort
   .then do table_limit

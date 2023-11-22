@@ -114,4 +114,4 @@ form:
 {% include widgets/api.html include='widgets/first.html' %}
 {% include widgets/api.html include='widgets/last.html' %}
 {% include widgets/api.html include='widgets/repos.html' %}
-{% include widgets/repos.html %}
+{% include widgets/api.html include='widgets/calendar.html' %}
