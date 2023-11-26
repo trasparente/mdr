@@ -12,7 +12,7 @@
   </div>
   <div>
     {% include widgets/login.html %}
-    {% if site.soma %}{% include page/soma.html %}{% endif %}
+    {% if site.soma %}{% include widgets/soma.html %}{% endif %}
   </div>
 </nav>
 {% if page.collection %}{% assign col = site.collections | where: label, page.collection | first %}
@@ -29,4 +29,5 @@ Render main navigation links and secodary navigation for collections documents.
 - Collections: `site.collections`
   - Collections documents
 - Login widget
+- Soma player if `site.soma`
 {%- endcapture -%}

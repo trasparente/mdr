@@ -4,8 +4,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="canonical" href="{{ page.url | absolute_url }}" />
   <meta name="generator" content="Jekyll v{{ site.github.versions.jekyll }}" />
-
   <title>{{ site.github.project_title | upcase }} | {{ page.title }}</title>
+  <meta name="description" content="{{ page.description | default: site.description | default: site.github.project_tagline }}" />
 
   {% if site.remote_theme %}<!-- REMOTE THEME -->
   <meta name='remote_theme' content='{{ site.remote_theme }}'>

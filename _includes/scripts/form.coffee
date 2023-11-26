@@ -6,6 +6,7 @@ $('form[data-file$=".csv"]').on 'submit', ->
   form = $ @
   form.find(':input').blur()
   file_url = url_from_data_file form
+  # Array of objects {name: '...', value: '...'}
   serialized = form.serializeArray()
   header = serialized.map((i) -> i.name).join ','
   row = serialized.map((i) -> i.value).join ','

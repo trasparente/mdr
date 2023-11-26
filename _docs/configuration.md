@@ -69,13 +69,14 @@ Color classes `.color-{ color }`{:.language-css}
 <span class='color-muted'>.color-muted</span>
 <span class='color-fg'>.color-fg</span>
 <span class='color-link'>.color-link</span>
-<span class='blink'>.blink</span>
 {% for c in colors %}<span class='color-{{c}}'>.color-{{c}}</span>
 {% endfor %}
 
 Background classes `.background-{ color }`{:.language-css}
 
-<span style='padding:1em;display:inline-block' class='background-bg'>.background-bg</span><span style='padding:1em;display:inline-block' class='background-muted'>.background-muted</span><span style='padding:1em;display:inline-block' class='background-muted background-blink'>.background-blink</span>
+<span style='padding:1em;display:inline-block' class='background-bg'>.background-bg</span><span style='padding:1em;display:inline-block' class='background-muted'>.background-muted</span>
 {% for c in colors %}<span style='padding:1em;display:inline-block' class='background-{{c}}'>.background-{{c}}</span>{% endfor %}
 
 Accent classes `.accent-{ color }`{:.language-css} coordinates links, navigation and border colors.
+
+Blink classes <span class='background-muted blink'>.blink</span> <span class='background-muted foreground-blink'>.foreground-blink</span> <span class='background-muted background-blink'>.background-blink</span>

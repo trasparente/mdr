@@ -13,6 +13,10 @@ environment = '{{ site.github.environment }}'
 github_repo_url = '{{ site.github.api_url }}/repos/{{ site.github.repository_nwo }}'
 lang = '{{ page.language | default: site.language | default: "it" }}'
 
+# Data
+data_user = {% if site.data.user %}{{ site.data.user | jsonify }}{% else %}{}{% endif %}
+data_fork = {% if site.data.form %}{{ site.data.form | jsonify }}{% else %}{}{% endif %}
+
 # Prevent-default class
 dom.on 'click', 'a.prevent', (e) -> e.preventDefault()
 dom.on 'submit', 'form.prevent', (e) -> e.preventDefault()
@@ -43,11 +47,6 @@ $('[data-json]').each ->
   el.html text
   return
 
-$('a[data-yaml]').each ->
-  el = $ @
-  console.log el.data 'yaml'
-  return
-
 # Preview YML file
 # Attribute [data-yml]
 # --------------------------------------
@@ -63,17 +62,23 @@ $('[data-yml]').each ->
 
 #
 # SCROLL Event
-# Add `html.scrolled` when scroll > win height
+# Add `html.scrolled` when scroll > win height (1 page)
 # --------------------------------------
 win.scroll () -> if win.scrollTop() > win.height() then html.addClass 'scrolled' else html.removeClass 'scrolled'
 
 #
 # FOCUS / BLUR
-# Called from BODY attribute
+# Called from BODY events
 # --------------------------------------
 @focus = -> html.addClass('focus').removeClass 'blur'
 @blur = -> html.addClass('blur').removeClass 'focus'
 if document.hasFocus() then do focus else do blur
+
+# SOMA audio streaming detector
+soma = $ 'audio#soma'
+soma_playing = false
+soma.on 'playing', -> soma_playing = true
+soma.on 'paused', -> soma_playing = false
 
 #
 # FULLSCREEN: WINDOW RESIZE EVENT
@@ -108,7 +113,9 @@ get_auth = (token) -> $.get
     localStorage.setItem 'token', token
     localStorage.setItem 'user', user.login
     return # End get_auth done
-  error: -> logout token
+  error: (request) -> # Reset token if Requires authentication or Forbidden
+    if [401, 403].includes request.status then logout token else do logout
+    return # End get_auth error
 
 get_repo = (user, token) -> $.get
   url: github_repo_url
@@ -160,9 +167,10 @@ sync_upstream = -> $.ajax
 get_csv_file = (form, file_url, file, header, row) -> $.get
   url: file_url
   # arguments: Object, 'error', 'Not Found'
-  error: (request, textStatus , errorThrown) -> save_if_404 request, form, file_url, file
+  error: (request, textStatus , errorThrown) -> if request.status is 404 then save_file form, file_url, file
   success: (data) ->
-    # Decode old file
+    # Decode old file and split
+    # Boolean remove empty elements
     csv_array = Base64.decode data.content
       .split '\n'
       .filter Boolean
@@ -171,33 +179,22 @@ get_csv_file = (form, file_url, file, header, row) -> $.get
     # append row
     csv_array.push row
     new_file = csv_array.join '\n'
-    save_file form, file_url, new_file, data.sha
+    save_file form, file_url, new_file, {sha: data.sha}
     return # End get_csv_file done
 
 get_json_file = (form, file_url, file) -> $.get
   url: file_url
   # arguments: Object, 'error', 'Not Found'
-  error: (request, textStatus , errorThrown) -> save_if_404 request, form, file_url, file
-  success: (data) ->
-    save_file form, file_url, file, data.sha
-    return # End get_json_file done
+  error: (request, textStatus , errorThrown) -> if request.status is 404 then save_file form, file_url, file
+  success: (data) -> save_file form, file_url, file, {sha: data.sha}
 
-# Save if file not found
-save_if_404 = (request, form, file_url, file) ->
-  if request.status is 404 then save_file form, file_url, file
-  return # End save_if_404
-
-save_file = (form, file_url, file, sha) -> $.ajax
+save_file = (form, file_url, file, data) -> $.ajax
   url: file_url
   method: 'PUT'
-  data: if sha then JSON.stringify {
-    message: "Commit data content #{ form.attr 'data-file' }"
-    sha: sha
-    content: Base64.encode file
-  } else JSON.stringify {
+  data: JSON.stringify $.extend {
     message: "Commit data content #{ form.attr 'data-file' }"
     content: Base64.encode file
-  }
+  }, data
   success: (data) ->
     alert "Committed #{ data.content.path } as #{ data.commit.sha.slice 0, 7 }"
     form.trigger 'reset'
@@ -215,7 +212,7 @@ get_forks = (pg = 1, forks = []) -> $.get
     links = request.getResponseHeader 'links'
     if links && links.includes 'rel="next"'
       get_forks pg+1, output
-    else console.log output
+    else console.log "#{fork.name} #{fork.updated_at} #{fork.id}" for fork in output 
     return # End get_forks
 
 # Bootstrap
@@ -235,7 +232,12 @@ bootstrap = (token) ->
 # ONLINE / OFFLINE
 # Called from BODY attribute
 # --------------------------------------
-@online = -> html.addClass('online').removeClass 'offline'
+@online = ->
+  html.addClass('online').removeClass 'offline'
+  if soma_playing
+    soma[0].load()
+    soma[0].play()
+  return
 @offline = -> html.addClass('offline').removeClass 'online'
 # Initial call
 if navigator.onLine then do online else do offline

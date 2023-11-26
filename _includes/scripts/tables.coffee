@@ -49,6 +49,7 @@ table_sort = -> $('table:not([data-sort=""]').each ->
   # Remove rows and append new sequence
   table.find('tbody tr').remove()
   table.find('tbody').append rows
+  return # End table_sort
 
 # Hide extra rows if data-limit attribute is set
 # Negative limit show table bottom rows
@@ -61,4 +62,4 @@ table_limit = -> $('table[data-limit]').each ->
       if (limit > 0 and i > limit) or (limit < 0 and i < rows.length+limit - 1)
         $(e).hide()
       return # End data-limit loop
-  return # End table_sort
+  return # End table_limit
