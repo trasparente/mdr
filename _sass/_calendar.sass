@@ -1,17 +1,36 @@
-.calendar
+[class*='calendar']
   display: flex
   justify-content: space-between
 
+.calendar
   // Days
   div[data-day]
     flex-grow: 1
+    min-height: 2.5em
     cursor: default
     text-align: center
     font-family: monospace
-    color: var(--fg-muted)
+    color: var(--border)
+    border-inline: 1px solid var(--bg)
     &:hover
-      background-color: var(--border)
+      background-color: var(--fg-muted)
+      color: var(--bg)
 
-  // No property
-  div[data-property='']
-    opacity: .3
+  // With property value
+  div:not([data-property=''])
+    @extend .color-muted
+    background-color: var(--border)
+
+.calendar-footer, .calendar-header
+  @extend .color-muted
+  // Horizontal line
+  div
+    @extend .background-bg
+    padding-block: .45em
+    &:not(:last-child)
+      padding-right: .5em
+    &:not(:first-child)
+      padding-left: .5em
+
+.calendar-footer
+  background: linear-gradient(to bottom, var(--bg) calc(50% + 1px), var(--border) calc(50% + 1px) calc(50% + 2px), var(--bg) calc(50% + 2px))

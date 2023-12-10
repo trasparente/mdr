@@ -3,6 +3,9 @@
 {%- assign total = 0 -%}
 {%- assign not = 0 -%}
 {%- assign days = include.days | default: 60 | minus: 1 -%}
+<div class='calendar-header'>
+  <div><strong>{{ include.title | default: include.property }}</strong></div>
+</div>
 <div class="calendar">
 {%- for d in (0..days) reversed -%}
   {%- assign gap = d | times: 86400 -%}
@@ -19,17 +22,23 @@
     {%- assign effimer = not -%}
     {% if effimer > 9 %}{% assign effimer = 1 %}{% endif %}
   {%- endif -%}
-  <div data-property='{{ csv | where: "date", day | map: include.property }}' data-day='{{ day }}' title='{{ day | date: "%A %B %-d %Y" }}'>
+  <div data-property='{% cycle "one", "two", "" %}{{ csv | where: "date", day | map: include.property }}' data-day='{{ day }}' title='{{ day | date: "%A %B %-d %Y" }}'>
     {{ effimer }}
   </div>
 {%- endfor -%}
+</div>
+<div class='calendar-footer'>
+  <div>{{ include.days | default: 60 }} days ago</div>
+  <div>{{ total }} serie</div>
+  <div>Today</div>
 </div>
 {%- capture api -%}
 Render a series of divs from a csv file with a `date` column.
 
 - `csv`: data file without extension
 - `property`: divs will have `data-property` attribute for styling
-- `days`: past span from today of the calendar, default to 60 (past 2 months)
+- `days`: days in the past to show, default to 60 (past 2 months)
+- `title`: Title to show, default to `property`
 
 ```liquid
 {% raw %}{% include widgets/calendar.html csv='practice' property='serie' %}{% endraw %}
@@ -42,7 +51,7 @@ Divs represent a day, showing a counter of consecutive days present or not prese
 ```
 
 Divs attributes:
-- `data-property`: the property passed as include variabile
+- `data-property`: value of the property passed as include variabile
 - `data-day`: day in the format `YYYY-MM-DD`
 - `title`: date in the format `Weekday Month D YYYY`
 {%- endcapture -%}

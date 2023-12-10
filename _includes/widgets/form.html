@@ -7,6 +7,7 @@
 {% assign unix = site.time | date: "%s" %}
 {% assign file = form.file | replace: extension, '/' | append: unix | append: extension %}
 {% else %}{% assign file = form.file %}{% endif %}
+{% if form.user %}{% assign file = file | prepend: 'user/' %}{% endif %}
 <form class='prevent{% if form.class %} {{ form.class }}{% endif %}' data-file='{{ file }}'{% if form.timestamp %} data-timestamp='{{ form.timestamp }}'{% endif %}>
 <h3>{{ form.name | capitalize | default: file | default: 'Form' }}</h3>
 {% for field in form.fields %}
@@ -93,4 +94,12 @@ Render a functional form from a `yml` object in the page front matter
 {% raw %}{% include widgets/form.html form=page.form %}{% endraw %}
 ```
 - `include.form`: yml form, front-matter or data file
+
+Form properties:
+
+- file: fields.json
+- timestamp: true
+- user: true
+- fields:
+  - type: text, textarea, number, boolean, color, date, select, ref, random, roll (csv)
 {% endcapture %}

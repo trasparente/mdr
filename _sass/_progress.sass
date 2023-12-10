@@ -2,11 +2,18 @@ progress
   border: 0
   display: block
   appearance: none
-  &, &::-webkit-progress-bar
-    background-color: var(--border)
-  &::-moz-progress-bar
-    background-color: var(--fg-muted)
 
-// That's Chrome everybody
+  // Progress background
+  // 1px grid, 9 lines
+  &, &::-webkit-progress-bar
+    @include background-lines-v(1px, 9, var(--border), var(--bg))
+
+  // Progress active bar
+  &::-moz-progress-bar
+    background-color: var(--background-cyan)
+    border-right: 2px solid var(--color-cyan)
+
+// Chrome
 progress::-webkit-progress-value
-  background-color: var(--fg-muted)
+  background-color: var(--background-cyan)
+  border-right: 2px solid var(--color-cyan)

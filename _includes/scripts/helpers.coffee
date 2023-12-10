@@ -97,12 +97,7 @@ date_iso = (date) -> new Date(date || +new Date()).toLocaleDateString 'sv'
 
 # Get data file url from data-file form attribute
 # If it is a fork, save inside 'user' folder
-url_from_data_file = (form) ->
-  path = form.attr 'data-file'
-  # Prepend user folder if repository is forked
-  if localStorage.getItem('parent') and body.attr('data-github-fork') is 'true'
-    path = "user/#{ form.attr 'data-file' }"
-  return "#{ github_repo_url }/contents/_data/#{ path }" # End url_from_data_file
+url_from_data_file = (form) -> "#{ github_repo_url }/contents/_data/#{ form.data 'file' }"
 
 # GitHub auth, personal token as argument
 get_auth = (token) -> $.get
@@ -192,7 +187,7 @@ save_file = (form, file_url, file, data) -> $.ajax
   url: file_url
   method: 'PUT'
   data: JSON.stringify $.extend {
-    message: "Commit data content #{ form.attr 'data-file' }"
+    message: "Commit data content #{ form.data 'file' }"
     content: Base64.encode file
   }, data
   success: (data) ->

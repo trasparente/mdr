@@ -3,10 +3,11 @@
 # Required
 file: fields.json
 
-# Timestamp to save as 'folder/{timestamp}.ext'
-# Form class list
-# Optional
+# Optional timestamp to save as 'folder/file/{timestamp}.ext'
 timestamp: true
+
+# Optional save in 'user' subfolder 'user/folder/file.ext'
+user: true
 
 # Form field as yaml fields
 # Columns if file is 'csv'
@@ -19,7 +20,7 @@ fields:
     # Optional
     title: Label string
     default: default string
-    description: "Implicit form text: true"
+    description: "Implicit form {text: true}"
 
   # Textarea
   textarea:

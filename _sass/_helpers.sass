@@ -22,7 +22,7 @@
 
 // EVIDENT
 .evident
-  @extend .background-muted, .border-radius, .no-border, .padding-around
+  @extend .background-muted, .border-radius, .border, .padding-around
   margin-inline: .2em
 
 // DISPLAY
@@ -69,7 +69,7 @@ html.fullscreen
   header, nav, main, footer
     max-width: none
 
-// SCREEN MIXING
+// MOBILE SCREEN
 // Mobile screens are 40em (620px)
 // element
 //   @include mobile
@@ -77,3 +77,13 @@ html.fullscreen
 @mixin mobile
   @media screen and (max-width: 40em)
     @content
+
+// BACKGROUND LINES
+// Vertical
+@mixin background-lines-v($width, $lines, $background-color, $line-color)
+  background: linear-gradient(90deg, #{$background-color} calc(100% - #{$width}), #{$line-color} 0)
+  background-size: calc((100% - #{$lines}*#{$width})/(#{$lines} + 1) + #{$width}) 100%
+// Horizontal
+@mixin background-lines-h($width, $lines, $background-color, $line-color)
+  background: linear-gradient(0deg, #{$background-color} calc(100% - #{$width}), #{$line-color} 0)
+  background-size: 100% calc((100% - #{$lines}*#{$width})/(#{$lines} + 1) + #{$width})
