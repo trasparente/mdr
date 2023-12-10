@@ -131,15 +131,34 @@ get_repo = (user, token) -> $.get
 get_builds = -> $.get
   url: github_repo_url + '/pages/builds'
   success: (builds) ->
+    spy = $ '#spy .behind'
     if builds[0].status is 'built' or environment is 'development'
+      # -------
+      # UPDATED
+      # -------
       if html.hasClass 'behind'
-        history.pushState null, '', "#{ window.location }?update_to=#{ builds[0].updated_at }"
-        $('#spy .behind').addClass 'foreground-blink'
-      html.removeClass('behind').addClass 'updated'
+        # Was behind
+        updated_url = [
+          window.location.origin
+          window.location.pathname
+          '?update_to='
+          builds[0].updated_at
+        ].join ''
+        history.pushState null, '', updated_url
+        # Activate button
+        spy.addClass 'foreground-blink pointer'
+        spy.on 'click', () -> window.location.href = updated_url
+      html.removeClass 'behind'
+        .addClass 'updated'
     else
-      html.removeClass('updated').addClass 'behind'
-      $('#spy .behind').removeClass 'foreground-blink'
+      # ------
+      # BEHIND
+      # ------
+      html.removeClass 'updated'
+        .addClass 'behind'
+      # Check again in 60 thousands of milliseconds
       setTimeout get_builds, 1000*60
+
     return # End get_builds done
 
 # Get parent repo last commit

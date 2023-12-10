@@ -22,14 +22,14 @@
     {%- assign effimer = not -%}
     {% if effimer > 9 %}{% assign effimer = 1 %}{% endif %}
   {%- endif -%}
-  <div data-property='{% cycle "one", "two", "" %}{{ csv | where: "date", day | map: include.property }}' data-day='{{ day }}' title='{{ day | date: "%A %B %-d %Y" }}'>
+  <div data-property='{{ csv | where: "date", day | map: include.property }}' data-day='{{ day }}' title='{{ day | date: "%A %B %-d %Y" }}'>
     {{ effimer }}
   </div>
 {%- endfor -%}
 </div>
 <div class='calendar-footer'>
   <div>{{ include.days | default: 60 }} days ago</div>
-  <div>{{ total }} serie</div>
+  <div>{{ total }} {{ include.property }}</div>
   <div>Today</div>
 </div>
 {%- capture api -%}

@@ -8,6 +8,10 @@
 .mpz
   @extend .mz, .pz
 
+// CURSOR
+.pointer
+  cursor: pointer
+
 // BORDERS
 .no-border
   border: none
@@ -80,10 +84,7 @@ html.fullscreen
 
 // BACKGROUND LINES
 // Vertical
+// Arguments: line width, number of line, and both colors
 @mixin background-lines-v($width, $lines, $background-color, $line-color)
   background: linear-gradient(90deg, #{$background-color} calc(100% - #{$width}), #{$line-color} 0)
   background-size: calc((100% - #{$lines}*#{$width})/(#{$lines} + 1) + #{$width}) 100%
-// Horizontal
-@mixin background-lines-h($width, $lines, $background-color, $line-color)
-  background: linear-gradient(0deg, #{$background-color} calc(100% - #{$width}), #{$line-color} 0)
-  background-size: 100% calc((100% - #{$lines}*#{$width})/(#{$lines} + 1) + #{$width})
