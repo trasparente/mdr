@@ -3,9 +3,9 @@
 {%- assign total = 0 -%}
 {%- assign not = 0 -%}
 {%- assign days = include.days | default: 60 | minus: 1 -%}
-<div class='calendar-header'>
-  <div><strong>{{ include.title | default: include.property }}</strong></div>
-</div>
+{% if include.title %}<div class='calendar-header'>
+  <div><strong>{{ include.title }}</strong></div>
+</div>{% endif %}
 <div class="calendar">
 {%- for d in (0..days) reversed -%}
   {%- assign gap = d | times: 86400 -%}
@@ -22,7 +22,8 @@
     {%- assign effimer = not -%}
     {% if effimer > 9 %}{% assign effimer = 1 %}{% endif %}
   {%- endif -%}
-  <div data-property='{{ csv | where: "date", day | map: include.property }}' data-day='{{ day }}' title='{{ day | date: "%A %B %-d %Y" }}'>
+  {% assign value = csv | where: "date", day | map: include.property | first %}
+  <div data-property='{{ value }}' data-day='{{ day }}' title='{{ day | date: "%A %B %-d %Y" }}{% if value.size %} - {{ include.property }}: {{ value }}{% endif %}'>
     {{ effimer }}
   </div>
 {%- endfor -%}

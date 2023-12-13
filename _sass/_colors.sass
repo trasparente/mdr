@@ -24,9 +24,12 @@
   .accent-#{$color}
     // Links
     --link: var(--color-#{$color})
-    // Evidend
-    &.evident
+    // Evidend and calendar days
+    &.match-color
       @extend .background-#{$color}, .color-#{$color}
+      &:hover
+        color: var(--background-#{$color})
+        background: var(--color-#{$color})
     // Navigation
     nav a
       &:hover
