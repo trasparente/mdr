@@ -17,3 +17,14 @@
 {%- endfor -%}
 {%- assign rolls_output = rolls_output | plus: rolls_mod -%}
 {{ rolls_output }}
+{%- capture api -%}
+Compute a dice roll from a string (rolls)d(sides)(+/-modifier).  
+Expose the liquid array `rolls_rolls` of the rolls.
+
+```liquid
+{% raw %}{% include widgets/rolls.html roll='1d6' mod=0 %}{% endraw %}
+```
+
+- `include.roll`: Roll string default to `1d6`
+- `include.mod`: modifier default to 0
+{%- endcapture -%}

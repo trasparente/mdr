@@ -1,0 +1,10 @@
+<g class='hex' data-distance='{{ include.distance }}'>
+  <g class='hexagon'>
+    <polygon transform='translate({{ include.x }},{{ y | times: -1 }}) scale({{ include.scale | default: 0.93 }})' points="1,0 0.5,0.866 -0.5,0.866 -1,0 -0.5,-0.866 0.5,-0.866"></polygon>
+  </g>
+  <g class='text'>
+    <text x="{{ include.x }}" y="{{ y | times: -1 }}" dy='2.8em'>{{ include.hx }}{{ include.hy }}</text>
+    <text x="{{ include.x }}" y="{{ y | times: -1 }}" dy='-1em'>e={{ effimer | round:1 }} ug={{upper_gap|round}}</text>
+    <text x="{{ include.x }}" y="{{ y | times: -1 }}">dc={{ dc | round:1 }} d={{distance}}</text>
+  </g>
+</g>

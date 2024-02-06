@@ -46,6 +46,12 @@ input, select, output, textarea
   -webkit-appearance: none
   padding: 1px 2px
   @extend .color-yellow, .border, .background-muted
+  // Description paragraph of the field
+  // The <p> tag is added by liquid markdowinfy
+  // Appear as a <small> tag
+  & + p
+    display: inline
+    font-size: smaller
 
 // Interaction
 input, label, select, textarea

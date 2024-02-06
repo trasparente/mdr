@@ -1,0 +1,57 @@
+//
+// SVG MAP
+//
+
+// map
+svg.map
+  @extend .border
+
+// Gridlines
+#gridlines line
+  @extend .stroke-border
+  shape-rendering: crispEdges
+  stroke-width: .02
+
+//
+// HEX
+//
+.hex
+
+  // TEXT
+  .text text
+    cursor: default
+    // Center horizontally and vertically
+    text-anchor: middle
+    dominant-baseline: middle
+    // Appearance
+    font-family: monospace
+    font-size: 0.25px
+    @extend .fill-muted
+    &:first-child
+      @extend .fill-bg
+      font-weight: bold
+
+  // only visible on hover
+  // .hover
+  //   visibility: hidden
+  // &:hover .hover
+  //   visibility: visible
+
+  // HEXAGON
+
+  // Default
+  .hexagon
+    @extend .fill-border
+    stroke-width: .08
+
+  // Distance colors
+  &[data-distance='1'] .hexagon
+    @extend .fill-yellow
+  &[data-distance='2'] .hexagon
+    @extend .fill-orange
+  &[data-distance='3'] .hexagon
+    @extend .fill-red
+  &[data-distance='4'] .hexagon
+    @extend .fill-magenta
+  &[data-distance='5'] .hexagon
+    @extend .fill-purple

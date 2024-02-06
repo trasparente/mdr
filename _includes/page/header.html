@@ -1,2 +1,2 @@
-<h1>{{ site.github.project_title }}</h1>
+<h1>{% assign logo_path = site.static_files | where_exp: "item", "item.path contains 'logo.png'" | map: 'path' | first %}{% if logo_path %}<img src='{{ logo_path | absolute_url }}' class='logo'>{% endif %}{{ site.title | default: site.github.project_title }}</h1>
 {%- include page/spy.html -%}

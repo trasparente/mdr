@@ -11,7 +11,7 @@
   data-github-id='{{ site.github.public_repositories | where: "full_name", site.github.repository_nwo | first | map: "id" | first }}'
   data-github-environment='{{ site.github.environment }}'
   data-github-remote-theme='{{ site.remote_theme }}'
-  class='{{ page.class }}'>
+  class='{{ page.color_scheme | default: site.color_scheme | default: "dark" | append: " " | append: page.class | strip }}'>
 <header>{%- include page/header.html -%}</header>
 {%- include page/navigation.html -%}
 <main>{{ content }}</main>

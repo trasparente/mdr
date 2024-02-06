@@ -1,0 +1,9 @@
+fieldset
+  @extend .mz, .padding-around, .border
+  margin: 1em 0
+  &:focus-within legend
+    @extend .color-fg
+
+legend
+  @extend .padding-around, .background-muted, .border
+  border-radius: 1em

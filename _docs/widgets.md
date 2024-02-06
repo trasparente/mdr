@@ -10,6 +10,7 @@ order: 2
 {% include widgets/api.html include='widgets/view' %}
 {% include widgets/api.html include='widgets/form' %}
 {% include widgets/form.html form=site.data.form %}
+{% include widgets/api.html include='widgets/rolls' %}
 {% include widgets/api.html %}
 {% include widgets/api.html include='widgets/github_url' %}
 {% include widgets/api.html include='widgets/github_link' %}
@@ -18,3 +19,4 @@ order: 2
 {% include widgets/api.html include='widgets/last.html' %}
 {% include widgets/api.html include='widgets/repos.html' %}
 {% include widgets/api.html include='widgets/calendar.html' %}
+{% include widgets/api.html include='widgets/soma.html' %}

@@ -20,7 +20,8 @@ fields:
     # Optional
     title: Label string
     default: default string
-    description: "Implicit form {text: true}"
+    # Description supports markdown
+    description: "Implicit form `{text: true}`{:.language-json}"
 
   # Textarea
   textarea:
@@ -83,6 +84,8 @@ fields:
     # Column name to pick
     property: dead
     description: Get a csv file and a property to pick from
+    # Optional disabled
+    disabled: true
 
   # Roll dices at site deploy
   roll:
@@ -91,6 +94,8 @@ fields:
     description: Roll property is (rolls)d(sides)
     # Optional modifier
     mod: 0
+    # Optional disabled
+    disabled: true
 
   # Roll and index a value/name csv
   roll_csv:

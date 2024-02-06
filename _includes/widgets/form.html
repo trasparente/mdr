@@ -58,6 +58,7 @@
       <input
         type='text' id='{{ field[0] }}' name='{{ field[0] }}'
         value='{{ options | sample | map: property }}'
+        {% if field[1].disabled %}disabled{% endif %}
         title='picked {{ property }} from {{ csv }}'>
     {% when 'roll' %}
       {%- assign roll = field[1].roll -%}
@@ -74,11 +75,12 @@
         type='{{ type }}' id='{{ field[0] }}' name='{{ field[0] }}'
         value='{{ dice }}'
         title='Rolled {{ roll }}{% if mod != 0 %}{% if mod > 0 %}+{% endif %}{{ mod }}{% endif %}: {{ rolls_rolls | inspect }}'
-        {% if field[1].hidden %}hidden{% endif %}>
+        {% if field[1].hidden %}hidden{% endif %}
+        {% if field[1].disabled %}disabled{% endif %}>
     {% else %}
       {{ field[1] | inspect }}
   {% endcase %}
-  {% if field[1].description %}<small>{{ field[1].description }}</small>{% endif %}
+  {% if field[1].description %}{{ field[1].description | markdownify }}{% endif %}
   </div>
 {% endfor %}
   <div data-buttons>

@@ -3,23 +3,48 @@
   color: var(--fg)
 .color-muted
   color: var(--fg-muted)
+.stroke-muted
+  stroke: var(--fg-muted)
 .color-border
   color: var(--border)
+.stroke-border
+  stroke: var(--border)
 .color-link
   color: var(--link)
+.stroke-link
+  stroke: var(--link)
 .background-bg
   background-color: var(--bg) !important
+.fill-bg
+  fill: var(--bg)
 .background-muted
   background-color: var(--border)
+.fill-border
+  fill: var(--border)
+.fill-muted
+  fill: var(--fg-muted)
 
 // COLOR CYCLE
 @each $color in $colors
   // Color classes
   .color-#{$color}
     color: var(--color-#{$color})
+  .stroke-#{$color}
+    stroke: var(--color-#{$color})
+  .stroke-background-#{$color}
+    stroke: var(--background-#{$color})
   // Background classes
   .background-#{$color}
     background-color: var(--background-#{$color})
+  .fill-#{$color}
+    fill: var(--background-#{$color})
+  blockquote.accent-#{$color}
+    background-color: var(--background-#{$color})
+    border-color: var(--color-#{$color})
+  fieldset.accent-#{$color}
+    border-color: var(--background-#{$color})
+    legend
+      background-color: var(--background-#{$color})
   // ACCENTS
   .accent-#{$color}
     // Links
@@ -27,9 +52,9 @@
     // Evidend and calendar days
     &.match-color
       @extend .background-#{$color}, .color-#{$color}
-      &:hover
-        color: var(--background-#{$color})
-        background: var(--color-#{$color})
+      // &:hover
+      //   color: var(--background-#{$color})
+      //   background: var(--color-#{$color})
     // Navigation
     nav a
       &:hover
@@ -49,7 +74,3 @@
 .border, .border-top, .border-bottom, .border-left
   border-color: var(--border)
   border-style: solid
-.border-radius
-  border-radius: 3px
-.border-left
-  border-left-width: 5px

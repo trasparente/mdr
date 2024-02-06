@@ -75,10 +75,10 @@ win.scroll () -> if win.scrollTop() > win.height() then html.addClass 'scrolled'
 if document.hasFocus() then do focus else do blur
 
 # SOMA audio streaming detector
-soma = $ 'audio#soma'
+@soma = $ 'audio#soma'
 soma_playing = false
-soma.on 'playing', -> soma_playing = true
-soma.on 'paused', -> soma_playing = false
+soma.on 'playing', -> console.log $(@)
+soma.on 'suspend', -> console.log 'suspend'
 
 #
 # FULLSCREEN: WINDOW RESIZE EVENT
@@ -148,8 +148,9 @@ get_builds = -> $.get
         # Activate button
         spy.addClass 'foreground-blink pointer'
         spy.on 'click', () -> window.location.href = updated_url
-      html.removeClass 'behind'
-        .addClass 'updated'
+      else
+        html.removeClass 'behind'
+          .addClass 'updated'
     else
       # ------
       # BEHIND

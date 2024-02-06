@@ -1,29 +1,29 @@
 \:root
 
-  // MAIN
+  // FONTS
+  --font-size: #{$font-size}
+  --font-family: #{$font-family}
+  --headings-font-family: #{$headings-font-family}
+
+  // DARK
   --bg: #{$bg}
   --fg-muted: #{$fg-muted}
   --fg: #{$fg}
   --link: #{$blue}
   --border: #{$border}
 
-  // FONTS
-  --font-size: #{$font-size}
-  --font-family: #{$font-family}
-  --headings-font-family: #{$headings-font-family}
-
   // COLORS
-  --color-red: #{$red}
-  --color-orange: #{$orange}
-  --color-yellow: #{$yellow}
-  --color-green: #{$green}
-  --color-forest: #{$forest}
-  --color-cyan: #{$cyan}
-  --color-blue: #{$blue}
-  --color-violet: #{$violet}
-  --color-purple: #{$purple}
-  --color-magenta: #{$magenta}
-  --color-pink: #{$pink}
+  --background-red: #{$red}
+  --background-orange: #{$orange}
+  --background-yellow: #{$yellow}
+  --background-green: #{$green}
+  --background-forest: #{$forest}
+  --background-cyan: #{$cyan}
+  --background-blue: #{$blue}
+  --background-violet: #{$violet}
+  --background-purple: #{$purple}
+  --background-magenta: #{$magenta}
+  --background-pink: #{$pink}
 
   // BACKGROUNDS
   --background-red: #{$background_red}
@@ -37,3 +37,12 @@
   --background-purple: #{$background_purple}
   --background-magenta: #{$background_magenta}
   --background-pink: #{$background_pink}
+
+@mixin light-scheme
+  --fg:        hsl(210, 0%, 4%)
+  --bg:        hsl(210, 0%, 92%)
+  --border:    hsl(210, 0%, 75%)
+  --fg-muted:  hsl(210, 0%, 50%)
+
+.light
+  @include light-scheme

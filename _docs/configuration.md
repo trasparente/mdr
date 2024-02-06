@@ -1,5 +1,6 @@
 ---
 order: 1
+color_scheme: light
 ---
 # Configuration
 {:.no_toc}
@@ -33,11 +34,22 @@ collections:
   posts:
     title: Blog
 ```
+
+<fieldset markdown='1'><legend>Customization</legend>
+
 - Custom styles in `_sass/_custom.sass`
 - Custom coffeescripts in `_includes/scripts/custom.coffee`
 - Custom favicons files `favicon.ico` and `favicon.png` somewhere
+
+</fieldset>
+<fieldset markdown='1'><legend>Content</legend>
+
 - Pages as `.md` files in the root or in `assets` with `permlink: page_name/`
 - Collections in the root `_collection_name` with `order: n`
+
+</fieldset>
+<fieldset markdown='1'><legend>Rebuild</legend>
+
 - Rebuild at midnight with `.github/workflows/build_pages.yml`
 
 ```yml
@@ -53,6 +65,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${% raw %}{{ secrets.GITHUB_TOKEN }}{% endraw %}
 ```
+</fieldset>
 
 ## Theme
 
@@ -63,20 +76,35 @@ jobs:
 Content
 </details>
 
-Color classes `.color-{ color }`{:.language-css}
-
 {% assign colors = "red,orange,yellow,green,forest,cyan,blue,violet,purple,magenta,pink" | split: ',' %}
-<span class='color-muted'>.color-muted</span>
+
+<!-- COLOR -->
+
+<fieldset><legend markdown='1'>Color classes `.color-{color}`{:.language-css}</legend>
 <span class='color-fg'>.color-fg</span>
+<span class='color-muted'>.color-muted</span>
 <span class='color-link'>.color-link</span>
 {% for c in colors %}<span class='color-{{c}}'>.color-{{c}}</span>
 {% endfor %}
+</fieldset>
 
-Background classes `.background-{ color }`{:.language-css}
+<!-- BACKGROUND -->
 
-<span style='padding:1em;display:inline-block' class='background-bg'>.background-bg</span><span style='padding:1em;display:inline-block' class='background-muted'>.background-muted</span>
-{% for c in colors %}<span style='padding:1em;display:inline-block' class='background-{{c}}'>.background-{{c}}</span>{% endfor %}
+<fieldset><legend markdown='1'>Background classes `.background-{color}`{:.language-css}</legend>
+<span style='padding:1em;display:inline-block' class='background-bg'>.background-bg</span><span style='padding:1em;display:inline-block' class='background-muted'>.background-muted</span>{% for c in colors %}<span style='padding:1em;display:inline-block' class='background-{{c}}'>.background-{{c}}</span>{% endfor %}
+</fieldset>
 
-Accent classes `.accent-{ color }`{:.language-css} coordinates links, navigation and border colors.
+<fieldset markdown='1'><legend markdown='1'>Accent classes: `.accent-{color}`{:.language-css}</legend>coordinates links, navigation and border colors; affects `<blockquote>`{:.language-html} and `<fieldset>`{:.language-html} too.
+</fieldset>
 
-Blink classes <span class='background-muted blink'>.blink</span> <span class='background-muted foreground-blink'>.foreground-blink</span> <span class='background-muted background-blink'>.background-blink</span>
+<fieldset markdown='1'><legend>Blink classes</legend>
+- <span class='background-muted blink'>.blink</span>
+- <span class='background-muted foreground-blink'>.foreground-blink</span>
+- <span class='background-muted background-blink'>.background-blink</span>
+</fieldset>
+
+## User/fork data
+
+Exposed are two `json` endpoints:
+- `{{ 'assets/data/user.json' | absolute_url }}` is queried for user data
+- `{{ 'assets/data/fork.json' | absolute_url }}`

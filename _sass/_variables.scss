@@ -3,6 +3,10 @@ $bg:        hsl(210, 0%, 4%);
 $fg:        hsl(210, 0%, 80%);
 $fg-muted:  hsl(210, 0%, 55%);
 $border:    hsl(210, 0%, 10%);
+$light-fg:        hsl(210, 0%, 4%);
+$light-bg:        hsl(210, 0%, 92%);
+$light-border:    hsl(210, 0%, 75%);
+$light-fg-muted:  hsl(210, 0%, 50%);
 
 // COLORS
 $colors: ('red','orange','yellow','green','forest','cyan','blue','violet','purple','magenta','pink');
@@ -43,7 +47,7 @@ $headings-margins: 0.67 0.83 1 1.33 1.67 2.33;
 $headings-weight: 400 400 400 600 900 900;
 
 // SPACERS
-$padding_around: .45em .7em;
+$padding_around: .4em .7em;
 
 // BLINK TIME
 $blink: 1.2s;
