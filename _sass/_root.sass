@@ -7,23 +7,23 @@
 
   // DARK
   --bg: #{$bg}
-  --fg-muted: #{$fg-muted}
   --fg: #{$fg}
-  --link: #{$blue}
+  --fg-muted: #{$fg-muted}
   --border: #{$border}
+  --link: #{$blue}
 
   // COLORS
-  --background-red: #{$red}
-  --background-orange: #{$orange}
-  --background-yellow: #{$yellow}
-  --background-green: #{$green}
-  --background-forest: #{$forest}
-  --background-cyan: #{$cyan}
-  --background-blue: #{$blue}
-  --background-violet: #{$violet}
-  --background-purple: #{$purple}
-  --background-magenta: #{$magenta}
-  --background-pink: #{$pink}
+  --color-red: #{$red}
+  --color-orange: #{$orange}
+  --color-yellow: #{$yellow}
+  --color-green: #{$green}
+  --color-forest: #{$forest}
+  --color-cyan: #{$cyan}
+  --color-blue: #{$blue}
+  --color-violet: #{$violet}
+  --color-purple: #{$purple}
+  --color-magenta: #{$magenta}
+  --color-pink: #{$pink}
 
   // BACKGROUNDS
   --background-red: #{$background_red}
@@ -38,11 +38,39 @@
   --background-magenta: #{$background_magenta}
   --background-pink: #{$background_pink}
 
+// LIGHT SCHEME
 @mixin light-scheme
-  --fg:        hsl(210, 0%, 4%)
-  --bg:        hsl(210, 0%, 92%)
-  --border:    hsl(210, 0%, 75%)
-  --fg-muted:  hsl(210, 0%, 50%)
+  --bg:        #{$light-bg}
+  --fg:        #{$light-fg}
+  --fg-muted:  #{$light-fg-muted}
+  --border:    #{$light-border}
+  --link:      #{darken($blue,20%)}
+
+  // COLORS
+  --background-red: #{lighten($red,20%)}
+  --background-orange: #{lighten($orange,20%)}
+  --background-yellow: #{lighten($yellow,20%)}
+  --background-green: #{lighten($green,20%)}
+  --background-forest: #{lighten($forest,20%)}
+  --background-cyan: #{lighten($cyan,20%)}
+  --background-blue: #{lighten($blue,20%)}
+  --background-violet: #{lighten($violet,20%)}
+  --background-purple: #{lighten($purple,20%)}
+  --background-magenta: #{lighten($magenta,20%)}
+  --background-pink: #{lighten($pink,20%)}
+
+  // BACKGROUNDS
+  --color-red: #{darken($red,20%)}
+  --color-orange: #{darken($orange,20%)}
+  --color-yellow: #{darken($yellow,20%)}
+  --color-green: #{darken($green,20%)}
+  --color-forest: #{darken($forest,20%)}
+  --color-cyan: #{darken($cyan,20%)}
+  --color-blue: #{darken($blue,20%)}
+  --color-violet: #{darken($violet,20%)}
+  --color-purple: #{darken($purple,20%)}
+  --color-magenta: #{darken($magenta,20%)}
+  --color-pink: #{darken($pink,20%)}
 
 .light
   @include light-scheme

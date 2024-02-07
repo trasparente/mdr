@@ -1,4 +1,4 @@
-<audio id="soma" controls><source src="https://ice3.somafm.com/dronezone-128-mp3"></audio>
+{% if site.soma or page.soma %}<audio id="soma" controls><source src="https://ice3.somafm.com/dronezone-128-mp3"></audio>{% endif %}
 {%- capture api -%}
 Render an `audio` element streaming a somafm-drone music channel. Setting `site.soma: true` will render the player on navigation bar.
 ```html

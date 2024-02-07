@@ -12,7 +12,7 @@
   </div>
   <div>
     {% include widgets/login.html %}
-    {% if site.soma %}{% include widgets/soma.html %}{% endif %}
+    {% include widgets/soma.html %}
   </div>
 </nav>
 {% if page.collection %}{% assign col = site.collections | where: label, page.collection | first %}

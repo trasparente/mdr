@@ -1,6 +1,5 @@
 ---
 order: 1
-color_scheme: light
 ---
 # Configuration
 {:.no_toc}
