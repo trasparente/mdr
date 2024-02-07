@@ -15,7 +15,7 @@
       {% if include.category contains row.category or include.category == nil %}
       <tr data-row='{{ forloop.index }}'>{% for cell in row %}
         <td data-header='{{ cell[0] }}' data-value='{{ cell[1] }}'>{% if cell[0] == "date" or cell[0] == "unix" %}
-          <time datetime="{{ cell[1] | date_to_rfc822 }}">{{ cell[1] | date: "%F" }} </time>{% else %}{{ cell[1] }}{% endif %}</td>
+          <time datetime="{{ cell[1] | date_to_rfc822 }}" data-sort='{{ cell[1] | date: "%s" }}'>{{ cell[1] | date: "%F" }} </time>{% else %}{{ cell[1] }}{% endif %}</td>
         {% endfor %}
       </tr>
       {% endif %}

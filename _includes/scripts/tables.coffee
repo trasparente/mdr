@@ -41,7 +41,8 @@ table_durations = -> $('tr').has('td[data-header="duration"]:not(:empty)').each 
 table_sort = -> $('table:not([data-sort=""]').each ->
   table = $ @
   # Sort function by `td time[data-sort]`
-  rows = table.find('tbody tr').sort (a, b) ->
+  rows = table.find('tbody tr').filter(":visible").sort (a, b) ->
+    console.log a,b
     value_a = $(a).find("td time").data('sort') || $(a).find("td time").attr 'datetime'
     value_b = $(b).find("td time").data('sort') || $(b).find("td time").attr 'datetime'
     if 'asc' is table.data 'sort'
